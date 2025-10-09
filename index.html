@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md Faiyaz Rizwee - Bioinformatics Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2b6cb0;
+            --secondary: #38b2ac;
+            --accent: #4a5568;
+            --dark-bg: #0f0f1e;
+            --card-bg: rgba(25, 25, 50, 0.7);
+            --text: #e0e0ff;
+            --text-light: #a0a0c0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c0c1c, #1a1a3a);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(135deg, rgba(43, 108, 176, 0.2), rgba(56, 178, 172, 0.2));
+            backdrop-filter: blur(10px);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%232b6cb0" opacity="0.05"><polygon points="1000,100 1000,0 0,100"/></svg>');
+            border-radius: 0 0 30px 30px;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            margin-bottom: 25px;
+            box-shadow: 0 0 30px rgba(43, 108, 176, 0.5);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            margin: 0 auto 25px;
+        }
+
+        .header-content h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background-clip: text; /* Standard property */
+            -webkit-background-clip: text; /* Webkit prefix */
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-content p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: var(--text-light);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            font-size: 2.2rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* Summary Section */
+        .summary {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .summary:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Education Section */
+        .education-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .education-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .education-item h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .education-item .date {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .education-item .grade {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Projects Section - Full Width like Education */
+        .project-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .project-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-item h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-item p {
+            margin-bottom: 15px;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            background: rgba(56, 178, 172, 0.1);
+            border: 1px solid rgba(56, 178, 172, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            background: rgba(56, 178, 172, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-list {
+            list-style-type: none;
+        }
+
+        .skill-list li {
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+
+        .skill-list li i {
+            color: var(--accent);
+        }
+
+        /* Internship & Certification */
+        .experiences-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 25px;
+        }
+
+        .experience-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--secondary), var(--accent));
+        }
+
+        .experience-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .experience-item h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .experience-item .date {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Language Section */
+        .languages {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .language-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px 30px;
+            text-align: center;
+            min-width: 180px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .language-item:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        .language-item h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .language-item p {
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, rgba(43, 108, 176, 0.1), rgba(56, 178, 172, 0.1));
+            backdrop-filter: blur(10px);
+            color: var(--text);
+            text-align: center;
+            padding: 40px 0;
+            border-radius: 30px 30px 0 0;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Floating elements for background */
+        .floating {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), transparent);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .floating:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+        }
+
+        .floating:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            background: radial-gradient(circle, var(--secondary), transparent);
+        }
+
+        .floating:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 10%;
+            left: 20%;
+            background: radial-gradient(circle, var(--accent), transparent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-links a {
+                width: 250px;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .skills-container,
+            .experiences-container {
+                grid-template-columns: 1fr;
+            }
+
+            .languages {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .language-item {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background floating elements -->
+    <div class="floating"></div>
+    <div class="floating"></div>
+    <div class="floating"></div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="profile-img">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h1>Md Faiyaz Rizwee</h1>
+                <p>Bioinformatics Student | Passionate about Genomics, Coding & Biotechnology</p>
+                <div class="contact-links">
+                    <a href="mailto:mdfaiyaz4840@gmail.com">
+                        <i class="fas fa-envelope"></i> Email
+                    </a>
+                    <a href="https://linkedin.com/in/md-faiyaz-rizwee-34515b322" target="_blank">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/faiyazrizwee" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="#" id="download-cv">
+                        <i class="fas fa-download"></i> Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Career Summary Section -->
+    <section id="summary">
+        <div class="container">
+            <h2 class="section-title">Career Summary</h2>
+            <div class="summary">
+                <p>Highly motivated and enthusiastic student with a strong background in biotechnology. Committed to leveraging my skills, knowledge, and passion to contribute to the development and innovation of the field, while utilizing my expertise in bioinformatics, genomics, coding, and laboratory procedures. Capable of following instructions from superiors and performing independently with limited supervision.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="education-item">
+                <h3>M.Sc. Bioinformatics</h3>
+                <p class="date"><i class="far fa-calendar-alt"></i> 2024 - 2026</p>
+                <p><i class="fas fa-university"></i> Jamia Millia Islamia, Delhi</p>
+                <p class="grade"><i class="fas fa-star"></i> SGPA: 9.64</p>
+            </div>
+            <div class="education-item">
+                <h3>Bachelor of Science (Honors) Biotechnology</h3>
+                <p class="date"><i class="far fa-calendar-alt"></i> 2019 - 2022</p>
+                <p><i class="fas fa-university"></i> B.N. College Patna University, Patna</p>
+                <p class="grade"><i class="fas fa-star"></i> CGPA: 7.79/10</p>
+            </div>
+            <div class="education-item">
+                <h3>10+2</h3>
+                <p class="date"><i class="far fa-calendar-alt"></i> 2017 - 2019</p>
+                <p><i class="fas fa-university"></i> Rajkiyakrit Town inter college (BSEB)</p>
+                <p class="grade"><i class="fas fa-star"></i> Percentage: 73%</p>
+            </div>
+            <div class="education-item">
+                <h3>10th</h3>
+                <p class="date"><i class="far fa-calendar-alt"></i> 2007 - 2017</p>
+                <p><i class="fas fa-university"></i> St. Ignatius School (CBSE)</p>
+                <p class="grade"><i class="fas fa-star"></i> CGPA: 7.6/10</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="project-item">
+                <h3><i class="fas fa-globe"></i> Differential Gene Expression Analysis Web Tool</h3>
+                <p>Making a website that takes differentially expressed genes (DEGs) as an input and perform pathway enrichment, disease relation and also suggest drugs for them.</p>
+                <a href="https://biocontext-mqzqqjs3bbe4w7bp2cbayp.streamlit.app/#gene2therapy" target="_blank" class="project-link">
+                    <i class="fas fa-external-link-alt"></i> Visit Website
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3><i class="fas fa-code"></i> Programming Languages</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-chevron-right"></i> C++</li>
+                        <li><i class="fas fa-chevron-right"></i> R</li>
+                        <li><i class="fas fa-chevron-right"></i> Python</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-dna"></i> Bioinformatics Tools</h3>
+                    <ul class="skill-list">
+                        <li><i class="fas fa-chevron-right"></i> NGS - Bowtie2, SRA-toolkit, SAM-tools, Cufflinks, Cuffdiff</li>
+                        <li><i class="fas fa-chevron-right"></i> BLAST, SWISS-MODEL, PyMol</li>
+                        <li><i class="fas fa-chevron-right"></i> Docking, Cytoscape, Cell Designer</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Internship Section -->
+    <section id="internship">
+        <div class="container">
+            <h2 class="section-title">Internship</h2>
+            <div class="experiences-container">
+                <div class="experience-item">
+                    <h3>Multi omics Data Science toolkit: Basics to Advanced</h3>
+                    <p class="date"><i class="far fa-calendar-alt"></i> Two-month internship</p>
+                    <p><i class="fas fa-map-marker-alt"></i> NextGen helper, New Delhi</p>
+                </div>
+                <div class="experience-item">
+                    <h3>Patna Dairy Project</h3>
+                    <p class="date"><i class="far fa-calendar-alt"></i> One month training</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Quality control and quality assurance (chemical and micro-biological analysis of milk and milk products)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certification Section -->
+    <section id="certification">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="experiences-container">
+                <div class="experience-item">
+                    <h3>How to Plan and Systematic review paper</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Dr. Zakir Husain Library, Jamia Millia Islamia</p>
+                </div>
+                <div class="experience-item">
+                    <h3>Molecular Docking workshop with hands-on session</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Research Boulevard Technologies (AutoDock vina and PyRx tools)</p>
+                </div>
+                <div class="experience-item">
+                    <h3>Introduction to Bioinformatics and its Advancements</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Biocode</p>
+                </div>
+                <div class="experience-item">
+                    <h3>Supervised Machine Learning with python</h3>
+                </div>
+                <div class="experience-item">
+                    <h3>Webinars Attended</h3>
+                    <p>Application of next generation sequencing in molecular medicine</p>
+                    <p>Application of Thin Layer Chromatography in Pharmacology</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Md Faiyaz Rizwee. All rights reserved.</p>
+            <p>Contact: mdfaiyaz4840@gmail.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // Working CV download script
+        document.getElementById('download-cv').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Replace 'your-cv.pdf' with the actual path to your PDF file
+            const pdfUrl = 'CV.pdf';
+            
+            // Create a temporary link element
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = 'Md_Faiyaz_Rizwee_CV.pdf'; // The filename for download
+            
+            // Append to body, click, and remove
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Optional: Show success message
+            console.log('CV download initiated');
+        });
+    </script>
+</body>
+</html>
