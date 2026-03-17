@@ -1,839 +1,796 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Md Faiyaz Rizwee - Bioinformatics Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --primary: #63b3ed; /* Lighter Blue for Dark Mode */
-            --primary-rgb: 99, 179, 237;
-            --secondary: #4fd1c5; /* Bright Teal for Dark Mode */
-            --accent: #ed64a6;
-            --bg: #050505; /* Deep Black */
-            --text-main: #f7fafc; /* White/Off-White */
-            --text-muted: #a0aec0; /* Light Grey */
-            --card-glass: rgba(20, 20, 20, 0.6);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-        }
+      :root {
+        /* Colors */
+        --bg-offwhite: #f5f5f2;
+        --text-charcoal: #1e1e1e;
+        --accent-slate: #5a6c7d;
+        --accent-terracotta: #c47a5a;
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
-        }
+        /* Fibonacci Spacing */
+        --space-xs: 8px;
+        --space-s: 13px;
+        --space-m: 21px;
+        --space-l: 34px;
+        --space-xl: 55px;
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-        }
+        /* Skeuomorphic Shadows */
+        --shadow-raised: 8px 8px 16px #d1d1cf, -8px -8px 16px #ffffff;
+        --shadow-pressed:
+          inset 4px 4px 8px #d1d1cf, inset -4px -4px 8px #ffffff;
+        --shadow-button: 4px 4px 10px #d1d1cf, -4px -4px 10px #ffffff;
+        --shadow-button-active:
+          inset 2px 2px 5px #d1d1cf, inset -2px -2px 5px #ffffff;
+      }
 
-        /* Decorative Side Gradients */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 20%;
-            left: -150px;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(79, 209, 197, 0.1) 0%, transparent 70%); /* Teal Glow */
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(100px);
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
 
-        body::after {
-            content: '';
-            position: absolute;
-            bottom: 10%;
-            right: -150px;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 179, 237, 0.1) 0%, transparent 70%); /* Blue Glow */
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(100px);
-        }
+      body {
+        background-color: var(--bg-offwhite);
+        color: var(--text-charcoal);
+        line-height: 1.6;
+        overflow-x: hidden;
+        perspective: 2000px; /* Enable 3D perspective for the whole page */
+      }
 
-        /* 3D Background Canvas */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            /* Subtle gradient overlay behind the 3D model */
-            background: radial-gradient(circle at center, #1a202c 0%, #050505 100%);
-        }
+      .container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 var(--space-l);
+      }
 
-        .container {
-            max-width: 1400px; /* Broadened from 1100px */
-            margin: 0 auto;
-            padding: 0 40px;
-            position: relative;
-            z-index: 1;
-        }
+      /* Typography */
+      h1,
+      h2,
+      h3 {
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
 
-        /* Glassmorphism Utilities */
-        /* Dark Glassmorphism */
-        /* Dark Glassmorphism (Matched to Email Button) */
-        .glass-panel {
-            background: transparent; /* Maximum Transparency (0.02 -> 0) */
-            backdrop-filter: blur(2px); /* Reduced blur to reduce 'fog' */
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Matched to .btn-glass */
-            border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+      h1 {
+        font-size: 4.5rem;
+      }
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: var(--space-m);
+      }
+      h3 {
+        font-size: 1.5rem;
+        margin-bottom: var(--space-s);
+      }
 
-        .glass-panel:hover {
-            background: rgba(255, 255, 255, 0.15); /* Matched to .btn-glass:hover */
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
+      /* Layout Helpers */
+      .grid-phi {
+        display: grid;
+        grid-template-columns: 1.618fr 1fr;
+        gap: var(--space-xl);
+      }
 
-        /* Header */
-        header {
-            padding: 100px 0 60px;
-            text-align: center;
-        }
+      .section-padding {
+        padding: var(--space-xl) 0;
+      }
 
-        .profile-wrapper {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 30px;
-        }
+      /* Skeuomorphic Elements */
+      .card {
+        background: var(--bg-offwhite);
+        border-radius: 24px;
+        padding: var(--space-l);
+        box-shadow: var(--shadow-raised);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
 
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid white;
-            box-shadow: 0 10px 25px rgba(49, 130, 206, 0.2);
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3.5rem;
-            position: relative;
-            z-index: 2;
-            animation: float 6s ease-in-out infinite;
-        }
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow:
+          12px 12px 24px #d1d1cf,
+          -12px -12px 24px #ffffff;
+      }
 
-        .profile-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(var(--primary-rgb), 0.2) 0%, transparent 70%);
-            border-radius: 50%;
-            z-index: 1;
-            animation: pulse 4s ease-in-out infinite;
-        }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-s) var(--space-l);
+        border-radius: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border: none;
+        cursor: pointer;
+        gap: 10px;
+      }
 
+      .btn-primary {
+        background-color: var(--accent-terracotta);
+        color: white;
+        box-shadow: 0 4px 10px rgba(196, 122, 90, 0.3);
+      }
+
+      .btn-primary:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+      }
+
+      .btn-primary:active {
+        transform: translateY(0);
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-secondary {
+        background: var(--bg-offwhite);
+        color: var(--accent-slate);
+        box-shadow: var(--shadow-button);
+      }
+
+      .btn-secondary:hover {
+        box-shadow:
+          6px 6px 12px #d1d1cf,
+          -6px -6px 12px #ffffff;
+      }
+
+      .btn-secondary:active {
+        box-shadow: var(--shadow-button-active);
+      }
+
+      /* Hero Styling */
+      .hero {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        padding-top: var(--space-xl);
+      }
+
+      .hero-visual {
+        position: relative;
+        background: var(--bg-offwhite);
+        border-radius: 50%;
+        width: 300px;
+        height: 300px;
+        box-shadow: var(--shadow-raised);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+      }
+
+      .hero-visual i {
+        font-size: 6rem;
+        color: var(--accent-slate);
+        opacity: 0.8;
+      }
+
+      /* Skills Structure */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-l);
+      }
+
+      @media (max-width: 1100px) {
+        .skills-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .skills-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .skill-group {
+        padding: var(--space-m);
+      }
+
+      .skill-tag {
+        background: var(--bg-offwhite);
+        padding: 8px 16px;
+        border-radius: 8px;
+        box-shadow: var(--shadow-button);
+        font-size: 0.9rem;
+        margin: 5px;
+        display: inline-block;
+        color: var(--accent-slate);
+        font-weight: 500;
+      }
+
+      /* Timelines/History */
+      .timeline-item {
+        position: relative;
+        padding-left: var(--space-l);
+        margin-bottom: var(--space-l);
+        border-left: 2px solid var(--accent-slate);
+      }
+
+      .timeline-date {
+        font-weight: 700;
+        color: var(--accent-terracotta);
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      /* Animations */
+      @keyframes fadeIn3D {
+        from {
+          opacity: 0;
+          transform: translateY(100px) rotateX(25deg) scale(0.9);
+          filter: blur(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) rotateX(0) scale(1);
+          filter: blur(0);
+        }
+      }
+
+      .animate-in {
+        animation: fadeIn3D 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+      }
+
+      /* Tilt Effect on Cards */
+      .card {
+        background: var(--bg-offwhite);
+        border-radius: 24px;
+        padding: var(--space-l);
+        box-shadow: var(--shadow-raised);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition:
+          transform 0.5s cubic-bezier(0.2, 1, 0.3, 1),
+          box-shadow 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+        transform-style: preserve-3d;
+      }
+
+      .card:hover {
+        transform: translateY(-10px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+        box-shadow:
+          20px 20px 40px #d1d1cf,
+          -20px -20px 40px #ffffff;
+      }
+
+      /* Responsiveness */
+      @media (max-width: 1024px) {
+        .grid-phi {
+          grid-template-columns: 1fr;
+        }
         h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
+          font-size: 3.5rem;
         }
+      }
 
-        .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 30px;
-            font-weight: 400;
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.8rem;
         }
+        .container {
+          padding: 0 var(--space-m);
+        }
+      }
 
-        .contact-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 28px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-glass {
-            background: transparent; /* Maximum Transparency */
-            color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-
-        .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-            color: white;
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 4px 15px rgba(49, 130, 206, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(49, 130, 206, 0.4);
-            filter: brightness(110%);
-        }
-
-        /* Sections */
-        section {
-            padding: 50px 0;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 40px;
-            color: var(--text-main);
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 2px;
-        }
-
-        /* Experience & Education Cards */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .card-content h3 {
-            color: var(--text-main);
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-        }
-
-        .card-sub {
-            color: var(--primary);
-            font-weight: 500;
-            margin-bottom: 15px;
-            display: block;
-            font-size: 0.95rem;
-        }
-
-        .card-meta {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .card-grade {
-            background: rgba(49, 130, 206, 0.1);
-            color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .summary-card {
-            padding: 50px;
-            text-align: center;
-            max-width: 1100px; /* Broadened from 800px */
-            margin: 0 auto;
-        }
-        
-        .summary-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-main);
-        }
-
-        /* Skills */
-        .skill-group {
-            padding: 30px;
-        }
-
-        .skill-group h3 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .skill-items {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-tag {
-            background: white;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            color: #1a202c; /* Force dark text for visibility on white pill */
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-
-        .skill-tag:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .skill-tag i {
-            color: var(--secondary);
-            font-size: 0.8rem;
-        }
-
-        /* Publication */
-        .pub-card {
-            padding: 30px;
-            margin-bottom: 20px;
-        }
-
-        .pub-title {
-            color: var(--text-main);
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-        }
-
-        .pub-auth {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        /* Footer */
-        footer {
-            background: white;
-            padding: 40px 0;
-            text-align: center;
-            margin-top: 60px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.02);
-        }
-
-        /* Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; }
-            50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.2; }
-            100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; }
-        }
-
-        /* Initial Load Animation */
-        /* "Drop from Top-Right" Scroll Animation */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translate3d(100px, -100px, 0); /* Start further Top-Right */
-            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: opacity, transform;
-        }
-
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-        }
-        
-        /* Staggered Delays for Grid Items */
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .section-title { font-size: 1.8rem; }
-            .grid-container { grid-template-columns: 1fr; }
-        }
+      section {
+        transform-style: preserve-3d;
+        will-change: transform, opacity;
+      }
     </style>
-</head>
-<body>
-    <!-- 3D Background -->
-    <canvas id="bg-canvas"></canvas>
-
-    <header>
-        <div class="container">
-            <div class="profile-wrapper animate-on-scroll">
-                <div class="profile-glow"></div>
-                <div class="profile-img">
-                    <i class="fas fa-user-graduate"></i>
-                </div>
-            </div>
-            
-            <h1 class="animate-on-scroll delay-1">Md Faiyaz Rizwee</h1>
-            <p class="subtitle animate-on-scroll delay-2">Bioinformatics Student | Genomics • Coding • Biotechnology</p>
-            
-            <div class="contact-links animate-on-scroll delay-3">
-                <a href="mailto:mdfaiyaz4840@gmail.com" class="btn btn-glass">
-                    <i class="fas fa-envelope"></i> Email
-                </a>
-                <a href="https://www.linkedin.com/in/md-faiyaz-rizwee-62024438b" target="_blank" class="btn btn-glass">
-                    <i class="fab fa-linkedin"></i> LinkedIn
-                </a>
-                <a href="https://github.com/faiyazrizwee" target="_blank" class="btn btn-glass">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-                <a href="#" id="download-cv" class="btn btn-primary">
-                    <i class="fas fa-download"></i> Download CV
-                </a>
-            </div>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Hero Section: 60/40 Split -->
+      <section class="hero section-padding animate-in">
+        <div style="text-align: center; width: 100%">
+          <p
+            style="
+              color: var(--accent-terracotta);
+              font-weight: 700;
+              font-size: 1.1rem;
+              margin-bottom: var(--space-xs);
+              text-transform: uppercase;
+              letter-spacing: 0.1em;
+            "
+          >
+            Bioinformatics Researcher
+          </p>
+          <h1
+            style="
+              color: var(--text-charcoal);
+              margin-bottom: var(--space-m);
+              font-size: clamp(3rem, 10vw, 5rem);
+              line-height: 1;
+            "
+          >
+            Md Faiyaz Rizwee
+          </h1>
+          <p
+            style="
+              font-size: 1.35rem;
+              color: var(--accent-slate);
+              margin-bottom: var(--space-xl);
+              max-width: 800px;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            Bridging Biology & Computation specializing in genomics pipelines,
+            multi-omics data science, and therapeutic biomarker discovery.
+          </p>
+          <div
+            style="
+              display: flex;
+              gap: var(--space-m);
+              justify-content: center;
+              flex-wrap: wrap;
+              max-width: 1000px;
+              margin: 0 auto;
+            "
+          >
+            <a
+              href="#"
+              id="download-cv"
+              class="btn btn-primary"
+              style="padding: 1.1rem var(--space-l)"
+            >
+              <i class="fas fa-download"></i> Download CV
+            </a>
+            <a
+              href="mailto:mdfaiyaz4840@gmail.com"
+              class="btn btn-secondary"
+              style="padding: 1.1rem var(--space-l)"
+            >
+              <i class="fas fa-paper-plane"></i> Get in Touch
+            </a>
+            <a
+              href="https://github.com/faiyazrizwee"
+              target="_blank"
+              class="btn btn-secondary"
+              style="padding: 1.1rem var(--space-l)"
+            >
+              <i class="fab fa-github"></i> GitHub Profile
+            </a>
+            <a
+              href="https://www.linkedin.com/in/md-faiyaz-rizwee-62024438b"
+              target="_blank"
+              class="btn btn-secondary"
+              style="padding: 1.1rem var(--space-l)"
+            >
+              <i class="fab fa-linkedin"></i> LinkedIn Profile
+            </a>
+          </div>
         </div>
-    </header>
+      </section>
 
-    <section id="summary">
-        <div class="container">
-            <div class="glass-panel summary-card animate-on-scroll delay-3">
-                <h2 class="section-title" style="transform: none; left: auto; display: block; margin-bottom: 25px;">Career Summary</h2>
-                <p class="summary-text">
-                    Highly motivated and enthusiastic bioinformatics student with a strong foundation in biotechnology. 
-                    I bridge the gap between biological data and computational analysis, leveraging skills in 
-                    <strong>genomics, programming, and data mining</strong>. Committed to driving innovation in the 
-                    field through rigorous research and development.
-                </p>
-            </div>
+      <!-- About / Research Summary -->
+      <section class="section-padding animate-in" style="animation-delay: 0.2s">
+        <div class="grid-phi">
+          <div class="card">
+            <h2>Research Focus</h2>
+            <p style="font-size: 1.1rem; color: var(--text-charcoal)">
+              Highly motivated bioinformatics researcher focused on the
+              intersection of biotechnology and high-performance computing.
+              Currently pursuing an M.Sc. in Bioinformatics at Jamia Millia
+              Islamia with a 9.64 SGPA. My work revolves around leveraging
+              <strong>NGS tools, Python pipelines, and machine learning</strong>
+              to extract actionable insights from complex biological datasets.
+            </p>
+          </div>
+          <div style="padding-top: var(--space-l)">
+            <h3 style="color: var(--accent-slate)">Current Pursuits</h3>
+            <p style="color: var(--accent-slate)">
+              Developing automated pipelines for biomarker discovery in
+              neurological disorders and optimizing pathway enrichment tools for
+              clinical research.
+            </p>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <section id="education">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="grid-container">
-                <div class="glass-panel animate-on-scroll delay-1" style="padding: 30px;">
-                    <div class="card-content">
-                        <h3>M.Sc. Bioinformatics</h3>
-                        <span class="card-sub">Jamia Millia Islamia, Delhi</span>
-                        <div class="card-meta">
-                            <span><i class="far fa-calendar-alt"></i> 2024 - 2026</span>
-                            <span class="card-grade">SGPA: 9.64</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-panel animate-on-scroll delay-2" style="padding: 30px;">
-                    <div class="card-content">
-                        <h3>B.Sc. (Honors) Biotechnology</h3>
-                        <span class="card-sub">B.N. College Patna University</span>
-                        <div class="card-meta">
-                            <span><i class="far fa-calendar-alt"></i> 2019 - 2022</span>
-                            <span class="card-grade">CGPA: 7.79/10</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-panel animate-on-scroll delay-3" style="padding: 30px;">
-                    <div class="card-content">
-                        <h3>Intermediate (10+2)</h3>
-                        <span class="card-sub">Rajkiyakrit Town Inter College</span>
-                        <div class="card-meta">
-                            <span><i class="far fa-calendar-alt"></i> 2017 - 2019</span>
-                            <span class="card-grade">73%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass-panel animate-on-scroll delay-4" style="padding: 30px;">
-                    <div class="card-content">
-                        <h3>10th</h3>
-                        <span class="card-sub">St. Ignatius School (CBSE)</span>
-                        <div class="card-meta">
-                            <span><i class="far fa-calendar-alt"></i> 2007 - 2017</span>
-                            <span class="card-grade">CGPA: 7.6/10</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- Education: Structured Grid -->
+      <section
+        id="education"
+        class="section-padding animate-in"
+        style="animation-delay: 0.3s"
+      >
+        <h2 style="margin-bottom: var(--space-xl)">Academic Foundation</h2>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-l);
+          "
+        >
+          <div class="card">
+            <span class="timeline-date">2024 — 2026</span>
+            <h3>M.Sc. Bioinformatics</h3>
+            <p style="color: var(--accent-slate)">
+              Jamia Millia Islamia, Delhi
+            </p>
+            <p style="font-weight: 600; color: var(--accent-terracotta)">
+              SGPA: 9.64
+            </p>
+          </div>
+          <div class="card">
+            <span class="timeline-date">2019 — 2022</span>
+            <h3>B.Sc. (Honors) Biotechnology</h3>
+            <p style="color: var(--accent-slate)">
+              B.N. College Patna University
+            </p>
+            <p style="font-weight: 600; color: var(--accent-terracotta)">
+              CGPA: 7.79/10
+            </p>
+          </div>
+          <div class="card">
+            <span class="timeline-date">2017 — 2019</span>
+            <h3>Intermediate (10+2)</h3>
+            <p style="color: var(--accent-slate)">Town Inter College</p>
+            <p style="font-weight: 600; color: var(--accent-terracotta)">
+              Result: 73%
+            </p>
+          </div>
+          <div class="card">
+            <span class="timeline-date">2007 — 2017</span>
+            <h3>Secondary Education (10th)</h3>
+            <p style="color: var(--accent-slate)">St. Ignatius School</p>
+            <p style="font-weight: 600; color: var(--accent-terracotta)">
+              CGPA: 7.6
+            </p>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Skills & Expertise</h2>
-            <div class="grid-container">
-                <div class="glass-panel skill-group animate-on-scroll delay-1">
-                    <h3><i class="fas fa-code"></i> Programming</h3>
-                    <ul class="skill-items">
-                        <li class="skill-tag"><i class="fas fa-circle"></i> Python</li>
-                        <li class="skill-tag"><i class="fas fa-circle"></i> R Language</li>
-                        <li class="skill-tag"><i class="fas fa-circle"></i> C++</li>
-                        <li class="skill-tag"><i class="fas fa-circle"></i> Shell Scripting</li>
-                    </ul>
-                </div>
-
-                <div class="glass-panel skill-group animate-on-scroll delay-2">
-                    <h3><i class="fas fa-dna"></i> Bioinformatics</h3>
-                    <ul class="skill-items">
-                        <li class="skill-tag"><i class="fas fa-atom"></i> NGS Tools</li>
-                        <li class="skill-tag"><i class="fas fa-atom"></i> Bowtie2</li>
-                        <li class="skill-tag"><i class="fas fa-atom"></i> SRA-toolkit</li>
-                        <li class="skill-tag"><i class="fas fa-atom"></i> BLAST</li>
-                        <li class="skill-tag"><i class="fas fa-atom"></i> PyMol</li>
-                        <li class="skill-tag"><i class="fas fa-atom"></i> Molecular Docking</li>
-                    </ul>
-                </div>
-            </div>
+      <!-- Skills & Expertise: Functional Grouping -->
+      <section
+        id="skills"
+        class="section-padding animate-in"
+        style="animation-delay: 0.4s"
+      >
+        <h2 style="margin-bottom: var(--space-xl)">Technical Arsenal</h2>
+        <div class="skills-grid">
+          <div class="card skill-group">
+            <h3><i class="fas fa-terminal"></i> Programming</h3>
+            <div class="skill-tag">Python (Biopython, Pandas)</div>
+            <div class="skill-tag">R (Bioconductor, Tidyverse)</div>
+            <div class="skill-tag">C++</div>
+            <div class="skill-tag">Linux Shell (Bash)</div>
+          </div>
+          <div class="card skill-group">
+            <h3><i class="fas fa-microscope"></i> Bioinformatics</h3>
+            <div class="skill-tag">NGS Analysis (Bowtie2, SAMtools)</div>
+            <div class="skill-tag">SRA-Toolkit</div>
+            <div class="skill-tag">BLAST+</div>
+            <div class="skill-tag">Molecular Docking (AutoDock Vina)</div>
+            <div class="skill-tag">PyMol Visualization</div>
+          </div>
+          <div class="card skill-group">
+            <h3><i class="fas fa-database"></i> Data & Research</h3>
+            <div class="skill-tag">Machine Learning (Scikit-Learn)</div>
+            <div class="skill-tag">Data Mining</div>
+            <div class="skill-tag">Database Management</div>
+            <div class="skill-tag">Systematic Reviews</div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <section id="internship">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="grid-container">
-                <div class="glass-panel animate-on-scroll delay-1" style="padding: 30px;">
-                    <h3>Multi-omics Data Science</h3>
-                    <span class="card-sub">NextGen Helper, New Delhi</span>
-                    <div class="card-meta">
-                        <span><i class="far fa-calendar-alt"></i> 2 Months</span>
-                    </div>
-                    <p class="text-muted">Basics to Advanced toolkit implementation.</p>
-                </div>
-
-                <div class="glass-panel animate-on-scroll delay-2" style="padding: 30px;">
-                    <h3>Data Mining Pipeline</h3>
-                    <span class="card-sub">Jawaharlal Nehru University (JNU)</span>
-                    <div class="card-meta">
-                        <span><i class="far fa-calendar-alt"></i> 2 Months</span>
-                    </div>
-                    <p class="text-muted">Created Python pipelines to identify Biomarkers of Epilepsy.</p>
-                </div>
-
-                <div class="glass-panel animate-on-scroll delay-3" style="padding: 30px;">
-                    <h3>Quality Control Training</h3>
-                    <span class="card-sub">Patna Dairy Project</span>
-                    <div class="card-meta">
-                        <span><i class="far fa-calendar-alt"></i> 1 Month</span>
-                    </div>
-                    <p class="text-muted">Chemical and micro-biological analysis of products.</p>
-                </div>
+      <!-- Research Work & Publication -->
+      <section
+        id="research"
+        class="section-padding animate-in"
+        style="animation-delay: 0.5s; padding: var(--space-xl) 0"
+      >
+        <h2 style="margin-bottom: var(--space-xl)">Peer-Reviewed Research</h2>
+        <div class="card">
+          <div class="grid-phi">
+            <div>
+              <span class="timeline-date">Elsevier, 2025</span>
+              <h3>Patient-Centric Care & Digital Health Tools</h3>
+              <p
+                style="
+                  color: var(--accent-slate);
+                  font-style: italic;
+                  margin-bottom: var(--space-s);
+                "
+              >
+                Advances in Protein Chemistry and Structural Biology
+              </p>
+              <p
+                style="
+                  font-size: 0.9rem;
+                  color: var(--text-charcoal);
+                  margin-bottom: var(--space-m);
+                "
+              >
+                Ali, A. M., Shah, S. N., <strong>Rizwee, F.</strong>, et al.
+              </p>
+              <a
+                href="https://www.sciencedirect.com/science/article/abs/pii/S0079612325001207"
+                target="_blank"
+                class="btn btn-primary"
+              >
+                <i class="fas fa-external-link-alt"></i> Read Publication
+              </a>
             </div>
-        </div>
-    </section>
-
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="glass-panel animate-on-scroll delay-1" style="padding: 40px; margin-bottom: 30px;">
-                <h3 style="font-size: 1.5rem; margin-bottom: 15px; color: var(--primary);">
-                    <i class="fas fa-laptop-code" style="margin-right: 10px;"></i> 
-                    DEGs Analysis Web Tool
-                </h3>
-                <p style="max-width: 100%; line-height: 1.6; margin-bottom: 25px;">
-                    A comprehensive web application that accepts differentially expressed genes (DEGs) as input to perform pathway enrichment analysis, identify disease relationships, and suggest potential therapeutic drugs.
-                </p>
-                <div style="text-align: right;">
-                    <a href="https://biocontext-gene2therapy.streamlit.app/" target="_blank" class="btn btn-primary">
-                        Visit Live Tool <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
-                    </a>
-                </div>
+            <div
+              style="
+                border-left: 2px solid var(--accent-slate);
+                padding-left: var(--space-l);
+              "
+            >
+              <p style="color: var(--accent-slate)">
+                Contributing to the structural biology perspective of digital
+                health, focusing on the integration of protein chemistry data
+                into patient-centric digital frameworks.
+              </p>
             </div>
-
-            <div class="glass-panel pub-card animate-on-scroll delay-2">
-                <h3 class="pub-title">
-                    <i class="fas fa-book-open" style="color: var(--secondary);"></i>
-                    Publication
-                </h3>
-                <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: 5px;">
-                    Patient-centric care and digital health tools
-                </p>
-                <p class="pub-auth">Advances in Protein Chemistry and Structural Biology (Elsevier, 2025)</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-                    <p style="font-size: 0.9rem; max-width: 70%; color: var(--text-muted);">
-                        Ali, A. M., Shah, S. N., Rizwee, F., et al.
-                    </p>
-                    <a href="https://www.sciencedirect.com/science/article/abs/pii/S0079612325001207" target="_blank" class="btn btn-glass" style="padding: 8px 20px; font-size: 0.9rem;">
-                        <i class="fas fa-external-link-alt"></i> View Paper
-                    </a>
-                </div>
-            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <section id="certifications">
-        <div class="container">
-            <h2 class="section-title">Certifications</h2>
-            <div class="grid-container">
-                <div class="glass-panel animate-on-scroll delay-1" style="padding: 25px;">
-                    <i class="fas fa-file-alt" style="color: var(--secondary); font-size: 1.5rem; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 10px;">How to Plan and Write Systematic Review Paper</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);"><i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i> Dr. Zakir Husain Library, Jamia Millia Islamia</p>
-                </div>
+      <!-- Project Portfolio: Technical Deep-Dive -->
+      <section
+        id="projects"
+        class="section-padding animate-in"
+        style="animation-delay: 0.6s; padding: var(--space-xl) 0"
+      >
+        <h2 style="margin-bottom: var(--space-xl)">Engineering & Pipelines</h2>
+        <div class="skills-grid" style="margin-bottom: var(--space-l)">
+          <div
+            class="card"
+            style="
+              grid-column: span 3;
+              border-left: 4px solid var(--accent-terracotta);
+            "
+          >
+            <h3>Full-Stack Management System</h3>
+            <span class="timeline-date">Django & Render</span>
+            <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
+              Engineered a robust student and teacher management platform.
+              Implemented secure backend logic using **Django ORM**, crafted a
+              clean skeuomorphic-ready UI with HTML/CSS, and successfully
+              deployed the production instance on Render.
+            </p>
+            <a
+              href="https://lnkd.in/g6Ap7M-5"
+              target="_blank"
+              class="btn btn-primary"
+              style="padding: 8px 16px; font-size: 0.85rem"
+            >
+              Live Demo <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
 
-                <div class="glass-panel animate-on-scroll delay-2" style="padding: 25px;">
-                    <i class="fas fa-dna" style="color: var(--secondary); font-size: 1.5rem; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Molecular Docking workshop with hands-on session</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);"><i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i> Research Boulevard Technologies (AutoDock vina and PyRx tools)</p>
-                </div>
-
-                <div class="glass-panel animate-on-scroll delay-3" style="padding: 25px;">
-                    <i class="fas fa-laptop-medical" style="color: var(--secondary); font-size: 1.5rem; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Introduction to Bioinformatics and its Advancements</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);"><i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i> Biocode</p>
-                </div>
-
-                <div class="glass-panel animate-on-scroll delay-4" style="padding: 25px;">
-                    <i class="fas fa-robot" style="color: var(--secondary); font-size: 1.5rem; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Supervised Machine Learning with python</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);"><i class="fas fa-map-marker-alt" style="margin-right: 5px;"></i> Mindluster</p>
-                </div>
-
-                <div class="glass-panel fade-in-up delay-3" style="padding: 25px;">
-                    <i class="fas fa-video" style="color: var(--secondary); font-size: 1.5rem; margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 1.1rem; margin-bottom: 10px;">Webinars Attended</h3>
-                    <ul style="font-size: 0.9rem; color: var(--text-muted); list-style: none; padding-left: 0;">
-                        <li style="margin-bottom: 5px;"><i class="fas fa-chevron-right" style="color: var(--primary); font-size: 0.8rem; margin-right: 5px;"></i> Application of next generation sequencing in molecular medicine</li>
-                        <li><i class="fas fa-chevron-right" style="color: var(--primary); font-size: 0.8rem; margin-right: 5px;"></i> Application of Thin Layer Chromatography in Pharmacology</li>
-                    </ul>
-                </div>
-            </div>
+          <div class="card">
+            <h3>DEGs Analysis Web Tool</h3>
+            <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
+              Developed an end-to-end bioinformatics pipeline (Streamlit) for
+              Differential Gene Expression (DGE) analysis. Integrated
+              KEGG/Reactome pathway enrichment.
+            </p>
+            <a
+              href="https://biocontext-gene2therapy.streamlit.app/"
+              target="_blank"
+              class="btn btn-primary"
+              style="padding: 8px 16px; font-size: 0.85rem"
+            >
+              Launch Tool <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+          <div class="card">
+            <h3>Epilepsy Biomarker Discovery</h3>
+            <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
+              Python-based mining for high-dimensional GEO datasets. Utilized
+              **ARACNE** for gene regulatory network reconstruction.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Multi-omics Data Science</h3>
+            <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
+              Advanced NGS toolkits at NextGen Helper. Variant calling workflows
+              and transcriptomics alignment (Bowtie2).
+            </p>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Md Faiyaz Rizwee</p>
+      <!-- Certifications & Awards -->
+      <section
+        id="certifications"
+        class="section-padding animate-in"
+        style="animation-delay: 0.7s"
+      >
+        <h2 style="margin-bottom: var(--space-xl)">Academic Credentials</h2>
+        <div class="skills-grid">
+          <div class="card">
+            <i
+              class="fas fa-certificate"
+              style="
+                color: var(--accent-terracotta);
+                margin-bottom: var(--space-s);
+              "
+            ></i>
+            <p style="font-weight: 700">Systematic Review Paper Planning</p>
+            <p style="font-size: 0.85rem; color: var(--accent-slate)">
+              Dr. Zakir Husain Library, JMI
+            </p>
+          </div>
+          <div class="card">
+            <i
+              class="fas fa-atom"
+              style="
+                color: var(--accent-terracotta);
+                margin-bottom: var(--space-s);
+              "
+            ></i>
+            <p style="font-weight: 700">Molecular Docking Workshop</p>
+            <p style="font-size: 0.85rem; color: var(--accent-slate)">
+              AutoDock Vina & PyRx Hands-on
+            </p>
+          </div>
+          <div class="card">
+            <i
+              class="fas fa-brain"
+              style="
+                color: var(--accent-terracotta);
+                margin-bottom: var(--space-s);
+              "
+            ></i>
+            <p style="font-weight: 700">Supervised Machine Learning</p>
+            <p style="font-size: 0.85rem; color: var(--accent-slate)">
+              Python-based implementation (Mindluster)
+            </p>
+          </div>
+          <div class="card">
+            <i
+              class="fas fa-laptop-medical"
+              style="
+                color: var(--accent-terracotta);
+                margin-bottom: var(--space-s);
+              "
+            ></i>
+            <p style="font-weight: 700">Intro to Bioinformatics</p>
+            <p style="font-size: 0.85rem; color: var(--accent-slate)">
+              Advancements & Tools (Biocode)
+            </p>
+          </div>
+          <div class="card">
+            <i
+              class="fas fa-video"
+              style="
+                color: var(--accent-terracotta);
+                margin-bottom: var(--space-s);
+              "
+            ></i>
+            <p style="font-weight: 700">Webinars Attended</p>
+            <p style="font-size: 0.85rem; color: var(--accent-slate)">
+              NGS in medicine & TLC in Pharmacology
+            </p>
+          </div>
+          <div class="card">
+            <i
+              class="fas fa-microscope"
+              style="
+                color: var(--accent-terracotta);
+                margin-bottom: var(--space-s);
+              "
+            ></i>
+            <p style="font-weight: 700">Genomic Data Science Symposium</p>
+            <p style="font-size: 0.85rem; color: var(--accent-slate)">
+              BRIC-NIPGR, New Delhi (March 2026)
+            </p>
+          </div>
         </div>
-    </footer>
+      </section>
 
-    <!-- Three.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+      <!-- Footer -->
+      <footer
+        style="
+          text-align: center;
+          padding: var(--space-xl) 0;
+          border-top: 1px solid #d1d1cf;
+          margin-top: var(--space-xl);
+        "
+      >
+        <p style="color: var(--accent-slate); font-size: 0.9rem">
+          &copy; 2026 Md Faiyaz Rizwee — Bioinformatics Portfolio
+        </p>
+        <p
+          style="
+            color: var(--accent-slate);
+            font-size: 0.75rem;
+            margin-top: var(--space-xs);
+          "
+        >
+          Built with a Fibonacci spacing scale and skeuomorphic depth.
+        </p>
+      </footer>
+    </div>
+    <!-- End Container -->
+
     <script>
-        // PDF Download Logic
-        document.getElementById('download-cv').addEventListener('click', function(e) {
-            e.preventDefault();
-            const link = document.createElement('a');
-            link.href = 'CV.pdf';
-            link.download = 'CV.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+      // PDF Download Logic
+      document.addEventListener("click", function (e) {
+        const downloadBtn = e.target.closest("#download-cv");
+        if (downloadBtn) {
+          e.preventDefault();
+          const link = document.createElement("a");
+          link.href = "CV.pdf";
+          link.download = "CV.pdf";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      });
+
+      // 3D Scroll Perspective Logic
+      const sections = document.querySelectorAll("section");
+      
+      const handle3DScroll = () => {
+        const viewportHeight = window.innerHeight;
+        
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          const sectionCenter = rect.top + rect.height / 2;
+          const distanceFromCenter = sectionCenter - viewportHeight / 2;
+          
+          // Calculate tilt based on distance from viewport center
+          // Higher value = more tilt
+          const tiltFactor = 0.05; 
+          const rotation = distanceFromCenter * tiltFactor;
+          
+          // Constrain rotation to reasonable limits
+          const constrainedRotation = Math.max(Math.min(rotation, 15), -15);
+          
+          // Apply 3D transform
+          if (rect.top < viewportHeight && rect.bottom > 0) {
+            section.style.transform = `rotateX(${constrainedRotation * -1}deg) translateY(${distanceFromCenter * 0.1}px) scale(${1 - Math.abs(distanceFromCenter) * 0.0001})`;
+            section.style.opacity = 1 - Math.abs(distanceFromCenter) * 0.0005;
+          }
         });
+      };
 
-        // 3D DNA Helix Animation & Background
-        const init3D = () => {
-            const canvas = document.querySelector('#bg-canvas');
-            const scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x050505, 0.002);
-
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 30;
-
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-
-            // --- 1. DNA Helix ---
-            const particlesGeometry = new THREE.BufferGeometry();
-            const particlesCount = 1000; // Increased count
-            const posArray = new Float32Array(particlesCount * 3);
-            const colorsArray = new Float32Array(particlesCount * 3);
-
-            for(let i = 0; i < particlesCount; i++) {
-                const i3 = i * 3;
-                const t = (i / particlesCount) * 25 * Math.PI; 
-                const radius = 10;
-                const isStrandA = i % 2 === 0;
-                const angle = t + (isStrandA ? 0 : Math.PI);
-                
-                const x = Math.cos(angle) * radius + (Math.random() - 0.5) * 2;
-                const y = (i / particlesCount) * 100 - 50; // Taller helix
-                const z = Math.sin(angle) * radius + (Math.random() - 0.5) * 2;
-
-                posArray[i3] = x;
-                posArray[i3 + 1] = y;
-                posArray[i3 + 2] = z;
-
-                if (isStrandA) {
-                    colorsArray[i3] = 0.19; colorsArray[i3+1] = 0.51; colorsArray[i3+2] = 0.81;
-                } else {
-                    colorsArray[i3] = 0.22; colorsArray[i3+1] = 0.70; colorsArray[i3+2] = 0.67;
-                }
-            }
-
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorsArray, 3));
-
-            const material = new THREE.PointsMaterial({
-                size: 0.25, vertexColors: true, transparent: true, opacity: 0.8, sizeAttenuation: true
-            });
-            const particlesMesh = new THREE.Points(particlesGeometry, material);
-            scene.add(particlesMesh);
-
-            // --- 2. Ambient Dust (Filling Empty Space) ---
-            const dustCount = 2000;
-            const dustGeo = new THREE.BufferGeometry();
-            const dustPos = new Float32Array(dustCount * 3);
-            
-            for(let i=0; i<dustCount*3; i+=3) {
-                // Scatter widely across the screen
-                dustPos[i] = (Math.random() - 0.5) * 120;   // Wide X
-                dustPos[i+1] = (Math.random() - 0.5) * 120; // Wide Y
-                dustPos[i+2] = (Math.random() - 0.5) * 50 - 10; // Depth
-            }
-            dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-            const dustMat = new THREE.PointsMaterial({
-                color: 0x63b3ed, size: 0.15, transparent: true, opacity: 0.6
-            });
-            const dustMesh = new THREE.Points(dustGeo, dustMat);
-            scene.add(dustMesh);
-
-            // --- 3. Floating Shapes (More & Wider) ---
-            const geometry = new THREE.IcosahedronGeometry(1, 0);
-            const materialGeo = new THREE.MeshBasicMaterial({ color: 0x4fd1c5, wireframe: true, transparent: true, opacity: 0.2 });
-            
-            const shapes = [];
-            for (let i = 0; i < 40; i++) { // Increased to 40
-                const mesh = new THREE.Mesh(geometry, materialGeo);
-                mesh.position.set(
-                    (Math.random() - 0.5) * 100, // Widely scattered X
-                    (Math.random() - 0.5) * 80,
-                    (Math.random() - 0.5) * 60
-                );
-                mesh.scale.setScalar(Math.random() * 2 + 1);
-                scene.add(mesh);
-                shapes.push({ mesh, speed: Math.random() * 0.005 });
-            }
-
-            // Mouse Interaction
-            let mouseX = 0; let mouseY = 0;
-            let targetX = 0; let targetY = 0;
-            const windowHalfX = window.innerWidth / 2;
-            const windowHalfY = window.innerHeight / 2;
-
-            document.addEventListener('mousemove', (event) => {
-                mouseX = (event.clientX - windowHalfX);
-                mouseY = (event.clientY - windowHalfY);
-            });
-
-            const clock = new THREE.Clock();
-
-            const animate = () => {
-                targetX = mouseX * 0.001;
-                targetY = mouseY * 0.001;
-                const elapsedTime = clock.getElapsedTime();
-
-                // Rotate Helix
-                particlesMesh.rotation.y = elapsedTime * 0.1;
-
-                // Gentle Dust Movement
-                dustMesh.rotation.y = elapsedTime * 0.05;
-
-                // Animate floating shapes
-                shapes.forEach(shape => {
-                    shape.mesh.rotation.x += shape.speed;
-                    shape.mesh.rotation.y += shape.speed;
-                });
-
-                // Camera Sway
-                camera.position.x += (mouseX * 0.01 - camera.position.x) * 0.05;
-                camera.position.y += (-mouseY * 0.01 - camera.position.y) * 0.05;
-                camera.lookAt(scene.position);
-
-                renderer.render(scene, camera);
-                requestAnimationFrame(animate);
-            };
-
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        };
-
-        init3D();
-    </script>
-    <!-- Scroll Observer -->
-    <script>
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // Toggle 'visible' class based on intersection status
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                } else {
-                    // Remove class when out of view to reset animation
-                    entry.target.classList.remove('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-            observer.observe(el);
+      // Initial call and scroll event listener
+      window.addEventListener("scroll", () => {
+        requestAnimationFrame(handle3DScroll);
+      });
+      
+      // Simple Intersection Observer for initial entrance animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-in");
+            observer.unobserve(entry.target);
+          }
         });
+      }, { threshold: 0.1 });
+
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+
+      handle3DScroll(); // Run once on load
     </script>
-</body>
+  </body>
 </html>
