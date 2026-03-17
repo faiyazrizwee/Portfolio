@@ -567,10 +567,9 @@
             <h3>Full-Stack Management System</h3>
             <span class="timeline-date">Django & Render</span>
             <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-              Engineered a robust student and teacher management platform.
-              Implemented secure backend logic using **Django ORM**, crafted a
-              clean skeuomorphic-ready UI with HTML/CSS, and successfully
-              deployed the production instance on Render.
+              This project was part of my hands-on learning journey in web
+              development, where I explored how to build and deploy a full-stack
+              application.
             </p>
             <a
               href="https://lnkd.in/g6Ap7M-5"
@@ -601,8 +600,9 @@
           <div class="card">
             <h3>Epilepsy Biomarker Discovery</h3>
             <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-              Python-based mining for high-dimensional GEO datasets. Utilized
-              **ARACNE** for gene regulatory network reconstruction.
+              Identifying biomarkers of Epilepsy using an integrated approach
+              combining Data Mining, Network-Based Pharmacology, and Machine
+              Learning.
             </p>
           </div>
           <div class="card">
@@ -746,23 +746,23 @@
 
       // 3D Scroll Perspective Logic
       const sections = document.querySelectorAll("section");
-      
+
       const handle3DScroll = () => {
         const viewportHeight = window.innerHeight;
-        
-        sections.forEach(section => {
+
+        sections.forEach((section) => {
           const rect = section.getBoundingClientRect();
           const sectionCenter = rect.top + rect.height / 2;
           const distanceFromCenter = sectionCenter - viewportHeight / 2;
-          
+
           // Calculate tilt based on distance from viewport center
           // Higher value = more tilt
-          const tiltFactor = 0.05; 
+          const tiltFactor = 0.05;
           const rotation = distanceFromCenter * tiltFactor;
-          
+
           // Constrain rotation to reasonable limits
           const constrainedRotation = Math.max(Math.min(rotation, 15), -15);
-          
+
           // Apply 3D transform
           if (rect.top < viewportHeight && rect.bottom > 0) {
             section.style.transform = `rotateX(${constrainedRotation * -1}deg) translateY(${distanceFromCenter * 0.1}px) scale(${1 - Math.abs(distanceFromCenter) * 0.0001})`;
@@ -775,16 +775,19 @@
       window.addEventListener("scroll", () => {
         requestAnimationFrame(handle3DScroll);
       });
-      
+
       // Simple Intersection Observer for initial entrance animations
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-in");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("animate-in");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
 
       sections.forEach((section) => {
         observer.observe(section);
