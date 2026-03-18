@@ -295,6 +295,43 @@
       .nav-links a:hover {
         color: var(--accent-terracotta);
       }
+      .nav-links a.active {
+        color: var(--accent-terracotta);
+        position: relative;
+      }
+      .nav-links a.active::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--accent-terracotta);
+        border-radius: 2px;
+      }
+
+      /* Logo Bounce Effect */
+      .logo-bounce:hover {
+        transform: scale(1.1) rotate(-2deg);
+        color: var(--accent-terracotta) !important;
+      }
+      .logo-bounce:active {
+        transform: scale(0.95);
+      }
+      @keyframes clickBounce {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2) rotate(5deg);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .clicked-bounce {
+        animation: clickBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
 
       @media (max-width: 600px) {
         .navbar {
@@ -409,19 +446,24 @@
   <body>
     <nav class="navbar">
       <a
-        href="index.html"
+        href="#top"
+        id="logo-link"
+        class="logo-bounce"
         style="
           text-decoration: none;
           color: inherit;
           font-weight: 800;
           font-size: 1.2rem;
           letter-spacing: -0.02em;
+          display: inline-block;
+          transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         "
       >
         RIZWEE<span style="color: var(--accent-terracotta)">.BIO</span>
       </a>
       <div class="nav-links">
         <a href="#about">ABOUT</a>
+        <a href="#academics">ACADEMICS</a>
         <a href="#projects">WORK</a>
       </div>
     </nav>
@@ -555,7 +597,7 @@
 
       <!-- Education: Structured Grid -->
       <section
-        id="education"
+        id="academics"
         class="section-padding animate-in"
         style="animation-delay: 0.3s"
       >
@@ -634,7 +676,7 @@
 
       <!-- Skills & Expertise: Functional Grouping -->
       <section
-        id="projects"
+        id="skills"
         class="section-padding animate-in"
         style="animation-delay: 0.4s"
       >
@@ -670,7 +712,7 @@
 
       <!-- Research Work & Publication -->
       <section
-        id="research"
+        id="projects"
         class="section-padding animate-in"
         style="animation-delay: 0.5s; padding: var(--space-xl) 0"
       >
@@ -945,18 +987,110 @@
         "
       >
         <p style="color: var(--accent-slate); font-size: 0.9rem">
-          &copy; 2026 Md Faiyaz Rizwee — Bioinformatics Portfolio
+          &copy; 2026 Md Faiyaz Rizwee — Bioinformatician
         </p>
       </footer>
     </div>
     <!-- End Container -->
 
     <script>
+      // Smooth Scroll Logic with Bounce
+      let isScrolling = false;
+
+      const smoothScrollTo = (targetY) => {
+        isScrolling = true;
+        const startY = window.pageYOffset || window.scrollY;
+        const distance = targetY - startY;
+        const duration = 1400; // Slower, smoother duration
+        let start = null;
+
+        // easeOutBack easing function for that premium bounce
+        const easeOutBack = (t) => {
+          const c1 = 1.30158; // Reduced for a smoother, less aggressive bounce
+          const c3 = c1 + 1;
+          return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+        };
+
+        const animation = (currentTime) => {
+          if (start === null) start = currentTime;
+          const timeElapsed = currentTime - start;
+          const progress = Math.min(timeElapsed / duration, 1);
+
+          // Apply easeOutBack
+          const ease = easeOutBack(progress);
+
+          window.scrollTo(0, startY + distance * ease);
+
+          if (timeElapsed < duration) {
+            requestAnimationFrame(animation);
+          } else {
+            // Buffer to allow the bounce to settle before re-enabling observer
+            setTimeout(() => {
+              isScrolling = false;
+            }, 100);
+          }
+        };
+
+        requestAnimationFrame(animation);
+      };
+
+      // Handle Nav Link and Logo Clicks
+      document.addEventListener("click", (e) => {
+        const logoLink = e.target.closest("#logo-link");
+        const navLink = e.target.closest(".nav-links a");
+
+        if (logoLink || navLink) {
+          e.preventDefault();
+          const targetId = (logoLink || navLink).getAttribute("href");
+
+          if (targetId === "#top") {
+            smoothScrollTo(0);
+            const logo = document.querySelector("#logo-link");
+            logo.classList.add("clicked-bounce");
+            setTimeout(() => logo.classList.remove("clicked-bounce"), 500);
+          } else {
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              const navbar = document.querySelector(".navbar");
+              const offset = navbar ? navbar.offsetHeight + 40 : 100;
+              smoothScrollTo(targetElement.offsetTop - offset);
+            }
+          }
+        }
+      });
+
+      // Active Section Highlighting
+      const observerOptions = {
+        root: null,
+        rootMargin: "-20% 0px -60% 0px",
+        threshold: 0,
+      };
+
+      const navObserver = new IntersectionObserver((entries) => {
+        if (isScrolling) return;
+
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("id");
+            document.querySelectorAll(".nav-links a").forEach((link) => {
+              link.classList.toggle(
+                "active",
+                link.getAttribute("href") === `#${id}`,
+              );
+            });
+          }
+        });
+      }, observerOptions);
+
       // Scroll to top on refresh
       if ("scrollRestoration" in history) {
         history.scrollRestoration = "manual";
       }
       window.scrollTo(0, 0);
+
+      document.querySelectorAll("section[id]").forEach((section) => {
+        navObserver.observe(section);
+      });
 
       // PDF Download Logic
       document.addEventListener("click", function (e) {
