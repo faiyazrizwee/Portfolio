@@ -50,7 +50,8 @@
       body {
         background-color: var(--bg-offwhite);
         color: var(--text-charcoal);
-        line-height: 1.6;
+        font-size: 1.05rem;
+        line-height: 1.7;
         overflow-x: hidden;
         perspective: 2000px; /* Enable 3D perspective for the whole page */
       }
@@ -407,9 +408,18 @@
   </head>
   <body>
     <nav class="navbar">
-      <div style="font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em">
+      <a
+        href="index.html"
+        style="
+          text-decoration: none;
+          color: inherit;
+          font-weight: 800;
+          font-size: 1.2rem;
+          letter-spacing: -0.02em;
+        "
+      >
         RIZWEE<span style="color: var(--accent-terracotta)">.BIO</span>
-      </div>
+      </a>
       <div class="nav-links">
         <a href="#about">ABOUT</a>
         <a href="#projects">WORK</a>
@@ -509,7 +519,13 @@
         <div class="grid-phi">
           <div class="card">
             <h2>Research Focus</h2>
-            <p style="font-size: 1.1rem; color: var(--text-charcoal)">
+            <p
+              style="
+                font-size: 1.25rem;
+                word-spacing: 0.12em;
+                color: var(--text-charcoal);
+              "
+            >
               Highly motivated bioinformatics researcher focused on NGS data
               analysis and computational biology. Currently pursuing an M.Sc. in
               Bioinformatics at Jamia Millia Islamia with a 9.60 CGPA. My work
@@ -936,6 +952,12 @@
     <!-- End Container -->
 
     <script>
+      // Scroll to top on refresh
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+
       // PDF Download Logic
       document.addEventListener("click", function (e) {
         const downloadBtn = e.target.closest("#download-cv");
