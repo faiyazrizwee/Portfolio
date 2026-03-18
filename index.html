@@ -48,12 +48,17 @@
       }
 
       body {
-        background-color: var(--bg-offwhite);
+        background: radial-gradient(
+          circle at center,
+          #ffffff 0%,
+          #f5f5f2 60%,
+          #d1d1cf 100%
+        );
+        background-attachment: fixed;
         color: var(--text-charcoal);
         font-size: 1.05rem;
         line-height: 1.7;
         overflow-x: hidden;
-        perspective: 2000px; /* Enable 3D perspective for the whole page */
       }
 
       .container {
@@ -266,7 +271,7 @@
         top: 20px;
         z-index: 1000;
         margin: 0 var(--space-l);
-        background: rgba(245, 245, 242, 0.8);
+        background: rgba(245, 245, 242, 0);
         backdrop-filter: blur(10px);
         border-radius: 20px;
         padding: var(--space-s) var(--space-l);
@@ -329,27 +334,24 @@
           transform: scale(1);
         }
       }
-      .clicked-bounce {
-        animation: clickBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-
       @media (max-width: 600px) {
         .navbar {
           flex-direction: column;
-          gap: var(--space-s);
-          padding: var(--space-s);
+          gap: var(--space-xs);
+          padding: 8px 12px;
           top: 10px;
           margin: 0 var(--space-s);
         }
 
         .nav-links {
-          gap: var(--space-m);
+          gap: var(--space-s);
           width: 100%;
           justify-content: center;
         }
 
         .nav-links a {
-          font-size: 0.85rem;
+          font-size: 0.8rem;
+          letter-spacing: -0.01em;
         }
       }
 
@@ -410,6 +412,74 @@
         }
       }
 
+      /* Premium Hero Name Stagger Effect */
+      .hero-name {
+        display: grid;
+        place-items: center;
+        position: relative;
+        height: 1.8em; /* Further increased to prevent any descender clipping */
+        overflow: hidden;
+        cursor: pointer;
+        margin-bottom: var(--space-m);
+        white-space: nowrap;
+        padding-bottom: 0.2em; /* Extra clearing for 'y' tails */
+      }
+
+      .hero-name span {
+        display: inline-block;
+        transition: all 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+        will-change: transform, opacity;
+        line-height: normal;
+      }
+
+      .name-main,
+      .name-sub {
+        grid-area: 1/1;
+        width: 100%;
+        text-align: center;
+        font-size: clamp(1.8rem, 8vw, 5rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .name-main {
+        color: var(--text-charcoal); /* Match expected solid dark color */
+      }
+
+      .name-sub {
+        color: var(--accent-terracotta);
+        text-transform: uppercase;
+        font-size: clamp(1.1rem, 5vw, 3.5rem);
+        letter-spacing: 0.15em;
+        opacity: 0;
+      }
+
+      @media (max-width: 600px) {
+        .name-sub {
+          letter-spacing: 0.05em;
+        }
+      }
+
+      /* Alphabet Dropping Motion (Top to Bottom) */
+      .hero-name:hover .name-main span {
+        transform: translateY(100%); /* Slides down out */
+        opacity: 0;
+      }
+
+      .hero-name .name-sub span {
+        transform: translateY(-100%); /* Starts above */
+        opacity: 0;
+      }
+
+      .hero-name:hover .name-sub {
+        opacity: 1;
+      }
+
+      .hero-name:hover .name-sub span {
+        transform: translateY(0); /* Slides down into center */
+        opacity: 1;
+      }
+
       @media (max-width: 768px) {
         h1 {
           font-size: 2.8rem;
@@ -464,6 +534,7 @@
       <div class="nav-links">
         <a href="#about">ABOUT</a>
         <a href="#academics">ACADEMICS</a>
+        <a href="#skills">SKILLS</a>
         <a href="#projects">WORK</a>
       </div>
     </nav>
@@ -483,15 +554,9 @@
           >
             Bioinformatics Researcher
           </p>
-          <h1
-            style="
-              color: var(--text-charcoal);
-              margin-bottom: var(--space-m);
-              font-size: clamp(3rem, 10vw, 5rem);
-              line-height: 1;
-            "
-          >
-            Md Faiyaz Rizwee
+          <h1 class="hero-name">
+            <span class="name-main">Md Faiyaz Rizwee</span>
+            <span class="name-sub">Bioinformatician</span>
           </h1>
           <p
             style="
@@ -1048,9 +1113,21 @@
             const logo = document.querySelector("#logo-link");
             logo.classList.add("clicked-bounce");
             setTimeout(() => logo.classList.remove("clicked-bounce"), 500);
+
+            // Reset active state for all links when going to top
+            document.querySelectorAll(".nav-links a").forEach((link) => {
+              link.classList.remove("active");
+            });
           } else {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
+              // Manually set active state for the clicked link
+              if (navLink) {
+                document.querySelectorAll(".nav-links a").forEach((link) => {
+                  link.classList.toggle("active", link === navLink);
+                });
+              }
+
               const navbar = document.querySelector(".navbar");
               const offset = navbar ? navbar.offsetHeight + 40 : 100;
               smoothScrollTo(targetElement.offsetTop - offset);
@@ -1091,6 +1168,25 @@
       document.querySelectorAll("section[id]").forEach((section) => {
         navObserver.observe(section);
       });
+
+      // Staggered Text Reveal Initialization
+      const initHeroStagger = () => {
+        const split = (el) => {
+          const text = el.innerText;
+          el.innerHTML = text
+            .split("")
+            .map(
+              (char, i) =>
+                `<span style="transition-delay: ${i * 20}ms">${char === " " ? "&nbsp;" : char}</span>`,
+            )
+            .join("");
+        };
+        const main = document.querySelector(".name-main");
+        const sub = document.querySelector(".name-sub");
+        if (main) split(main);
+        if (sub) split(sub);
+      };
+      initHeroStagger();
 
       // PDF Download Logic
       document.addEventListener("click", function (e) {
@@ -1134,7 +1230,7 @@
               -tiltLimit,
             );
 
-            section.style.transform = `rotateX(${finalRotation * -1}deg) translateY(${distanceFromCenter * scrollFactor}px) scale(${1 - Math.abs(distanceFromCenter) * (isMobile ? 0.00005 : 0.0001)})`;
+            section.style.transform = `translateY(${distanceFromCenter * scrollFactor}px) scale(${1 - Math.abs(distanceFromCenter) * (isMobile ? 0.00005 : 0.0001)})`;
             section.style.opacity = 1 - Math.abs(distanceFromCenter) * 0.0005;
           }
         });
