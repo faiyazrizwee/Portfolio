@@ -581,7 +581,7 @@
               gap: var(--space-m);
               justify-content: center;
               flex-wrap: wrap;
-              max-width: 1000px;
+              max-width: 750px;
               margin: 0 auto;
             ">
           <a href="#" id="download-cv" class="btn btn-primary" style="padding: 1.1rem var(--space-l)">
@@ -597,6 +597,9 @@
           <a href="https://www.linkedin.com/in/md-faiyaz-rizwee-62024438b" target="_blank" class="btn btn-secondary"
             style="padding: 1.1rem var(--space-l)">
             <i class="fab fa-linkedin"></i> LinkedIn Profile
+          </a>
+          <a href="tel:+918676040291" class="btn btn-secondary" style="padding: 1.1rem var(--space-l)">
+            <i class="fas fa-phone"></i> +91 8676040291
           </a>
         </div>
       </div>
@@ -772,18 +775,35 @@
       <h2 style="margin-bottom: var(--space-xl)">Engineering & Pipelines</h2>
       <div class="skills-grid" style="margin-bottom: var(--space-l)">
         <div class="card project-wide-card">
+          <h3>LLM-Powered NL2SQL & RAG Chatbot</h3>
+          <span class="timeline-date">Python • Django • LLM • RAG • PostgreSQL</span>
+          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
+            Developed an integrated platform featuring an LLM-powered Natural Language to SQL system and a
+            domain-specific RAG chatbot. The system utilizes document ingestion pipelines, vector embeddings, and
+            semantic retrieval to ground AI responses in scientific literature, improving factual accuracy and reducing
+            hallucinations. The robust backend is powered by Django and PostgreSQL to handle secure APIs, query
+            execution, and conversational interactions.
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="http://14.139.61.8/plantpepdb2/assistant/" target="_blank" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem">
+              Live Demo: AI-Assistant <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="card project-wide-card">
           <h3>Multi class plant peptide family predictor</h3>
           <span class="timeline-date">BRIC - National Institute of Plant Genome Research</span>
           <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            Built an end-to-end multiclass prediction platform for identifying plant peptide 
-            families directly from protein sequences. The project involved dataset curation, 
-            feature extraction, model training and evaluation, followed by deployment of the 
-            best-performing model as an interactive web-based prediction tool within PlantPepDB 2.0. 
-            Additionally, a standalone command-line interface (CLI) was developed to enable efficient 
+            Built an end-to-end multiclass prediction platform for identifying plant peptide
+            families directly from protein sequences. The project involved dataset curation,
+            feature extraction, model training and evaluation, followed by deployment of the
+            best-performing model as an interactive web-based prediction tool within PlantPepDB 2.0.
+            Additionally, a standalone command-line interface (CLI) was developed to enable efficient
             batch prediction and integration into bioinformatics workflows.
           </p>
-          <a href="https://github.com/faiyazrizwee/multi-class-plant-peptide-predictor/" target="_blank" class="btn btn-primary"
-            style="padding: 8px 16px; font-size: 0.85rem">
+          <a href="https://github.com/faiyazrizwee/multi-class-plant-peptide-predictor/" target="_blank"
+            class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem">
             Check Github Repo <i class="fas fa-external-link-alt"></i>
           </a>
         </div>
