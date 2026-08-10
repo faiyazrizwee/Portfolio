@@ -1199,6 +1199,34 @@
     });
 
     handle3DScroll(); // Run once on load
+
+    // --- Visitor Tracking Logic (with Location) ---
+    // STEP 1: Replace this URL with your Google Apps Script Web App URL
+    const trackingUrl = "https://script.google.com/macros/s/AKfycbxxzhO_G6hvszSr-FK8PQY7_XHT0o7-I0W4G8ftpIuWjtKMTD9hol6HX7J28bkCo-mD/exec";
+    
+    // Check if we've already tracked this visit in this session
+    if (!sessionStorage.getItem("visitTracked") && trackingUrl !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+      
+      // Fetch the visitor's location first using a free IP geolocation API
+      fetch("https://get.geojs.io/v1/ip/geo.json")
+        .then(response => response.json())
+        .then(geoData => {
+          const country = geoData.country || "Unknown";
+          const city = geoData.city || "Unknown";
+          const userAgent = encodeURIComponent(navigator.userAgent);
+          
+          // Now send the location data along with userAgent to your Google Apps Script
+          const fullUrl = `${trackingUrl}?userAgent=${userAgent}&country=${encodeURIComponent(country)}&city=${encodeURIComponent(city)}`;
+          
+          return fetch(fullUrl, { method: "GET" });
+        })
+        .then(response => response.json())
+        .then(data => {
+          sessionStorage.setItem("visitTracked", "true");
+          console.log("Visit tracked successfully. Total visits:", data.totalVisits);
+        })
+        .catch(err => console.error("Error tracking visit:", err));
+    }
   </script>
 </body>
 
