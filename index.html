@@ -4,217 +4,826 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Md Faiyaz Rizwee - Bioinformatics Portfolio</title>
+  <title>Md Faiyaz Rizwee — Bioinformatics Researcher</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap"
     rel="stylesheet" />
   <style>
+    /* ========================================================
+       Cerâmica Wabi-Sabi Design System Tokens (DESIGN.md)
+       Style: Imperfect, Natural, Contemplative
+       ======================================================== */
     :root {
-      color-scheme: light;
       /* Colors */
-      --bg-offwhite: #f5f5f2;
-      --text-charcoal: #1e1e1e;
-      --accent-slate: #5a6c7d;
-      --accent-terracotta: #c47a5a;
+      --color-primary: #A0522D;     /* Clay Brown — Primary surface / dominant */
+      --color-clay: #A0522D;
+      --color-stone: #8B8680;      /* Stone Grey — Secondary text, borders */
+      --color-cream: #FAF0E6;      /* Cream — Light surface, card background */
+      --color-cream-light: #FFFDF9;/* Pure light porcelain surface */
+      --color-charcoal: #36454F;   /* Charcoal — Dark surface, primary text */
+      --color-matcha: #6B7B3A;     /* Matcha Green — Positive / success states */
+      --color-indigo: #3F51B5;     /* Indigo — Accent color, emphasis */
+      --color-gold: #D4AF37;       /* Gold Repair — Kintsugi accents */
+      --color-blush: #E8C4B8;      /* Soft Blush — Extended accent */
 
-      /* Fibonacci Spacing */
-      --space-xs: 8px;
-      --space-s: 13px;
-      --space-m: 21px;
-      --space-l: 34px;
-      --space-xl: 55px;
+      /* Typography */
+      --font-display: "Cormorant Garamond", Garamond, Georgia, serif;
+      --font-body: "Cormorant Garamond", Garamond, Georgia, serif;
+      --font-mono: "JetBrains Mono", monospace;
 
-      /* Skeuomorphic Shadows */
-      --shadow-raised: 8px 8px 16px #d1d1cf, -8px -8px 16px #ffffff;
-      --shadow-pressed:
-        inset 4px 4px 8px #d1d1cf, inset -4px -4px 8px #ffffff;
-      --shadow-button: 4px 4px 10px #d1d1cf, -4px -4px 10px #ffffff;
-      --shadow-button-active:
-        inset 2px 2px 5px #d1d1cf, inset -2px -2px 5px #ffffff;
+      /* Spacing Scale (Base unit: 0.5rem / 8px) */
+      --space-xs: 0.5rem;   /* 8px */
+      --space-s: 1rem;      /* 16px */
+      --space-m: 1.5rem;    /* 24px */
+      --space-l: 2.5rem;    /* 40px */
+      --space-xl: 4rem;     /* 64px */
+      --space-section: clamp(4rem, 8vw, 8rem);
+
+      /* Layout */
+      --max-width: 1280px;
+
+      /* Shadows (DESIGN.md: No shadows heavier than 0 2px 8px rgba(0,0,0,0.08)) */
+      --shadow-subtle: 0 2px 8px rgba(54, 69, 79, 0.06);
+      --shadow-card: 0 2px 12px rgba(54, 69, 79, 0.05);
+
+      /* Shapes (DESIGN.md: Base corner radius: 0px. Sharp edges 0px shape) */
+      --radius-base: 0px;
+
+      /* z-index contract: base (0) / sticky-nav (100) / overlay (200) / modal (300) / toast (500) */
+      --z-base: 0;
+      --z-nav: 100;
+      --z-overlay: 200;
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Plus Jakarta Sans", sans-serif;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      background: radial-gradient(circle at center,
-          #ffffff 0%,
-          #f5f5f2 60%,
-          #d1d1cf 100%);
-      background-attachment: fixed;
-      color: var(--text-charcoal);
+      background-color: var(--color-cream);
+      color: var(--color-charcoal);
+      font-family: var(--font-body);
       font-size: 1.05rem;
-      line-height: 1.7;
+      line-height: 1.6;
+      min-height: 100dvh;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Subtle ceramic paper matte grain texture */
+    .ceramic-texture {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.35;
+      background-image: 
+        radial-gradient(rgba(139, 134, 128, 0.09) 1px, transparent 1px),
+        radial-gradient(rgba(160, 82, 45, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px, 48px 48px;
+      background-position: 0 0, 12px 12px;
+    }
+
+    /* Selection Highlight */
+    ::selection {
+      background-color: var(--color-blush);
+      color: var(--color-charcoal);
+    }
+
+    /* Minimalist tactile scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--color-cream);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-stone);
+      border-radius: 0px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-clay);
     }
 
     .container {
-      max-width: 1440px;
+      max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 var(--space-l);
+      padding: 0 1.5rem;
     }
 
-    /* Typography */
-    h1,
-    h2,
-    h3 {
+    /* ========================================================
+       Typography Scale (DESIGN.md)
+       ======================================================== */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
       font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+      color: var(--color-charcoal);
     }
 
     h1 {
-      font-size: 4.5rem;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: var(--space-s);
     }
 
     h2 {
-      font-size: 2.5rem;
+      font-size: 2.25rem;
       margin-bottom: var(--space-m);
+      position: relative;
     }
 
     h3 {
       font-size: 1.5rem;
-      margin-bottom: var(--space-s);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
     }
 
-    /* Layout Helpers */
+    p {
+      max-width: 72ch;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--color-charcoal);
+    }
+
+    .mono-meta {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-stone);
+    }
+
+    /* ========================================================
+       Kintsugi Decorative Accents
+       ======================================================== */
+    .kintsugi-line {
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--color-gold) 20%,
+        var(--color-clay) 50%,
+        var(--color-gold) 80%,
+        transparent 100%
+      );
+      margin: var(--space-m) 0;
+      opacity: 0.85;
+    }
+
+    .kintsugi-gold-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: var(--color-gold);
+      border-radius: 0px;
+      margin-right: 6px;
+      transform: rotate(45deg);
+    }
+
+    /* ========================================================
+       Navigation (DESIGN.md: Primary surface, sharp edges 0px)
+       ======================================================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-nav);
+      background-color: var(--color-cream);
+      border-bottom: 1px solid rgba(139, 134, 128, 0.35);
+      transition: background-color 200ms ease-out;
+    }
+
+    .nav-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      color: var(--color-charcoal);
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      transition: color 200ms ease-out;
+    }
+
+    .nav-logo:hover {
+      color: var(--color-clay);
+    }
+
+    .logo-accent {
+      color: var(--color-clay);
+      font-size: 1.35rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      color: var(--color-stone);
+      padding: 4px 0;
+      position: relative;
+      transition: color 200ms ease-out;
+    }
+
+    .nav-links a:hover {
+      color: var(--color-charcoal);
+    }
+
+    .nav-links a.active {
+      color: var(--color-clay);
+      font-weight: 600;
+    }
+
+    .nav-links a.active::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background-color: var(--color-clay);
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.85rem 1rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* ========================================================
+       Hero Section — Asymmetric Wabi-Sabi Composition
+       Including portrait 'faiyaz.jpeg'
+       ======================================================== */
+    .hero {
+      padding: var(--space-xl) 0 var(--space-l);
+    }
+
+    .hero-asymmetric-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-clay);
+      margin-bottom: var(--space-xs);
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-title {
+      color: var(--color-charcoal);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--color-stone);
+      margin-bottom: var(--space-m);
+    }
+
+    .hero-bio {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      margin-bottom: var(--space-m);
+      color: var(--color-charcoal);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: var(--space-m);
+    }
+
+    /* Portrait Image Ceramic Mount with Kintsugi Gold Accents */
+    .hero-portrait-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-portrait-frame {
+      position: relative;
+      background: var(--color-cream-light);
+      border: 1px solid var(--color-stone);
+      padding: 12px;
+      box-shadow: 
+        6px 6px 0px var(--color-clay),
+        12px 12px 0px rgba(212, 175, 55, 0.28);
+      max-width: 380px;
+      width: 100%;
+      border-radius: var(--radius-base);
+    }
+
+    .hero-portrait-frame::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      right: 24px;
+      width: 44px;
+      height: 2px;
+      background: var(--color-gold);
+    }
+
+    .hero-portrait-img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      border-radius: var(--radius-base);
+      filter: saturate(0.92) contrast(1.02);
+    }
+
+    .portrait-caption {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(139, 134, 128, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .caption-label {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--color-charcoal);
+      letter-spacing: 0.05em;
+    }
+
+    .caption-sub {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--color-stone);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 900px) {
+      .hero-asymmetric-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-l);
+      }
+      .hero-portrait-wrapper {
+        order: -1;
+      }
+      .hero-portrait-frame {
+        max-width: 320px;
+      }
+      .hero-portrait-img {
+        height: 380px;
+      }
+    }
+
+    /* ========================================================
+       Components: Buttons (DESIGN.md: Sharp edges 0px)
+       ======================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: var(--radius-base);
+      cursor: pointer;
+      transition: all 200ms ease-out;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background-color: var(--color-clay);
+      color: var(--color-cream);
+      border-color: var(--color-clay);
+    }
+
+    .btn-primary:hover {
+      background-color: #8c4524; /* 8% darken */
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(160, 82, 45, 0.25);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--color-clay);
+      border: 1.5px solid var(--color-stone);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--color-cream-light);
+      border-color: var(--color-clay);
+      color: var(--color-clay);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary:active {
+      transform: translateY(1px);
+    }
+
+    /* ========================================================
+       Cards (DESIGN.md: Sharp edges 0px, Cream surface, 1px border)
+       ======================================================== */
+    .card {
+      background: var(--color-cream-light);
+      border: 1px solid rgba(139, 134, 128, 0.35);
+      border-radius: var(--radius-base);
+      padding: var(--space-m);
+      box-shadow: var(--shadow-card);
+      transition: border-color 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out;
+      position: relative;
+    }
+
+    /* Top Kintsugi Gold Line Accent */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 32px;
+      height: 2px;
+      background-color: var(--color-gold);
+    }
+
+    .card:hover {
+      border-color: var(--color-clay);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(54, 69, 79, 0.08);
+    }
+
+    /* Asymmetric Grids */
     .grid-phi {
       display: grid;
       grid-template-columns: 1.618fr 1fr;
-      gap: var(--space-xl);
+      gap: var(--space-l);
+    }
+
+    @media (max-width: 768px) {
+      .grid-phi {
+        grid-template-columns: 1fr;
+      }
     }
 
     .section-padding {
       padding: var(--space-xl) 0;
     }
 
-    /* Skeuomorphic Elements */
-    .card {
-      background: var(--bg-offwhite);
-      border-radius: 24px;
-      padding: var(--space-l);
-      box-shadow: var(--shadow-raised);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-clay);
+      display: block;
+      margin-bottom: 4px;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow:
-        12px 12px 24px #d1d1cf,
-        -12px -12px 24px #ffffff;
+    /* Tag badge */
+    .kintsugi-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid var(--color-stone);
+      color: var(--color-stone);
+      background: transparent;
+      border-radius: var(--radius-base);
+      display: inline-block;
+      margin-bottom: 8px;
     }
 
-    .btn {
+    .kintsugi-tag.accent {
+      border-color: var(--color-clay);
+      color: var(--color-clay);
+      background: rgba(160, 82, 45, 0.06);
+    }
+
+    .kintsugi-tag.matcha {
+      border-color: var(--color-matcha);
+      color: var(--color-matcha);
+      background: rgba(107, 123, 58, 0.08);
+    }
+
+    /* ========================================================
+       Skills Section — Asymmetric Bento Grid
+       (DESIGN.md: No 3-column equal-width feature layouts)
+       ======================================================== */
+    .skills-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: var(--space-m);
+      margin-bottom: var(--space-m);
+    }
+
+    .skills-filter-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      border: 1px solid rgba(139, 134, 128, 0.35);
+      padding: 4px;
+      background: var(--color-cream-light);
+      border-radius: var(--radius-base);
+    }
+
+    .skill-filter-btn {
+      background: transparent;
+      color: var(--color-stone);
+      border: 1px solid transparent;
+      padding: 6px 14px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: var(--radius-base);
+      transition: all 200ms ease-out;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      padding: var(--space-s) var(--space-l);
-      border-radius: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      border: none;
-      cursor: pointer;
-      gap: 10px;
+      gap: 6px;
     }
 
-    .btn-primary {
-      background-color: var(--accent-terracotta);
-      color: white;
-      box-shadow: 0 4px 10px rgba(196, 122, 90, 0.3);
+    .skill-filter-btn:hover {
+      color: var(--color-charcoal);
+      background: rgba(139, 134, 128, 0.08);
     }
 
-    .btn-primary:hover {
-      filter: brightness(1.1);
-      transform: translateY(-2px);
+    .skill-filter-btn.active {
+      background: var(--color-clay);
+      color: var(--color-cream);
+      border-color: var(--color-clay);
     }
 
-    .btn-primary:active {
-      transform: translateY(0);
-      box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    .skill-filter-btn .badge-count {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 1px 5px;
+      background: rgba(54, 69, 79, 0.08);
+      color: var(--color-stone);
     }
 
-    .btn-secondary {
-      background: var(--bg-offwhite);
-      color: var(--accent-slate);
-      box-shadow: var(--shadow-button);
+    .skill-filter-btn.active .badge-count {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--color-cream);
     }
 
-    .btn-secondary:hover {
-      box-shadow:
-        6px 6px 12px #d1d1cf,
-        -6px -6px 12px #ffffff;
-    }
-
-    .btn-secondary:active {
-      box-shadow: var(--shadow-button-active);
-    }
-
-    /* Hero Styling */
-    .hero {
-      min-height: 80vh;
-      display: flex;
-      align-items: center;
-      padding-top: var(--space-xl);
-    }
-
-    .hero-visual {
-      position: relative;
-      background: var(--bg-offwhite);
-      border-radius: 50%;
-      width: 300px;
-      height: 300px;
-      box-shadow: var(--shadow-raised);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: auto;
-    }
-
-    .hero-visual i {
-      font-size: 6rem;
-      color: var(--accent-slate);
-      opacity: 0.8;
-    }
-
-    /* Skills Structure */
-    .skills-grid {
+    .skills-bento-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-l);
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    .skill-bento-card {
+      background: var(--color-cream-light);
+      border: 1px solid rgba(139, 134, 128, 0.35);
+      border-radius: var(--radius-base);
+      padding: var(--space-m);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 200ms ease-out;
+    }
+
+    .skill-bento-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 32px;
+      height: 2px;
+      background: var(--color-gold);
+    }
+
+    .skill-bento-card:hover {
+      border-color: var(--color-clay);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(54, 69, 79, 0.08);
+    }
+
+    .bento-col-7 {
+      grid-column: span 7;
+    }
+
+    .bento-col-5 {
+      grid-column: span 5;
+    }
+
+    .bento-col-12 {
+      grid-column: span 12;
+    }
+
+    .bento-col-6 {
+      grid-column: span 6;
+    }
+
+    .skill-bento-card.is-filtered-single {
+      grid-column: span 12 !important;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .bento-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-s);
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(139, 134, 128, 0.2);
+    }
+
+    .bento-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bento-subgroup {
+      margin-bottom: 14px;
+    }
+
+    .bento-subgroup:last-child {
+      margin-bottom: 0;
+    }
+
+    .bento-sub-title {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-stone);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bento-sub-title::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      background: var(--color-clay);
+      display: inline-block;
+    }
+
+    .bento-tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skill-chip {
+      background: var(--color-cream);
+      color: var(--color-charcoal);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 4px 10px;
+      border: 1px solid rgba(139, 134, 128, 0.4);
+      border-radius: var(--radius-base);
+      transition: all 200ms ease-out;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .skill-chip:hover {
+      border-color: var(--color-clay);
+      color: var(--color-clay);
+      background: var(--color-cream-light);
+      transform: translateY(-1px);
+    }
+
+    .skill-chip.chip-highlight {
+      background: rgba(160, 82, 45, 0.08);
+      border-color: var(--color-clay);
+      color: var(--color-clay);
+      font-weight: 600;
+    }
+
+    .ml-subgrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .drug-design-feature {
+      margin-top: auto;
+      padding: 12px;
+      background: var(--color-cream);
+      border: 1px solid rgba(139, 134, 128, 0.35);
+      border-left: 3px solid var(--color-matcha);
+      font-size: 0.95rem;
+      color: var(--color-stone);
+      line-height: 1.55;
+    }
+
+    @keyframes skillFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .skill-animate-appear {
+      animation: skillFadeIn 300ms ease-out forwards;
     }
 
     @media (max-width: 1100px) {
-      .skills-grid {
+      .bento-col-7,
+      .bento-col-5 {
+        grid-column: span 12;
+      }
+      .ml-subgrid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 768px) {
-      .skills-grid {
+      .skills-bento-grid {
+        grid-template-columns: 1fr;
+      }
+      .bento-col-7,
+      .bento-col-5,
+      .bento-col-12,
+      .bento-col-6 {
+        grid-column: span 1;
+      }
+      .ml-subgrid {
         grid-template-columns: 1fr;
       }
     }
 
-    .skill-group {
-      padding: var(--space-m);
-    }
-
-    /* Education Grid */
+    /* ========================================================
+       Academic Credentials & Projects
+       ======================================================== */
     .education-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-l);
+      gap: var(--space-m);
     }
 
     @media (max-width: 768px) {
@@ -223,532 +832,523 @@
       }
     }
 
-    /* Project Cards */
     .project-wide-card {
       grid-column: span 3;
-      border-left: 4px solid var(--accent-terracotta);
+      border-left: 4px solid var(--color-clay) !important;
     }
 
-    @media (max-width: 1100px) {
-      .project-wide-card {
-        grid-column: span 2;
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-m);
+    }
+
+    @media (max-width: 800px) {
+      .project-grid {
+        grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 768px) {
-      .project-wide-card {
-        grid-column: span 1;
-      }
+    /* Certifications Grid */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-m);
     }
 
-    .skill-tag {
-      background: var(--bg-offwhite);
-      padding: 8px 16px;
-      border-radius: 8px;
-      box-shadow: var(--shadow-button);
-      font-size: 0.9rem;
-      margin: 5px;
-      display: inline-block;
-      color: var(--accent-slate);
-      font-weight: 500;
-    }
-
-    /* Timelines/History */
-    .timeline-item {
-      position: relative;
-      padding-left: var(--space-l);
-      margin-bottom: var(--space-l);
-      border-left: 2px solid var(--accent-slate);
-    }
-
-    /* Navbar */
-    .navbar {
-      position: sticky;
-      top: 20px;
-      z-index: 1000;
-      margin: 0 var(--space-l);
-      background: rgba(245, 245, 242, 0);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: var(--space-s) var(--space-l);
-      box-shadow: var(--shadow-raised);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.3s ease;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: var(--space-l);
-      align-items: center;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-charcoal);
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: color 0.3s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--accent-terracotta);
-    }
-
-    .nav-links a.active {
-      color: var(--accent-terracotta);
-      position: relative;
-    }
-
-    .nav-links a.active::after {
-      content: "";
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--accent-terracotta);
-      border-radius: 2px;
-    }
-
-    /* Logo Bounce Effect */
-    .logo-bounce:hover {
-      transform: scale(1.1) rotate(-2deg);
-      color: var(--accent-terracotta) !important;
-    }
-
-    .logo-bounce:active {
-      transform: scale(0.95);
-    }
-
-    @keyframes clickBounce {
-      0% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.2) rotate(5deg);
-      }
-
-      100% {
-        transform: scale(1);
+    @media (max-width: 900px) {
+      .cert-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 600px) {
-      .navbar {
-        flex-direction: column;
-        gap: var(--space-xs);
-        padding: 8px 12px;
-        top: 10px;
-        margin: 0 var(--space-s);
-      }
-
-      .nav-links {
-        gap: var(--space-s);
-        width: 100%;
-        justify-content: center;
-      }
-
-      .nav-links a {
-        font-size: 0.8rem;
-        letter-spacing: -0.01em;
+      .cert-grid {
+        grid-template-columns: 1fr;
       }
     }
 
-    .timeline-date {
-      font-weight: 700;
-      color: var(--accent-terracotta);
-      margin-bottom: 4px;
-      display: block;
+    .cert-icon {
+      font-size: 1.5rem;
+      color: var(--color-clay);
+      margin-bottom: 0.5rem;
     }
 
-    /* Animations */
-    @keyframes fadeIn3D {
+    /* ========================================================
+       Footer (Cerâmica Wabi-Sabi Minimalist)
+       ======================================================== */
+    footer {
+      border-top: 1px solid rgba(139, 134, 128, 0.35);
+      padding: var(--space-l) 0;
+      margin-top: var(--space-xl);
+      text-align: center;
+      background: var(--color-cream);
+    }
+
+    .footer-note {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--color-stone);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    /* Subtle Entry Animation */
+    @keyframes wabiFadeIn {
       from {
         opacity: 0;
-        transform: translateY(100px) rotateX(25deg) scale(0.9);
-        filter: blur(10px);
+        transform: translateY(16px);
       }
-
       to {
         opacity: 1;
-        transform: translateY(0) rotateX(0) scale(1);
-        filter: blur(0);
+        transform: translateY(0);
       }
     }
 
     .animate-in {
-      animation: fadeIn3D 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-    }
-
-    /* Tilt Effect on Cards */
-    .card {
-      background: var(--bg-offwhite);
-      border-radius: 24px;
-      padding: var(--space-l);
-      box-shadow: var(--shadow-raised);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      transition:
-        transform 0.5s cubic-bezier(0.2, 1, 0.3, 1),
-        box-shadow 0.5s cubic-bezier(0.2, 1, 0.3, 1);
-      transform-style: preserve-3d;
-    }
-
-    .card:hover {
-      transform: translateY(-10px) rotateX(5deg) rotateY(-5deg) scale(1.02);
-      box-shadow:
-        20px 20px 40px #d1d1cf,
-        -20px -20px 40px #ffffff;
-    }
-
-    /* Responsiveness */
-    @media (max-width: 1024px) {
-      .grid-phi {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: 3.5rem;
-      }
-    }
-
-    /* Premium Hero Name Stagger Effect */
-    .hero-name {
-      display: grid;
-      place-items: center;
-      position: relative;
-      height: 1.8em;
-      /* Further increased to prevent any descender clipping */
-      overflow: hidden;
-      cursor: pointer;
-      margin-bottom: var(--space-m);
-      white-space: nowrap;
-      padding-bottom: 0.2em;
-      /* Extra clearing for 'y' tails */
-    }
-
-    .hero-name span {
-      display: inline-block;
-      transition: all 0.8s cubic-bezier(0.7, 0, 0.3, 1);
-      will-change: transform, opacity;
-      line-height: normal;
-    }
-
-    .name-main,
-    .name-sub {
-      grid-area: 1/1;
-      width: 100%;
-      text-align: center;
-      font-size: clamp(1.8rem, 8vw, 5rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .name-main {
-      color: var(--text-charcoal);
-      /* Match expected solid dark color */
-    }
-
-    .name-sub {
-      color: var(--accent-terracotta);
-      text-transform: uppercase;
-      font-size: clamp(1.1rem, 5vw, 3.5rem);
-      letter-spacing: 0.15em;
-      opacity: 0;
-    }
-
-    @media (max-width: 600px) {
-      .name-sub {
-        letter-spacing: 0.05em;
-      }
-    }
-
-    /* Alphabet Dropping Motion (Top to Bottom) */
-    .hero-name:hover .name-main span {
-      transform: translateY(100%);
-      /* Slides down out */
-      opacity: 0;
-    }
-
-    .hero-name .name-sub span {
-      transform: translateY(-100%);
-      /* Starts above */
-      opacity: 0;
-    }
-
-    .hero-name:hover .name-sub {
-      opacity: 1;
-    }
-
-    .hero-name:hover .name-sub span {
-      transform: translateY(0);
-      /* Slides down into center */
-      opacity: 1;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.8rem;
-      }
-
-      .container {
-        padding: 0 var(--space-m);
-      }
-    }
-
-    section {
-      transform-style: preserve-3d;
-      will-change: transform, opacity;
-    }
-
-    /* Mobile Hero Fixes */
-    @media (max-width: 600px) {
-      .hero-btn-container {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .hero-btn-container .btn {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      .pursuits-container {
-        padding-left: var(--space-m);
-        padding-right: var(--space-m);
-      }
+      animation: wabiFadeIn 420ms ease-out forwards;
     }
   </style>
 </head>
 
 <body>
+  <!-- Ceramic subtle tactile grain overlay -->
+  <div class="ceramic-texture" aria-hidden="true"></div>
+
+  <!-- Sticky Wabi-Sabi Navigation Bar -->
   <nav class="navbar">
-    <a href="#top" id="logo-link" class="logo-bounce" style="
-          text-decoration: none;
-          color: inherit;
-          font-weight: 800;
-          font-size: 1.2rem;
-          letter-spacing: -0.02em;
-          display: inline-block;
-          transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        ">
-      RIZWEE<span style="color: var(--accent-terracotta)">.BIO</span>
-    </a>
-    <div class="nav-links">
-      <a href="#about">ABOUT</a>
-      <a href="#academics">ACADEMICS</a>
-      <a href="#skills">SKILLS</a>
-      <a href="#projects">WORK</a>
+    <div class="nav-container">
+      <a href="#top" id="logo-link" class="nav-logo">
+        RIZWEE<span class="logo-accent">.BIO</span>
+      </a>
+      <div class="nav-links">
+        <a href="#about">ABOUT</a>
+        <a href="#academics">ACADEMICS</a>
+        <a href="#skills">SKILLS</a>
+        <a href="#projects">WORK</a>
+        <a href="#certifications">CERTIFICATES</a>
+      </div>
     </div>
   </nav>
+
   <div class="container">
-    <!-- Hero Section: 60/40 Split -->
-    <section class="hero section-padding animate-in">
-      <div style="text-align: center; width: 100%">
-        <p style="
-              color: var(--accent-terracotta);
-              font-weight: 700;
-              font-size: 1.1rem;
-              margin-bottom: var(--space-xs);
-              text-transform: uppercase;
-              letter-spacing: 0.1em;
-            ">
-          Bioinformatics Researcher
-        </p>
-        <h1 class="hero-name">
-          <span class="name-main">Md Faiyaz Rizwee</span>
-          <span class="name-sub">Bioinformatician</span>
-        </h1>
-        <p style="
-              font-size: 1.35rem;
-              color: var(--accent-slate);
-              margin-bottom: var(--space-xl);
-              max-width: 800px;
-              margin-left: auto;
-              margin-right: auto;
-            ">
-          Bridging Biology & Computation specializing in genomics pipelines,
-          multi-omics data science, and therapeutic biomarker discovery.
-        </p>
-        <div class="hero-btn-container" style="
-              display: flex;
-              gap: var(--space-m);
-              justify-content: center;
-              flex-wrap: wrap;
-              max-width: 750px;
-              margin: 0 auto;
-            ">
-          <a href="#" id="download-cv" class="btn btn-primary" style="padding: 1.1rem var(--space-l)">
-            <i class="fas fa-download"></i> Download CV
-          </a>
-          <a href="mailto:mdfaiyaz4840@gmail.com" class="btn btn-secondary" style="padding: 1.1rem var(--space-l)">
-            <i class="fas fa-paper-plane"></i> Get in Touch
-          </a>
-          <a href="https://github.com/faiyazrizwee" target="_blank" class="btn btn-secondary"
-            style="padding: 1.1rem var(--space-l)">
-            <i class="fab fa-github"></i> GitHub Profile
-          </a>
-          <a href="https://www.linkedin.com/in/md-faiyaz-rizwee-62024438b" target="_blank" class="btn btn-secondary"
-            style="padding: 1.1rem var(--space-l)">
-            <i class="fab fa-linkedin"></i> LinkedIn Profile
-          </a>
-          <a href="tel:+918676040291" class="btn btn-secondary" style="padding: 1.1rem var(--space-l)">
-            <i class="fas fa-phone"></i> +91 8676040291
-          </a>
+    <!-- Hero Section: Asymmetric Composition with portrait 'faiyaz.jpeg' -->
+    <section class="hero section-padding animate-in" id="top">
+      <div class="hero-asymmetric-grid">
+        <div class="hero-content">
+          <div class="hero-eyebrow">
+            <span class="kintsugi-gold-dot"></span>
+            Bioinformatics Researcher &amp; Computational Biologist
+          </div>
+          <h1 class="hero-title">Md Faiyaz Rizwee</h1>
+          <p class="hero-subtitle">
+            Bridging Biology &amp; Computation with Multi-Omics Pipelines
+          </p>
+          <p class="hero-bio">
+            Bioinformatics researcher focused on WebDev, Tools Development, and Data Science in genomics and multi-omics analysis. Currently pursuing M.Sc. in Bioinformatics at Jamia Millia Islamia (CGPA: 9.68), and conducting research at BRIC-NIPGR on plant peptide databases and machine learning classification.
+          </p>
+          <div class="hero-actions">
+            <a href="#" id="download-cv" class="btn btn-primary">
+              <i class="fas fa-download"></i> Download CV
+            </a>
+            <a href="mailto:mdfaiyaz4840@gmail.com" class="btn btn-secondary">
+              <i class="fas fa-paper-plane"></i> Get in Touch
+            </a>
+            <a href="https://github.com/faiyazrizwee" target="_blank" class="btn btn-secondary">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/md-faiyaz-rizwee-62024438b" target="_blank" class="btn btn-secondary">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+            <a href="tel:+918676040291" class="btn btn-secondary">
+              <i class="fas fa-phone"></i> +91 8676040291
+            </a>
+          </div>
+        </div>
+
+        <!-- Portrait 'faiyaz.jpeg' in ceramic mount with kintsugi gold accents -->
+        <div class="hero-portrait-wrapper">
+          <div class="hero-portrait-frame">
+            <img src="faiyaz.jpeg" alt="Md Faiyaz Rizwee — Bioinformatics Researcher" class="hero-portrait-img" />
+            <div class="portrait-caption">
+              <div>
+                <div class="caption-label">MD FAIYAZ RIZWEE</div>
+                <div class="caption-sub">Bioinformatician • BRIC-NIPGR &amp; JMI</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
+    <div class="kintsugi-line"></div>
+
     <!-- About / Research Summary -->
-    <section id="about" class="section-padding animate-in" style="animation-delay: 0.2s">
+    <section id="about" class="section-padding animate-in">
       <div class="grid-phi">
         <div class="card">
+          <span class="kintsugi-tag accent">Research Profile</span>
           <h2>Research Focus</h2>
-          <p style="
-                font-size: 1.25rem;
-                word-spacing: 0.12em;
-                color: var(--text-charcoal);
-              ">
+          <p>
             Highly motivated bioinformatics researcher focused on WebDev, Tools
             Development, and Data Science in the context of genomics, multi-omics
             analysis and computational biology. Currently pursuing an M.Sc. in
-            Bioinformatics at Jamia Millia Islamia with a 9.68 CGPA. My work
+            Bioinformatics at Jamia Millia Islamia with a <strong>9.68 CGPA</strong>. My work
             revolves around building
-            <strong>efficient pipelines for DEGs identification, SNP and Indel
+            <strong style="color: var(--color-clay);">efficient pipelines for DEGs identification, SNP and Indel
               analysis</strong>, along with a strong interest in
-            <strong>tool development and structural biology (molecular docking and
+            <strong style="color: var(--color-clay);">tool development and structural biology (molecular docking and
               simulation)</strong>
             to derive meaningful insights from complex biological datasets.
           </p>
         </div>
-        <div class="pursuits-container" style="padding-top: var(--space-l)">
-          <h3 style="color: var(--accent-slate)">Current Pursuits</h3>
-          <p style="color: var(--accent-slate)">
-            Currently working at BRIC-NIPGR, New Delhi, on developing a
+
+        <div class="card">
+          <span class="kintsugi-tag">BRIC-NIPGR</span>
+          <h3>Current Pursuits</h3>
+          <p style="color: var(--color-stone); margin-bottom: var(--space-s);">
+            Currently working at <strong>BRIC-NIPGR, New Delhi</strong>, on developing a
             plant-dedicated peptide database and building a machine learning
             model for plant peptide ORF classification (true vs false ORF
             prediction).
           </p>
+          <div class="bento-tag-cloud" style="margin-top: 1rem;">
+            <span class="skill-chip chip-highlight">PlantPepDB 2.0</span>
+            <span class="skill-chip">ORF Classification</span>
+            <span class="skill-chip">ML Modeling</span>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Education: Structured Grid -->
-    <section id="academics" class="section-padding animate-in" style="animation-delay: 0.3s">
-      <h2 style="margin-bottom: var(--space-xl)">Academic Credentials</h2>
+    <section id="academics" class="section-padding animate-in">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-m);">
+        <div>
+          <span class="section-eyebrow">Academic Credentials</span>
+          <h2 style="margin-bottom: 0;">Education &amp; Qualifications</h2>
+        </div>
+        <span class="kintsugi-tag matcha"><i class="fas fa-check-circle"></i> Verified Credentials</span>
+      </div>
+
       <div class="education-grid">
         <div class="card">
-          <span class="timeline-date">2024 — 2026</span>
+          <span class="mono-meta">2024 — 2026 • Postgraduate</span>
           <h3>M.Sc. Bioinformatics</h3>
-          <p style="color: var(--accent-slate)">
-            Jamia Millia Islamia, Delhi
-          </p>
-          <p style="font-weight: 600; color: var(--accent-terracotta)">
+          <p style="color: var(--color-stone);">Jamia Millia Islamia, Delhi</p>
+          <p style="font-weight: 700; color: var(--color-clay); font-size: 1.15rem; margin: 4px 0 10px;">
             CGPA: 9.68
           </p>
-          <a href="Marksheets/MSc_Bioinformatics.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View Marksheet
+          <a href="Marksheets/MSc_Bioinformatics.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+            <i class="fas fa-file-pdf"></i> View Marksheet
           </a>
         </div>
+
         <div class="card">
-          <span class="timeline-date">2019 — 2022</span>
+          <span class="mono-meta">2019 — 2022 • Undergraduate</span>
           <h3>B.Sc. (Honors) Biotechnology</h3>
-          <p style="color: var(--accent-slate)">
-            B.N. College Patna University
-          </p>
-          <p style="font-weight: 600; color: var(--accent-terracotta)">
+          <p style="color: var(--color-stone);">B.N. College Patna University</p>
+          <p style="font-weight: 700; color: var(--color-clay); font-size: 1.15rem; margin: 4px 0 10px;">
             CGPA: 7.79
           </p>
-          <a href="Marksheets/BSc_Honors_Biotechnology.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View Marksheet
+          <a href="Marksheets/BSc_Honors_Biotechnology.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+            <i class="fas fa-file-pdf"></i> View Marksheet
           </a>
         </div>
+
         <div class="card">
-          <span class="timeline-date">2017 — 2019</span>
+          <span class="mono-meta">2017 — 2019 • Higher Secondary</span>
           <h3>Intermediate (10+2)</h3>
-          <p style="color: var(--accent-slate)">Town Inter College</p>
-          <p style="font-weight: 600; color: var(--accent-terracotta)">
+          <p style="color: var(--color-stone);">Town Inter College</p>
+          <p style="font-weight: 700; color: var(--color-clay); font-size: 1.15rem; margin: 4px 0 10px;">
             Result: 73.50%
           </p>
-          <a href="Marksheets/Intermediate_10_plus_2.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View Marksheet
+          <a href="Marksheets/Intermediate_10_plus_2.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+            <i class="fas fa-file-pdf"></i> View Marksheet
           </a>
         </div>
+
         <div class="card">
-          <span class="timeline-date">2007 — 2017</span>
+          <span class="mono-meta">2007 — 2017 • Secondary</span>
           <h3>Secondary Education (10th)</h3>
-          <p style="color: var(--accent-slate)">St. Ignatius School</p>
-          <p style="font-weight: 600; color: var(--accent-terracotta)">
+          <p style="color: var(--color-stone);">St. Ignatius School</p>
+          <p style="font-weight: 700; color: var(--color-clay); font-size: 1.15rem; margin: 4px 0 10px;">
             CGPA: 7.60
           </p>
-          <a href="Marksheets/Secondary_Education_10th.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View Marksheet
+          <a href="Marksheets/Secondary_Education_10th.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+            <i class="fas fa-file-pdf"></i> View Marksheet
           </a>
         </div>
       </div>
     </section>
 
-    <!-- Skills & Expertise: Functional Grouping -->
-    <section id="skills" class="section-padding animate-in" style="animation-delay: 0.4s">
-      <h2 style="margin-bottom: var(--space-xl)">Technical Skills</h2>
-      <div class="skills-grid">
-        <div class="card skill-group">
-          <h3><i class="fas fa-terminal"></i> Programming</h3>
-          <div class="skill-tag">R (Bioconductor, Tidyverse, DESeq2)</div>
-          <div class="skill-tag">Python (Biopython, Pandas, numpy)</div>
-          <div class="skill-tag">JavaScript (React.js, Node.js)</div>
-          <div class="skill-tag">Linux Shell (Bash)</div>
-          <div class="skill-tag">C++</div>
+    <!-- Skills & Methodologies: Asymmetric Bento Grid -->
+    <section id="skills" class="section-padding animate-in">
+      <div class="skills-section-header">
+        <div>
+          <span class="section-eyebrow">Technical Competencies</span>
+          <h2 style="margin-bottom: 0;">Skills &amp; Methodologies</h2>
         </div>
-        <div class="card skill-group">
-          <h3><i class="fas fa-microscope"></i> Bioinformatics</h3>
-          <div class="skill-tag">Structure-Based Drug Design (AutoDock Vina, AmberTools26, Open Babel)</div>
-          <div class="skill-tag">NGS Analysis (Bowtie2, SAMtools, SRA-Toolkit, FastQC, GATK)</div>
-          <div class="skill-tag">RNA-seq Analysis(EdgeR, DESeq2, limma+voom)</div>
-          <div class="skill-tag">Cell Designer</div>
-          <div class="skill-tag">Cytoscape</div>
-          <div class="skill-tag">BLAST+</div>
+        <div class="skills-filter-nav">
+          <button class="skill-filter-btn active" data-filter="all">
+            All Domains <span class="badge-count">5</span>
+          </button>
+          <button class="skill-filter-btn" data-filter="genomics">
+            NGS &amp; Genomics <span class="badge-count">18</span>
+          </button>
+          <button class="skill-filter-btn" data-filter="drug-design">
+            Drug Design <span class="badge-count">4</span>
+          </button>
+          <button class="skill-filter-btn" data-filter="ml">
+            Programming &amp; AI <span class="badge-count">20</span>
+          </button>
+          <button class="skill-filter-btn" data-filter="hpc">
+            Linux &amp; HPC <span class="badge-count">9</span>
+          </button>
+          <button class="skill-filter-btn" data-filter="web-dev">
+            Web &amp; DB <span class="badge-count">11</span>
+          </button>
         </div>
-        <div class="card skill-group">
-          <h3><i class="fas fa-database"></i> Data & Research</h3>
-          <div class="skill-tag">Machine Learning (Scikit-Learn, TensorFlow, PyTorch, Keras)</div>
-          <div class="skill-tag">Database Management(MySQL, PostgreSQL)</div>
-          <div class="skill-tag">Systematic Reviews</div>
-          <div class="skill-tag">Data Mining</div>
+      </div>
+
+      <div class="skills-bento-grid">
+        <!-- 1. NGS & Genomics -->
+        <div class="skill-bento-card bento-col-7" data-category="genomics">
+          <div class="bento-card-header">
+            <div class="bento-title-group">
+              <div>
+                <h3>NGS &amp; Genomics</h3>
+                <span class="mono-meta">High-Throughput Sequencing &amp; Genomic Informatics</span>
+              </div>
+            </div>
+            <span class="kintsugi-tag accent">Core Domain</span>
+          </div>
+
+          <div class="bento-subgroup">
+            <div class="bento-sub-title">Pipelines &amp; Analysis Workflows</div>
+            <div class="bento-tag-cloud">
+              <span class="skill-chip chip-highlight">RNA-Seq Analysis</span>
+              <span class="skill-chip chip-highlight">Sequence Alignment</span>
+              <span class="skill-chip">Variant Calling (SNP/INDEL)</span>
+              <span class="skill-chip">CNV Analysis</span>
+              <span class="skill-chip">Differential Gene Expression</span>
+            </div>
+          </div>
+
+          <div class="bento-subgroup">
+            <div class="bento-sub-title">Genome Data Formats</div>
+            <div class="bento-tag-cloud">
+              <span class="skill-chip">FASTQ</span>
+              <span class="skill-chip">BAM</span>
+              <span class="skill-chip">VCF</span>
+              <span class="skill-chip">GFF/GTF</span>
+            </div>
+          </div>
+
+          <div class="bento-subgroup">
+            <div class="bento-sub-title">Bioinformatics Tools &amp; Packages</div>
+            <div class="bento-tag-cloud">
+              <span class="skill-chip">HISAT2</span>
+              <span class="skill-chip">Bowtie2</span>
+              <span class="skill-chip">SAMtools</span>
+              <span class="skill-chip">GATK</span>
+              <span class="skill-chip">FastQC</span>
+              <span class="skill-chip">SRA Toolkit</span>
+              <span class="skill-chip">CNVkit</span>
+              <span class="skill-chip">ANNOVAR</span>
+              <span class="skill-chip">DESeq2</span>
+              <span class="skill-chip">edgeR</span>
+              <span class="skill-chip">limma-voom</span>
+              <span class="skill-chip">IGV</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Structure-Based Drug Design -->
+        <div class="skill-bento-card bento-col-5" data-category="drug-design">
+          <div class="bento-card-header">
+            <div class="bento-title-group">
+              <div>
+                <h3>Structure-Based Drug Design</h3>
+                <span class="mono-meta">CADD &amp; Molecular Modeling</span>
+              </div>
+            </div>
+            <span class="kintsugi-tag">Biomolecular</span>
+          </div>
+
+          <div class="bento-subgroup">
+            <div class="bento-sub-title">Computational Chemistry &amp; Docking Tools</div>
+            <div class="bento-tag-cloud">
+              <span class="skill-chip chip-highlight">AutoDock Vina</span>
+              <span class="skill-chip chip-highlight">PyMOL</span>
+              <span class="skill-chip">AmberTools26</span>
+              <span class="skill-chip">Open Babel</span>
+            </div>
+          </div>
+
+          <div class="drug-design-feature">
+            <div style="font-weight: 700; color: var(--color-charcoal); margin-bottom: 4px;">
+              Methodological Focus
+            </div>
+            Protein-ligand preparation, binding affinity scoring, conformational searching, force field parameterization, and virtual screening workflows.
+          </div>
+        </div>
+
+        <!-- 3. Programming & Machine Learning (12-Col Flagship) -->
+        <div class="skill-bento-card bento-col-12" data-category="ml">
+          <div class="bento-card-header">
+            <div class="bento-title-group">
+              <div>
+                <h3>Programming &amp; Machine Learning</h3>
+                <span class="mono-meta">Scientific Computing, Statistical Modeling &amp; GenAI</span>
+              </div>
+            </div>
+            <span class="kintsugi-tag accent">Core Engine</span>
+          </div>
+
+          <div class="ml-subgrid">
+            <div class="bento-subgroup">
+              <div class="bento-sub-title">Languages &amp; Core Data</div>
+              <div class="bento-tag-cloud">
+                <span class="skill-chip chip-highlight">Python</span>
+                <span class="skill-chip">R (working knowledge)</span>
+                <span class="skill-chip">Pandas</span>
+                <span class="skill-chip">NumPy</span>
+              </div>
+            </div>
+
+            <div class="bento-subgroup">
+              <div class="bento-sub-title">ML &amp; Deep Learning</div>
+              <div class="bento-tag-cloud">
+                <span class="skill-chip chip-highlight">Scikit-learn</span>
+                <span class="skill-chip chip-highlight">TensorFlow</span>
+                <span class="skill-chip">Feature Engineering</span>
+                <span class="skill-chip">Classification</span>
+                <span class="skill-chip">Deep Learning</span>
+              </div>
+            </div>
+
+            <div class="bento-subgroup">
+              <div class="bento-sub-title">GenAI &amp; Large Language Models</div>
+              <div class="bento-tag-cloud">
+                <span class="skill-chip chip-highlight">NLP</span>
+                <span class="skill-chip chip-highlight">LLMs</span>
+                <span class="skill-chip">RAG</span>
+                <span class="skill-chip">LoRA / PEFT</span>
+                <span class="skill-chip">Vector Search</span>
+              </div>
+            </div>
+
+            <div class="bento-subgroup">
+              <div class="bento-sub-title">Biological AI</div>
+              <div class="bento-tag-cloud">
+                <span class="skill-chip chip-highlight">Biological Sequence Analysis</span>
+                <span class="skill-chip chip-highlight">ML for Biological Data</span>
+              </div>
+              <div style="margin-top: 10px; font-size: 0.9rem; color: var(--color-stone); line-height: 1.5;">
+                Applying predictive modeling and embedding search across genomic sequences and biomedical records.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Linux & HPC -->
+        <div class="skill-bento-card bento-col-6" data-category="hpc">
+          <div class="bento-card-header">
+            <div class="bento-title-group">
+              <div>
+                <h3>Linux &amp; HPC</h3>
+                <span class="mono-meta">High-Performance Computing &amp; DevOps</span>
+              </div>
+            </div>
+            <span class="kintsugi-tag">Infrastructure</span>
+          </div>
+
+          <div class="bento-subgroup">
+            <div class="bento-sub-title">HPC &amp; Systems Administration</div>
+            <div class="bento-tag-cloud">
+              <span class="skill-chip chip-highlight">Linux System Administration</span>
+              <span class="skill-chip chip-highlight">Bash / Shell Scripting</span>
+              <span class="skill-chip">HPC Clusters</span>
+              <span class="skill-chip">SLURM Job Scheduling</span>
+            </div>
+          </div>
+
+          <div class="bento-subgroup">
+            <div class="bento-sub-title">Environment &amp; Version Management</div>
+            <div class="bento-tag-cloud">
+              <span class="skill-chip">Git</span>
+              <span class="skill-chip">GitHub</span>
+              <span class="skill-chip">Conda</span>
+              <span class="skill-chip">Docker</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Web, Software & Database Development -->
+        <div class="skill-bento-card bento-col-6" data-category="web-dev">
+          <div class="bento-card-header">
+            <div class="bento-title-group">
+              <div>
+                <h3>Web &amp; Database Development</h3>
+                <span class="mono-meta">Full-Stack Web Platforms &amp; Storage</span>
+              </div>
+            </div>
+            <span class="kintsugi-tag">Engineering</span>
+          </div>
+
+          <div class="bento-subgroup">
+            <div class="bento-sub-title">Frameworks &amp; APIs</div>
+            <div class="bento-tag-cloud">
+              <span class="skill-chip chip-highlight">FastAPI</span>
+              <span class="skill-chip chip-highlight">Django</span>
+              <span class="skill-chip">Streamlit</span>
+              <span class="skill-chip">React.js</span>
+              <span class="skill-chip">REST APIs</span>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="bento-subgroup">
+              <div class="bento-sub-title">Databases</div>
+              <div class="bento-tag-cloud">
+                <span class="skill-chip">PostgreSQL</span>
+                <span class="skill-chip">SQLite</span>
+                <span class="skill-chip">SQLAlchemy</span>
+              </div>
+            </div>
+            <div class="bento-subgroup">
+              <div class="bento-sub-title">Frontend</div>
+              <div class="bento-tag-cloud">
+                <span class="skill-chip">HTML5</span>
+                <span class="skill-chip">CSS3</span>
+                <span class="skill-chip">Bootstrap</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Research Work & Publication -->
-    <section id="projects" class="section-padding animate-in" style="animation-delay: 0.5s; padding: var(--space-xl) 0">
-      <h2 style="margin-bottom: var(--space-xl)">Peer-Reviewed Research</h2>
+    <section id="publications" class="section-padding animate-in">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-m);">
+        <div>
+          <span class="section-eyebrow">Academic Publications</span>
+          <h2 style="margin-bottom: 0;">Publications &amp; Book Chapters</h2>
+        </div>
+        <span class="kintsugi-tag accent">Elsevier 2025</span>
+      </div>
+
       <div class="card">
         <div class="grid-phi">
           <div>
-            <span class="timeline-date">Elsevier, 2025</span>
-            <h3>Patient-Centric Care & Digital Health Tools</h3>
-            <p style="
-                  color: var(--accent-slate);
-                  font-style: italic;
-                  margin-bottom: var(--space-s);
-                ">
+            <span class="mono-meta">Elsevier, 2025</span>
+            <h3>Patient-Centric Care &amp; Digital Health Tools</h3>
+            <p style="color: var(--color-stone); font-style: italic; margin-bottom: 0.5rem;">
               Advances in Protein Chemistry and Structural Biology
             </p>
-            <p style="
-                  font-size: 0.9rem;
-                  color: var(--text-charcoal);
-                  margin-bottom: var(--space-m);
-                ">
+            <p style="font-size: 0.95rem; margin-bottom: var(--space-m);">
               Ali, A. M., Shah, S. N., <strong>Rizwee, F.</strong>, et al.
             </p>
             <a href="https://www.sciencedirect.com/science/article/abs/pii/S0079612325001207" target="_blank"
@@ -756,11 +1356,8 @@
               <i class="fas fa-external-link-alt"></i> Read Publication
             </a>
           </div>
-          <div style="
-                border-left: 2px solid var(--accent-slate);
-                padding-left: var(--space-l);
-              ">
-            <p style="color: var(--accent-slate)">
+          <div style="border-left: 1px solid rgba(139, 134, 128, 0.35); padding-left: var(--space-m); display: flex; align-items: center;">
+            <p style="color: var(--color-stone); font-size: 1rem;">
               Contributing to the structural biology perspective of digital
               health, focusing on the integration of protein chemistry data
               into patient-centric digital frameworks.
@@ -770,276 +1367,220 @@
       </div>
     </section>
 
-    <!-- Project Portfolio: Technical Deep-Dive -->
-    <section id="projects" class="section-padding animate-in" style="animation-delay: 0.6s; padding: var(--space-xl) 0">
-      <h2 style="margin-bottom: var(--space-xl)">Engineering & Pipelines</h2>
-      <div class="skills-grid" style="margin-bottom: var(--space-l)">
-        <div class="card project-wide-card">
+    <!-- Project Portfolio: Asymmetric Grid -->
+    <section id="projects" class="section-padding animate-in">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-m);">
+        <div>
+          <span class="section-eyebrow">Pipelines &amp; Development</span>
+          <h2 style="margin-bottom: 0;">Engineering &amp; Pipelines</h2>
+        </div>
+        <span class="kintsugi-tag">Open Source &amp; Research</span>
+      </div>
+
+      <div class="project-grid">
+        <div class="card">
+          <span class="kintsugi-tag accent">CLI Platform</span>
           <h3>DrugLab — CLI Platform for Computational Drug Discovery</h3>
-          <span class="timeline-date">Python • AutoDock Vina • Admet AI</span>
-          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            Built a lightweight, GPU-free, cloud-free CLI platform automating the full CADD workflow — protein/ligand preparation, binding-pocket detection, and AutoDock Vina docking. Engineered multi-criteria lead selection combining drug-likeness filters (Lipinski, Veber, PAINS, Brenk) with ADMET screening, plus a lead-optimization module for analogue generation and docking-validated candidate ranking. Designed a modular, fully reproducible pipeline with single-command execution, resumable stages, and config snapshots for every run.
+          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Python • AutoDock Vina • Admet AI</span>
+          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
+            Built a lightweight, GPU-free, cloud-free CLI platform automating the full CADD workflow — protein/ligand preparation, binding-pocket detection, and AutoDock Vina docking. Engineered multi-criteria lead selection combining drug-likeness filters with ADMET screening, plus lead-optimization ranking.
           </p>
-          <a href="https://github.com/faiyazrizwee/druglab" target="_blank"
-            class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem">
-            Check Github Repo <i class="fas fa-external-link-alt"></i>
+          <a href="https://github.com/faiyazrizwee/druglab" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
+            Check GitHub Repo <i class="fas fa-external-link-alt"></i>
           </a>
         </div>
 
-        <div class="card project-wide-card">
-          <h3>LLM-Powered NL2SQL & RAG Chatbot</h3>
-          <span class="timeline-date">Python • Django • LLM • RAG • PostgreSQL</span>
-          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            Developed an integrated platform featuring an LLM-powered Natural Language to SQL system and a
-            domain-specific RAG chatbot. The system utilizes document ingestion pipelines, vector embeddings, and
-            semantic retrieval to ground AI responses in scientific literature, improving factual accuracy and reducing
-            hallucinations. The robust backend is powered by Django and PostgreSQL to handle secure APIs, query
-            execution, and conversational interactions.
+        <div class="card">
+          <span class="kintsugi-tag">GenAI &amp; RAG</span>
+          <h3>LLM-Powered NL2SQL &amp; RAG Chatbot</h3>
+          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Python • Django • LLM • RAG • PostgreSQL</span>
+          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
+            Developed an integrated platform featuring an LLM-powered Natural Language to SQL system and a domain-specific RAG chatbot. The system utilizes document ingestion pipelines, vector embeddings, and semantic retrieval to ground AI responses in scientific literature.
           </p>
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="http://14.139.61.8/plantpepdb2/assistant/" target="_blank" class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem">
-              Live Demo: AI-Assistant <i class="fas fa-external-link-alt"></i>
-            </a>
-          </div>
+          <a href="http://14.139.61.8/plantpepdb2/assistant/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
+            Live Demo: AI-Assistant <i class="fas fa-external-link-alt"></i>
+          </a>
         </div>
 
-        <div class="card project-wide-card">
+        <div class="card">
+          <span class="kintsugi-tag matcha">BRIC-NIPGR</span>
           <h3>Multi class plant peptide family predictor</h3>
-          <span class="timeline-date">BRIC - National Institute of Plant Genome Research</span>
-          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            Built an end-to-end multiclass prediction platform for identifying plant peptide
-            families directly from protein sequences. The project involved dataset curation,
-            feature extraction, model training and evaluation, followed by deployment of the
-            best-performing model as an interactive web-based prediction tool within PlantPepDB 2.0.
-            Additionally, a standalone command-line interface (CLI) was developed to enable efficient
-            batch prediction and integration into bioinformatics workflows.
+          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Machine Learning • Sequence Classification</span>
+          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
+            Built an end-to-end multiclass prediction platform for identifying plant peptide families directly from protein sequences. The project involved dataset curation, feature extraction, model training and evaluation, deployed within PlantPepDB 2.0 with a standalone CLI.
           </p>
-          <a href="https://github.com/faiyazrizwee/multi-class-plant-peptide-predictor/" target="_blank"
-            class="btn btn-primary" style="padding: 8px 16px; font-size: 0.85rem">
-            Check Github Repo <i class="fas fa-external-link-alt"></i>
+          <a href="https://github.com/faiyazrizwee/multi-class-plant-peptide-predictor/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
+            Check GitHub Repo <i class="fas fa-external-link-alt"></i>
           </a>
         </div>
 
-        <div class="card project-wide-card">
-          <h3>PlantPepDB2 - (Dr. Shailesh Kumar)</h3>
-          <span class="timeline-date">BRIC - National Institute of Plant Genome Research</span>
-          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            I have developed a comprehensive plant peptide database using
-            Django and PostgreSQL. This project involved designing a robust
-            database schema to store and manage peptide data, and creating
-            a user-friendly web interface for researchers to access and query
-            the database efficiently.
+        <div class="card">
+          <span class="kintsugi-tag">Production DB</span>
+          <h3>PlantPepDB2 — (Dr. Shailesh Kumar)</h3>
+          <span class="mono-meta" style="display: block; margin-bottom: 8px;">BRIC - National Institute of Plant Genome Research</span>
+          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
+            Developed a comprehensive plant peptide database using Django and PostgreSQL. Involved designing a robust database schema to store and manage peptide data, and creating a user-friendly web interface for researchers to query data efficiently.
           </p>
-          <a href="http://14.139.61.8/plantpepdb2/" target="_blank" class="btn btn-primary"
-            style="padding: 8px 16px; font-size: 0.85rem">
+          <a href="http://14.139.61.8/plantpepdb2/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
             Go to Database <i class="fas fa-external-link-alt"></i>
           </a>
         </div>
 
-        <div class="card project-wide-card">
-          <h3>Gene2Therapy - (Prof. Syed Zeeshan Hussain)</h3>
-          <span class="timeline-date">Jamia Millia Islamia</span>
-          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            Developed an end-to-end bioinformatics pipeline (React.js and FastAPI) for
-            Differential Gene Expression (DGE) analysis. Integrated
-            KEGG/Reactome pathway enrichment.
+        <div class="card">
+          <span class="kintsugi-tag">FastAPI &amp; React</span>
+          <h3>Gene2Therapy — (Prof. Syed Zeeshan Hussain)</h3>
+          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Jamia Millia Islamia</span>
+          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
+            Developed an end-to-end bioinformatics pipeline (React.js and FastAPI) for Differential Gene Expression (DGE) analysis. Integrated KEGG/Reactome pathway enrichment.
           </p>
-          <a href="http://14.139.61.8/gene2therapy/" target="_blank" class="btn btn-primary"
-            style="padding: 8px 16px; font-size: 0.85rem">
+          <a href="http://14.139.61.8/gene2therapy/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
             Launch Tool <i class="fas fa-external-link-alt"></i>
           </a>
         </div>
 
-        <div class="card project-wide-card">
+        <div class="card">
+          <span class="kintsugi-tag">Full-Stack</span>
           <h3>Full-Stack Management System</h3>
-          <span class="timeline-date">Django & Docker</span>
-          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            This project was part of my hands-on learning journey in web
-            development, where I explored how to build and deploy a full-stack
-            application.
+          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Django &amp; Docker</span>
+          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
+            This project was part of my hands-on learning journey in web development, exploring how to build and deploy containerized full-stack applications.
           </p>
-          <a href="https://school-demo-six-drab.vercel.app" target="_blank" class="btn btn-primary"
-            style="padding: 8px 16px; font-size: 0.85rem">
+          <a href="https://school-demo-six-drab.vercel.app" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
             Live Demo <i class="fas fa-external-link-alt"></i>
           </a>
         </div>
 
         <div class="card">
+          <span class="kintsugi-tag">Neuro-Research</span>
           <h3>Epilepsy Biomarker Discovery</h3>
-          <h4>(Prof. R.K. Brojen Singh)</h4>
-          <span class="timeline-date">Jawahar Lal Nehru University</span>
-          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            Identifying biomarkers of Epilepsy using an integrated approach
-            combining Data Mining, Network-Based Pharmacology, and Machine
-            Learning.
+          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Jawaharlal Nehru University (Prof. R.K. Brojen Singh)</span>
+          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
+            Identifying biomarkers of Epilepsy using an integrated approach combining Data Mining, Network-Based Pharmacology, and Machine Learning.
           </p>
-          <a href="Certificates/Epilepsy_Biomarker_Discovery.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View Certificate
+          <a href="Certificates/Epilepsy_Biomarker_Discovery.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+            <i class="fas fa-file-pdf"></i> View Certificate
           </a>
         </div>
+
         <div class="card">
+          <span class="kintsugi-tag">NGS Workflows</span>
           <h3>Multi-omics Data Science</h3>
-          <h4>Dr. Mamta Gautam</h4>
-          <p style="font-size: 0.95rem; margin-bottom: var(--space-m)">
-            Advanced NGS toolkits at NextGen Helper. Variant calling workflows
-            and transcriptomics alignment (Bowtie2).
+          <span class="mono-meta" style="display: block; margin-bottom: 8px;">NextGen Helper (Dr. Mamta Gautam)</span>
+          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
+            Advanced NGS toolkits. Variant calling workflows and transcriptomics alignment (Bowtie2).
           </p>
-          <a href="Certificates/Multi-omics_Data_Science.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View Certificate
+          <a href="Certificates/Multi-omics_Data_Science.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+            <i class="fas fa-file-pdf"></i> View Certificate
           </a>
         </div>
       </div>
     </section>
 
     <!-- Certifications & Awards -->
-    <section id="certifications" class="section-padding animate-in" style="animation-delay: 0.7s">
-      <h2 style="margin-bottom: var(--space-xl)">Courses & Certifications</h2>
-      <div class="skills-grid">
+    <section id="certifications" class="section-padding animate-in">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-m);">
+        <div>
+          <span class="section-eyebrow">Professional Development</span>
+          <h2 style="margin-bottom: 0;">Courses &amp; Certifications</h2>
+        </div>
+        <span class="kintsugi-tag matcha">Verified</span>
+      </div>
+
+      <div class="cert-grid">
         <div class="card">
-          <i class="fas fa-certificate" style="
-                color: var(--accent-terracotta);
-                margin-bottom: var(--space-s);
-              "></i>
-          <p style="font-weight: 700">Systematic Review Paper Planning</p>
-          <p style="font-size: 0.85rem; color: var(--accent-slate)">
-            Dr. Zakir Husain Library, JMI
-          </p>
-          <a href="Certificates/Systematic_Review_Paper_Planning.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View
+          <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+          <h3>Systematic Review Paper Planning</h3>
+          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">Dr. Zakir Husain Library, JMI</p>
+          <a href="Certificates/Systematic_Review_Paper_Planning.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+            <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
+
         <div class="card">
-          <i class="fas fa-atom" style="
-                color: var(--accent-terracotta);
-                margin-bottom: var(--space-s);
-              "></i>
-          <p style="font-weight: 700">Molecular Docking Workshop</p>
-          <p style="font-size: 0.85rem; color: var(--accent-slate)">
-            AutoDock Vina & PyRx Hands-on
-          </p>
-          <a href="Certificates/Molecular_Docking_Workshop.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View
+          <div class="cert-icon"><i class="fas fa-atom"></i></div>
+          <h3>Molecular Docking Workshop</h3>
+          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">AutoDock Vina &amp; PyRx Hands-on</p>
+          <a href="Certificates/Molecular_Docking_Workshop.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+            <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
+
         <div class="card">
-          <i class="fas fa-brain" style="
-                color: var(--accent-terracotta);
-                margin-bottom: var(--space-s);
-              "></i>
-          <p style="font-weight: 700">Supervised Machine Learning</p>
-          <p style="font-size: 0.85rem; color: var(--accent-slate)">
-            Python-based implementation (Mindluster)
-          </p>
-          <a href="Certificates/Supervised_Machine_Learning.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View
+          <div class="cert-icon"><i class="fas fa-brain"></i></div>
+          <h3>Supervised Machine Learning</h3>
+          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">Python Implementation (Mindluster)</p>
+          <a href="Certificates/Supervised_Machine_Learning.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+            <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
+
         <div class="card">
-          <i class="fas fa-laptop-medical" style="
-                color: var(--accent-terracotta);
-                margin-bottom: var(--space-s);
-              "></i>
-          <p style="font-weight: 700">Intro to Bioinformatics</p>
-          <p style="font-size: 0.85rem; color: var(--accent-slate)">
-            Advancements & Tools (Biocode)
-          </p>
-          <a href="Certificates/Intro_to_Bioinformatics.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View
+          <div class="cert-icon"><i class="fas fa-laptop-medical"></i></div>
+          <h3>Intro to Bioinformatics</h3>
+          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">Advancements &amp; Tools (Biocode)</p>
+          <a href="Certificates/Intro_to_Bioinformatics.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+            <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
+
         <div class="card">
-          <i class="fas fa-video" style="
-                color: var(--accent-terracotta);
-                margin-bottom: var(--space-s);
-              "></i>
-          <p style="font-weight: 700">Webinars Attended</p>
-          <p style="font-size: 0.85rem; color: var(--accent-slate)">
-            NGS in medicine & TLC in Pharmacology
-          </p>
-          <a href="Certificates/Webinars_Attended.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View
+          <div class="cert-icon"><i class="fas fa-video"></i></div>
+          <h3>Webinars Attended</h3>
+          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">NGS in medicine &amp; TLC in Pharmacology</p>
+          <a href="Certificates/Webinars_Attended.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+            <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
+
         <div class="card">
-          <i class="fas fa-microscope" style="
-                color: var(--accent-terracotta);
-                margin-bottom: var(--space-s);
-              "></i>
-          <p style="font-weight: 700">Genomic Data Science Symposium</p>
-          <p style="font-size: 0.85rem; color: var(--accent-slate)">
-            BRIC-NIPGR, New Delhi (March 2026)
-          </p>
-          <a href="Certificates/Genomic_Data_Science_Symposium.pdf" target="_blank" class="btn btn-secondary"
-            style="padding: 8px 12px; font-size: 0.8rem; margin-top: 10px">
-            <i class="fas fa-eye"></i> View
+          <div class="cert-icon"><i class="fas fa-microscope"></i></div>
+          <h3>Genomic Data Science Symposium</h3>
+          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">BRIC-NIPGR, New Delhi (March 2026)</p>
+          <a href="Certificates/Genomic_Data_Science_Symposium.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+            <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer style="
-          text-align: center;
-          padding: var(--space-xl) 0;
-          border-top: 1px solid #d1d1cf;
-          margin-top: var(--space-xl);
-        ">
-      <p style="color: var(--accent-slate); font-size: 0.9rem">
-        &copy; 2026 Md Faiyaz Rizwee — Bioinformatician
+    <footer>
+      <p style="font-weight: 600; color: var(--color-charcoal); font-size: 1.05rem;">
+        &copy; 2026 Md Faiyaz Rizwee — Bioinformatics Researcher
+      </p>
+      <p class="footer-note">
+        Crafted with Cerâmica Wabi-Sabi principles — Imperfect, Natural, Contemplative
       </p>
     </footer>
   </div>
-  <!-- End Container -->
 
   <script>
-    // Smooth Scroll Logic with Bounce
-    let isScrolling = false;
-
+    // Smooth Scroll with easeOut
     const smoothScrollTo = (targetY) => {
-      isScrolling = true;
       const startY = window.pageYOffset || window.scrollY;
       const distance = targetY - startY;
-      const duration = 1400; // Slower, smoother duration
+      const duration = 600;
       let start = null;
 
-      // easeOutBack easing function for that premium bounce
-      const easeOutBack = (t) => {
-        const c1 = 1.30158; // Reduced for a smoother, less aggressive bounce
-        const c3 = c1 + 1;
-        return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
-      };
+      const easeOutQuad = (t) => t * (2 - t);
 
       const animation = (currentTime) => {
         if (start === null) start = currentTime;
         const timeElapsed = currentTime - start;
         const progress = Math.min(timeElapsed / duration, 1);
-
-        // Apply easeOutBack
-        const ease = easeOutBack(progress);
+        const ease = easeOutQuad(progress);
 
         window.scrollTo(0, startY + distance * ease);
 
         if (timeElapsed < duration) {
           requestAnimationFrame(animation);
-        } else {
-          // Buffer to allow the bounce to settle before re-enabling observer
-          setTimeout(() => {
-            isScrolling = false;
-          }, 100);
         }
       };
 
       requestAnimationFrame(animation);
     };
 
-    // Handle Nav Link and Logo Clicks
+    // Nav clicks
     document.addEventListener("click", (e) => {
       const logoLink = e.target.closest("#logo-link");
       const navLink = e.target.closest(".nav-links a");
@@ -1050,33 +1591,19 @@
 
         if (targetId === "#top") {
           smoothScrollTo(0);
-          const logo = document.querySelector("#logo-link");
-          logo.classList.add("clicked-bounce");
-          setTimeout(() => logo.classList.remove("clicked-bounce"), 500);
-
-          // Reset active state for all links when going to top
-          document.querySelectorAll(".nav-links a").forEach((link) => {
-            link.classList.remove("active");
-          });
+          document.querySelectorAll(".nav-links a").forEach((link) => link.classList.remove("active"));
         } else {
           const targetElement = document.querySelector(targetId);
           if (targetElement) {
-            // Manually set active state for the clicked link
-            if (navLink) {
-              document.querySelectorAll(".nav-links a").forEach((link) => {
-                link.classList.toggle("active", link === navLink);
-              });
-            }
-
             const navbar = document.querySelector(".navbar");
-            const offset = navbar ? navbar.offsetHeight + 40 : 100;
+            const offset = navbar ? navbar.offsetHeight + 24 : 70;
             smoothScrollTo(targetElement.offsetTop - offset);
           }
         }
       }
     });
 
-    // Active Section Highlighting
+    // Active Section Observer
     const observerOptions = {
       root: null,
       rootMargin: "-20% 0px -60% 0px",
@@ -1084,51 +1611,53 @@
     };
 
     const navObserver = new IntersectionObserver((entries) => {
-      if (isScrolling) return;
-
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const id = entry.target.getAttribute("id");
           document.querySelectorAll(".nav-links a").forEach((link) => {
-            link.classList.toggle(
-              "active",
-              link.getAttribute("href") === `#${id}`,
-            );
+            link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
           });
         }
       });
     }, observerOptions);
 
-    // Scroll to top on refresh
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-    window.scrollTo(0, 0);
-
     document.querySelectorAll("section[id]").forEach((section) => {
       navObserver.observe(section);
     });
 
-    // Staggered Text Reveal Initialization
-    const initHeroStagger = () => {
-      const split = (el) => {
-        const text = el.innerText;
-        el.innerHTML = text
-          .split("")
-          .map(
-            (char, i) =>
-              `<span style="transition-delay: ${i * 20}ms">${char === " " ? "&nbsp;" : char}</span>`,
-          )
-          .join("");
-      };
-      const main = document.querySelector(".name-main");
-      const sub = document.querySelector(".name-sub");
-      if (main) split(main);
-      if (sub) split(sub);
-    };
-    initHeroStagger();
+    // Skills Filter
+    const skillFilterBtns = document.querySelectorAll(".skill-filter-btn");
+    const skillCards = document.querySelectorAll(".skill-bento-card");
 
-    // PDF Download Logic
+    if (skillFilterBtns.length > 0) {
+      skillFilterBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          skillFilterBtns.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const filter = btn.getAttribute("data-filter");
+
+          skillCards.forEach((card) => {
+            if (filter === "all" || card.getAttribute("data-category") === filter) {
+              card.style.display = "flex";
+              if (filter !== "all") {
+                card.classList.add("is-filtered-single");
+              } else {
+                card.classList.remove("is-filtered-single");
+              }
+              card.classList.remove("skill-animate-appear");
+              void card.offsetWidth;
+              card.classList.add("skill-animate-appear");
+            } else {
+              card.style.display = "none";
+              card.classList.remove("is-filtered-single");
+            }
+          });
+        });
+      });
+    }
+
+    // PDF Download
     document.addEventListener("click", function (e) {
       const downloadBtn = e.target.closest("#download-cv");
       if (downloadBtn) {
@@ -1142,90 +1671,38 @@
       }
     });
 
-    // 3D Scroll Perspective Logic
-    const sections = document.querySelectorAll("section");
-
-    const handle3DScroll = () => {
-      const viewportHeight = window.innerHeight;
-
-      sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const sectionCenter = rect.top + rect.height / 2;
-        const distanceFromCenter = sectionCenter - viewportHeight / 2;
-
-        // Calculate tilt based on distance from viewport center
-        // Higher value = more tilt
-        // Apply 3D transform - subtler on small screens
-        if (rect.top < viewportHeight && rect.bottom > 0) {
-          const isMobile = window.innerWidth < 768;
-          const tiltFactor = 0.05;
-          const rotation = distanceFromCenter * tiltFactor;
-
-          const scrollFactor = isMobile ? 0.02 : 0.1;
-          const rotationFactor = isMobile ? 0.3 : 1;
-          const tiltLimit = isMobile ? 5 : 15;
-
-          const finalRotation = Math.max(
-            Math.min(rotation * rotationFactor, tiltLimit),
-            -tiltLimit,
-          );
-
-          section.style.transform = `translateY(${distanceFromCenter * scrollFactor}px) scale(${1 - Math.abs(distanceFromCenter) * (isMobile ? 0.00005 : 0.0001)})`;
-          section.style.opacity = 1 - Math.abs(distanceFromCenter) * 0.0005;
-        }
-      });
-    };
-
-    // Initial call and scroll event listener
-    window.addEventListener("scroll", () => {
-      requestAnimationFrame(handle3DScroll);
-    });
-
-    // Simple Intersection Observer for initial entrance animations
-    const observer = new IntersectionObserver(
+    // Simple Intersection Observer for entry animations
+    const entryObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-in");
-            observer.unobserve(entry.target);
+            entryObserver.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1 },
+      { threshold: 0.08 }
     );
 
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
+    document.querySelectorAll("section").forEach((s) => entryObserver.observe(s));
 
-    handle3DScroll(); // Run once on load
-
-    // --- Visitor Tracking Logic (with Location) ---
-    // STEP 1: Replace this URL with your Google Apps Script Web App URL
+    // Visitor Tracking
     const trackingUrl = "https://script.google.com/macros/s/AKfycbxxzhO_G6hvszSr-FK8PQY7_XHT0o7-I0W4G8ftpIuWjtKMTD9hol6HX7J28bkCo-mD/exec";
-    
-    // Check if we've already tracked this visit in this session
     if (!sessionStorage.getItem("visitTracked") && trackingUrl !== "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
-      
-      // Fetch the visitor's location first using a free IP geolocation API
       fetch("https://get.geojs.io/v1/ip/geo.json")
-        .then(response => response.json())
-        .then(geoData => {
+        .then((res) => res.json())
+        .then((geoData) => {
           const country = geoData.country || "Unknown";
           const city = geoData.city || "Unknown";
           const userAgent = encodeURIComponent(navigator.userAgent);
-          
-          // Now send the location data along with userAgent to your Google Apps Script
           const fullUrl = `${trackingUrl}?userAgent=${userAgent}&country=${encodeURIComponent(country)}&city=${encodeURIComponent(city)}`;
-          
           return fetch(fullUrl, { method: "GET" });
         })
-        .then(response => response.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           sessionStorage.setItem("visitTracked", "true");
-          console.log("Visit tracked successfully. Total visits:", data.totalVisits);
         })
-        .catch(err => console.error("Error tracking visit:", err));
+        .catch((err) => console.error("Error tracking visit:", err));
     }
   </script>
 </body>
