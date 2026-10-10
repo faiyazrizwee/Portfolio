@@ -33,6 +33,20 @@
       --font-body: "Cormorant Garamond", Garamond, Georgia, serif;
       --font-mono: "JetBrains Mono", monospace;
 
+      /* Fluid Responsive Typography Scale (clamp min, preferred rem+vw, max) */
+      --font-size-hero: clamp(2.25rem, 1.45rem + 3.2vw, 3.85rem);
+      --font-size-h1: clamp(2rem, 1.35rem + 2.5vw, 3.25rem);
+      --font-size-h2: clamp(1.65rem, 1.35rem + 1.2vw, 2.25rem);
+      --font-size-h3: clamp(1.22rem, 1.1rem + 0.5vw, 1.5rem);
+      --font-size-lead: clamp(1.05rem, 0.98rem + 0.35vw, 1.2rem);
+      --font-size-subhead: clamp(1.15rem, 1.05rem + 0.45vw, 1.35rem);
+      --font-size-body: clamp(0.96rem, 0.92rem + 0.22vw, 1.05rem);
+      --font-size-nav: clamp(0.85rem, 0.8rem + 0.22vw, 0.95rem);
+      --font-size-nav-logo: clamp(1.25rem, 1.15rem + 0.45vw, 1.45rem);
+      --font-size-ui: clamp(0.86rem, 0.82rem + 0.2vw, 0.95rem);
+      --font-size-meta: clamp(0.74rem, 0.7rem + 0.16vw, 0.82rem);
+      --font-size-tag: clamp(0.68rem, 0.64rem + 0.12vw, 0.74rem);
+
       /* Spacing Scale (Base unit: 0.5rem / 8px) */
       --space-xs: 0.5rem;   /* 8px */
       --space-s: 1rem;      /* 16px */
@@ -73,10 +87,10 @@
       background-color: var(--color-cream);
       color: var(--color-charcoal);
       font-family: var(--font-body);
-      font-size: 1.05rem;
+      font-size: var(--font-size-body);
       line-height: 1.6;
       min-height: 100dvh;
-      overflow-x: hidden;
+      overflow-x: clip;
       position: relative;
     }
 
@@ -125,7 +139,7 @@
     }
 
     /* ========================================================
-       Typography Scale (DESIGN.md)
+       Typography Scale (DESIGN.md: Fluid with clamp)
        ======================================================== */
     h1, h2, h3, h4 {
       font-family: var(--font-display);
@@ -133,35 +147,37 @@
       line-height: 1.15;
       letter-spacing: -0.015em;
       color: var(--color-charcoal);
+      text-wrap: balance;
     }
 
     h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: var(--font-size-hero);
       margin-bottom: var(--space-s);
     }
 
     h2 {
-      font-size: 2.25rem;
+      font-size: var(--font-size-h2);
       margin-bottom: var(--space-m);
       position: relative;
     }
 
     h3 {
-      font-size: 1.5rem;
+      font-size: var(--font-size-h3);
       margin-bottom: 0.5rem;
       font-weight: 600;
     }
 
     p {
       max-width: 72ch;
-      font-size: 1.05rem;
+      font-size: var(--font-size-body);
       line-height: 1.65;
       color: var(--color-charcoal);
+      text-wrap: pretty;
     }
 
     .mono-meta {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: var(--font-size-meta);
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--color-stone);
@@ -217,7 +233,7 @@
 
     .nav-logo {
       font-family: var(--font-display);
-      font-size: 1.45rem;
+      font-size: var(--font-size-nav-logo);
       font-weight: 700;
       letter-spacing: 0.05em;
       text-decoration: none;
@@ -234,7 +250,7 @@
 
     .logo-accent {
       color: var(--color-clay);
-      font-size: 1.35rem;
+      font-size: 0.9em;
     }
 
     .nav-links {
@@ -245,7 +261,7 @@
 
     .nav-links a {
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: var(--font-size-nav);
       font-weight: 500;
       letter-spacing: 0.06em;
       text-decoration: none;
@@ -274,19 +290,90 @@
       background-color: var(--color-clay);
     }
 
+    .nav-toggle {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .nav-container {
-        flex-direction: column;
-        gap: 0.75rem;
-        padding: 0.85rem 1rem;
+        padding: 0.75rem 1.25rem;
+        position: relative;
       }
-      .nav-links {
-        gap: 1rem;
-        flex-wrap: wrap;
+
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: 1px solid rgba(139, 134, 128, 0.45);
+        color: var(--color-charcoal);
+        font-size: 1.15rem;
+        cursor: pointer;
+        border-radius: var(--radius-base);
+        transition: all 200ms ease-out;
       }
+
+      .nav-toggle:hover,
+      .nav-toggle:focus-visible {
+        border-color: var(--color-clay);
+        color: var(--color-clay);
+        background: rgba(160, 82, 45, 0.06);
+        outline: none;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background-color: var(--color-cream-light);
+        border-bottom: 2px solid var(--color-clay);
+        box-shadow: 0 8px 24px rgba(54, 69, 79, 0.12);
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        display: flex;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: max-height 280ms ease-out, opacity 200ms ease-out, padding 200ms ease-out;
+      }
+
+      .nav-links.is-open {
+        max-height: 380px;
+        opacity: 1;
+        pointer-events: auto;
+        padding: 0.5rem 0;
+      }
+
       .nav-links a {
-        font-size: 0.85rem;
+        display: block;
+        padding: 0.75rem 1.5rem;
+        font-size: var(--font-size-ui);
+        color: var(--color-charcoal);
+        border-left: 3px solid transparent;
+        transition: all 180ms ease-out;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(160, 82, 45, 0.06);
+        color: var(--color-clay);
+        border-left-color: var(--color-clay);
+      }
+
+      .nav-links a.active {
+        color: var(--color-clay);
+        font-weight: 700;
+        background-color: rgba(160, 82, 45, 0.08);
+        border-left-color: var(--color-gold);
+      }
+
+      .nav-links a.active::after {
+        display: none;
       }
     }
 
@@ -307,7 +394,7 @@
 
     .hero-eyebrow {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: var(--font-size-meta);
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--color-clay);
@@ -324,14 +411,14 @@
 
     .hero-subtitle {
       font-family: var(--font-display);
-      font-size: 1.35rem;
+      font-size: var(--font-size-subhead);
       font-style: italic;
       color: var(--color-stone);
       margin-bottom: var(--space-m);
     }
 
     .hero-bio {
-      font-size: 1.15rem;
+      font-size: var(--font-size-lead);
       line-height: 1.7;
       margin-bottom: var(--space-m);
       color: var(--color-charcoal);
@@ -396,7 +483,7 @@
 
     .caption-label {
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: var(--font-size-ui);
       font-weight: 700;
       color: var(--color-charcoal);
       letter-spacing: 0.05em;
@@ -404,7 +491,7 @@
 
     .caption-sub {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: var(--font-size-tag);
       color: var(--color-stone);
       letter-spacing: 0.04em;
     }
@@ -418,10 +505,61 @@
         order: -1;
       }
       .hero-portrait-frame {
-        max-width: 320px;
+        max-width: 270px;
+        padding: 10px;
+        box-shadow: 
+          5px 5px 0px var(--color-clay),
+          10px 10px 0px rgba(212, 175, 55, 0.28);
       }
       .hero-portrait-img {
-        height: 380px;
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-portrait-frame {
+        max-width: 210px;
+        padding: 8px;
+        box-shadow: 
+          4px 4px 0px var(--color-clay),
+          8px 8px 0px rgba(212, 175, 55, 0.26);
+      }
+      .hero-portrait-frame::before {
+        right: 16px;
+        width: 32px;
+      }
+      .hero-portrait-img {
+        height: 230px;
+      }
+      .portrait-caption {
+        margin-top: 8px;
+        padding-top: 6px;
+      }
+    }
+
+    /* Small phones: Galaxy S23 (~360px), iPhone SE (~375px), iPhone Mini, etc. */
+    @media (max-width: 400px) {
+      .hero {
+        padding: var(--space-l) 0 var(--space-m);
+      }
+      .container {
+        padding: 0 1rem;
+      }
+      .hero-portrait-frame {
+        max-width: 180px;
+        padding: 7px;
+        box-shadow: 
+          3px 3px 0px var(--color-clay),
+          6px 6px 0px rgba(212, 175, 55, 0.25);
+      }
+      .hero-portrait-img {
+        height: 195px;
+      }
+      .caption-label {
+        font-size: 0.8rem;
+      }
+      .caption-sub {
+        font-size: 0.62rem;
       }
     }
 
@@ -435,7 +573,7 @@
       gap: 8px;
       padding: 10px 20px;
       font-family: var(--font-body);
-      font-size: 0.95rem;
+      font-size: var(--font-size-ui);
       font-weight: 600;
       letter-spacing: 0.04em;
       text-decoration: none;
@@ -444,6 +582,11 @@
       transition: all 200ms ease-out;
       border: 1px solid transparent;
       user-select: none;
+    }
+
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: var(--font-size-meta);
     }
 
     .btn-primary {
@@ -528,7 +671,7 @@
 
     .section-eyebrow {
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: var(--font-size-meta);
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--color-clay);
@@ -539,7 +682,7 @@
     /* Tag badge */
     .kintsugi-tag {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: var(--font-size-tag);
       letter-spacing: 0.05em;
       text-transform: uppercase;
       padding: 3px 8px;
@@ -592,7 +735,7 @@
       border: 1px solid transparent;
       padding: 6px 14px;
       font-family: var(--font-display);
-      font-size: 0.95rem;
+      font-size: var(--font-size-ui);
       font-weight: 600;
       cursor: pointer;
       border-radius: var(--radius-base);
@@ -615,7 +758,7 @@
 
     .skill-filter-btn .badge-count {
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: var(--font-size-tag);
       padding: 1px 5px;
       background: rgba(54, 69, 79, 0.08);
       color: var(--color-stone);
@@ -708,7 +851,7 @@
 
     .bento-sub-title {
       font-family: var(--font-mono);
-      font-size: 0.74rem;
+      font-size: var(--font-size-meta);
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--color-stone);
@@ -736,7 +879,7 @@
       background: var(--color-cream);
       color: var(--color-charcoal);
       font-family: var(--font-body);
-      font-size: 0.95rem;
+      font-size: var(--font-size-ui);
       font-weight: 500;
       padding: 4px 10px;
       border: 1px solid rgba(139, 134, 128, 0.4);
@@ -772,7 +915,7 @@
       background: var(--color-cream);
       border: 1px solid rgba(139, 134, 128, 0.35);
       border-left: 3px solid var(--color-matcha);
-      font-size: 0.95rem;
+      font-size: var(--font-size-ui);
       color: var(--color-stone);
       line-height: 1.55;
     }
@@ -832,20 +975,167 @@
       }
     }
 
-    .project-wide-card {
-      grid-column: span 3;
-      border-left: 4px solid var(--color-clay) !important;
+    /* ========================================================
+       Engineering & Pipelines — Horizontal Scroll-Pinned Conveyor
+       Translates horizontally on vertical scroll, then unpins.
+       ======================================================== */
+    .projects-pin-section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      background-color: var(--color-cream);
+      margin: var(--space-xl) 0;
     }
 
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-m);
+    .projects-sticky-frame {
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1rem 0 2rem;
+      box-sizing: border-box;
     }
 
-    @media (max-width: 800px) {
-      .project-grid {
-        grid-template-columns: 1fr;
+    .projects-sticky-header {
+      margin-bottom: var(--space-m);
+      flex-shrink: 0;
+    }
+
+    .projects-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .projects-header-meta {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .projects-progress-track {
+      width: 100%;
+      height: 2px;
+      background: rgba(139, 134, 128, 0.25);
+      position: relative;
+      margin-top: 10px;
+    }
+
+    .projects-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--color-clay), var(--color-gold));
+      transition: width 60ms linear;
+    }
+
+    .projects-track-viewport {
+      width: 100%;
+      overflow: hidden;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .projects-horizontal-track {
+      display: flex;
+      gap: 24px;
+      padding-left: max(1.5rem, calc((100vw - var(--max-width)) / 2 + 1.5rem));
+      padding-right: 25vw;
+      width: max-content;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .project-h-card {
+      flex: 0 0 clamp(310px, 31vw, 430px);
+      min-height: 380px;
+      max-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--color-cream-light);
+      border: 1px solid rgba(139, 134, 128, 0.35);
+      border-radius: var(--radius-base);
+      padding: var(--space-m);
+      box-shadow: var(--shadow-card);
+      position: relative;
+      /* Initial state: appearing from opacity when at 40% of the screen */
+      opacity: 0.15;
+      transform: translateY(14px) scale(0.96);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 200ms ease-out,
+                  box-shadow 200ms ease-out;
+      will-change: opacity, transform;
+    }
+
+    .project-h-card::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
+      width: 32px;
+      height: 2px;
+      background-color: var(--color-gold);
+    }
+
+    .project-h-card:hover {
+      border-color: var(--color-clay);
+      box-shadow: 0 6px 18px rgba(54, 69, 79, 0.1);
+    }
+
+    /* Active state when card reaches 40% of the screen */
+    .project-h-card.is-in-view {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .project-h-card-body {
+      margin-bottom: var(--space-m);
+    }
+
+    .project-h-card-body h3 {
+      margin-bottom: 6px;
+    }
+
+    .project-h-card-body p {
+      margin-top: 8px;
+    }
+
+    .project-h-card-footer {
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .projects-sticky-frame {
+        top: 50px;
+        height: calc(100vh - 50px);
+        padding: 0.75rem 0 1.25rem;
+      }
+      .projects-horizontal-track {
+        gap: 16px;
+        padding-left: 1rem;
+        padding-right: 30vw;
+      }
+      .project-h-card {
+        flex: 0 0 clamp(270px, 82vw, 340px);
+        min-height: 330px;
+        padding: 1.1rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .project-h-card {
+        flex: 0 0 270px;
+        min-height: 310px;
+        padding: 1rem;
       }
     }
 
@@ -869,7 +1159,7 @@
     }
 
     .cert-icon {
-      font-size: 1.5rem;
+      font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.6rem);
       color: var(--color-clay);
       margin-bottom: 0.5rem;
     }
@@ -885,28 +1175,72 @@
       background: var(--color-cream);
     }
 
+    .footer-copy {
+      font-family: var(--font-display);
+      font-size: var(--font-size-subhead);
+      font-weight: 700;
+      color: var(--color-clay);
+      letter-spacing: 0.02em;
+      margin: 0;
+    }
+
     .footer-note {
       font-family: var(--font-display);
       font-style: italic;
       color: var(--color-stone);
-      font-size: 0.95rem;
+      font-size: var(--font-size-ui);
       margin-top: 4px;
     }
 
-    /* Subtle Entry Animation */
-    @keyframes wabiFadeIn {
+    /* ========================================================
+       Scroll-Driven Enter Transition Effects
+       @keyframes appear: from { opacity: 0; scale: 0.5 } to { opacity: 1; scale: 1 }
+       animation-timeline: view();
+       animation-range: entry 0% cover 40%;
+       ======================================================== */
+    @keyframes appear {
       from {
         opacity: 0;
-        transform: translateY(16px);
+        scale: 0.5;
       }
       to {
         opacity: 1;
-        transform: translateY(0);
+        scale: 1;
       }
     }
 
-    .animate-in {
-      animation: wabiFadeIn 420ms ease-out forwards;
+    /* Standard Scroll-Driven Animation on elements */
+    .reveal-on-scroll {
+      animation: appear linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+      transform-origin: center;
+      will-change: opacity, scale;
+    }
+
+    /* Fallback for browsers that do not yet support CSS scroll-driven animation-timeline */
+    @supports not (animation-timeline: view()) {
+      .reveal-on-scroll {
+        opacity: 0;
+        scale: 0.5;
+        transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+                    scale 600ms cubic-bezier(0.16, 1, 0.3, 1);
+        animation: none;
+      }
+
+      .reveal-on-scroll.is-revealed {
+        opacity: 1;
+        scale: 1;
+      }
+    }
+
+    /* Accessibility: Respect user preference for reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-on-scroll {
+        animation: none !important;
+        opacity: 1 !important;
+        scale: 1 !important;
+      }
     }
   </style>
 </head>
@@ -921,7 +1255,10 @@
       <a href="#top" id="logo-link" class="nav-logo">
         RIZWEE<span class="logo-accent">.BIO</span>
       </a>
-      <div class="nav-links">
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+      <div class="nav-links" id="nav-menu">
         <a href="#about">ABOUT</a>
         <a href="#academics">ACADEMICS</a>
         <a href="#skills">SKILLS</a>
@@ -933,7 +1270,7 @@
 
   <div class="container">
     <!-- Hero Section: Asymmetric Composition with portrait 'faiyaz.jpeg' -->
-    <section class="hero section-padding animate-in" id="top">
+    <section class="hero section-padding" id="top">
       <div class="hero-asymmetric-grid">
         <div class="hero-content">
           <div class="hero-eyebrow">
@@ -984,7 +1321,7 @@
     <div class="kintsugi-line"></div>
 
     <!-- About / Research Summary -->
-    <section id="about" class="section-padding animate-in">
+    <section id="about" class="section-padding">
       <div class="grid-phi">
         <div class="card">
           <span class="kintsugi-tag accent">Research Profile</span>
@@ -1022,7 +1359,7 @@
     </section>
 
     <!-- Education: Structured Grid -->
-    <section id="academics" class="section-padding animate-in">
+    <section id="academics" class="section-padding">
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-m);">
         <div>
           <span class="section-eyebrow">Academic Credentials</span>
@@ -1036,10 +1373,10 @@
           <span class="mono-meta">2024 — 2026 • Postgraduate</span>
           <h3>M.Sc. Bioinformatics</h3>
           <p style="color: var(--color-stone);">Jamia Millia Islamia, Delhi</p>
-          <p style="font-weight: 700; color: var(--color-clay); font-size: 1.15rem; margin: 4px 0 10px;">
+          <p style="font-weight: 700; color: var(--color-clay); font-size: var(--font-size-lead); margin: 4px 0 10px;">
             CGPA: 9.68
           </p>
-          <a href="Marksheets/MSc_Bioinformatics.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+          <a href="Marksheets/MSc_Bioinformatics.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-file-pdf"></i> View Marksheet
           </a>
         </div>
@@ -1048,10 +1385,10 @@
           <span class="mono-meta">2019 — 2022 • Undergraduate</span>
           <h3>B.Sc. (Honors) Biotechnology</h3>
           <p style="color: var(--color-stone);">B.N. College Patna University</p>
-          <p style="font-weight: 700; color: var(--color-clay); font-size: 1.15rem; margin: 4px 0 10px;">
+          <p style="font-weight: 700; color: var(--color-clay); font-size: var(--font-size-lead); margin: 4px 0 10px;">
             CGPA: 7.79
           </p>
-          <a href="Marksheets/BSc_Honors_Biotechnology.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+          <a href="Marksheets/BSc_Honors_Biotechnology.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-file-pdf"></i> View Marksheet
           </a>
         </div>
@@ -1060,10 +1397,10 @@
           <span class="mono-meta">2017 — 2019 • Higher Secondary</span>
           <h3>Intermediate (10+2)</h3>
           <p style="color: var(--color-stone);">Town Inter College</p>
-          <p style="font-weight: 700; color: var(--color-clay); font-size: 1.15rem; margin: 4px 0 10px;">
+          <p style="font-weight: 700; color: var(--color-clay); font-size: var(--font-size-lead); margin: 4px 0 10px;">
             Result: 73.50%
           </p>
-          <a href="Marksheets/Intermediate_10_plus_2.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+          <a href="Marksheets/Intermediate_10_plus_2.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-file-pdf"></i> View Marksheet
           </a>
         </div>
@@ -1072,10 +1409,10 @@
           <span class="mono-meta">2007 — 2017 • Secondary</span>
           <h3>Secondary Education (10th)</h3>
           <p style="color: var(--color-stone);">St. Ignatius School</p>
-          <p style="font-weight: 700; color: var(--color-clay); font-size: 1.15rem; margin: 4px 0 10px;">
+          <p style="font-weight: 700; color: var(--color-clay); font-size: var(--font-size-lead); margin: 4px 0 10px;">
             CGPA: 7.60
           </p>
-          <a href="Marksheets/Secondary_Education_10th.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
+          <a href="Marksheets/Secondary_Education_10th.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-file-pdf"></i> View Marksheet
           </a>
         </div>
@@ -1083,7 +1420,7 @@
     </section>
 
     <!-- Skills & Methodologies: Asymmetric Bento Grid -->
-    <section id="skills" class="section-padding animate-in">
+    <section id="skills" class="section-padding">
       <div class="skills-section-header">
         <div>
           <span class="section-eyebrow">Technical Competencies</span>
@@ -1245,7 +1582,7 @@
                 <span class="skill-chip chip-highlight">Biological Sequence Analysis</span>
                 <span class="skill-chip chip-highlight">ML for Biological Data</span>
               </div>
-              <div style="margin-top: 10px; font-size: 0.9rem; color: var(--color-stone); line-height: 1.5;">
+              <div style="margin-top: 10px; font-size: var(--font-size-ui); color: var(--color-stone); line-height: 1.5;">
                 Applying predictive modeling and embedding search across genomic sequences and biomedical records.
               </div>
             </div>
@@ -1331,7 +1668,7 @@
     </section>
 
     <!-- Research Work & Publication -->
-    <section id="publications" class="section-padding animate-in">
+    <section id="publications" class="section-padding">
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-m);">
         <div>
           <span class="section-eyebrow">Academic Publications</span>
@@ -1348,7 +1685,7 @@
             <p style="color: var(--color-stone); font-style: italic; margin-bottom: 0.5rem;">
               Advances in Protein Chemistry and Structural Biology
             </p>
-            <p style="font-size: 0.95rem; margin-bottom: var(--space-m);">
+            <p style="font-size: var(--font-size-ui); margin-bottom: var(--space-m);">
               Ali, A. M., Shah, S. N., <strong>Rizwee, F.</strong>, et al.
             </p>
             <a href="https://www.sciencedirect.com/science/article/abs/pii/S0079612325001207" target="_blank"
@@ -1357,7 +1694,7 @@
             </a>
           </div>
           <div style="border-left: 1px solid rgba(139, 134, 128, 0.35); padding-left: var(--space-m); display: flex; align-items: center;">
-            <p style="color: var(--color-stone); font-size: 1rem;">
+            <p style="color: var(--color-stone); font-size: var(--font-size-body);">
               Contributing to the structural biology perspective of digital
               health, focusing on the integration of protein chemistry data
               into patient-centric digital frameworks.
@@ -1367,129 +1704,189 @@
       </div>
     </section>
 
-    <!-- Project Portfolio: Asymmetric Grid -->
-    <section id="projects" class="section-padding animate-in">
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-m);">
-        <div>
-          <span class="section-eyebrow">Pipelines &amp; Development</span>
-          <h2 style="margin-bottom: 0;">Engineering &amp; Pipelines</h2>
+  </div> <!-- /.container -->
+
+  <!-- Project Portfolio: Horizontal Scroll-Pinned Conveyor -->
+  <section id="projects" class="projects-pin-section">
+    <div class="projects-sticky-frame">
+      <div class="container projects-sticky-header">
+        <div class="projects-header-flex">
+          <div>
+            <span class="section-eyebrow">Pipelines &amp; Development</span>
+            <h2 style="margin-bottom: 0;">Engineering &amp; Pipelines</h2>
+          </div>
+          <div class="projects-header-meta">
+            <span class="kintsugi-tag accent" id="projects-counter">1 / 9</span>
+          </div>
         </div>
-        <span class="kintsugi-tag">Open Source &amp; Research</span>
-      </div>
-
-      <div class="card" style="margin-bottom: var(--space-m);">
-        <span class="kintsugi-tag accent">sORF Prediction</span>
-        <h3>SOPHIA — Short Open Reading Frame Prediction using Holistic Integrated Analysis</h3>
-        <span class="mono-meta" style="display: block; margin-bottom: 8px;">Python • Machine Learning • Web &amp; Windows App</span>
-        <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-          Developed a plant-focused computational framework with web and Windows applications for identifying and evaluating small open reading frames (sORFs). Integrated sequence analysis, ORF extraction and translation, feature generation, and machine-learning-based coding-potential classification into an end-to-end workflow.
-        </p>
-        <a href="http://14.139.61.8/sophia" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
-          Launch Tool <i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-
-      <div class="project-grid">
-        <div class="card">
-          <span class="kintsugi-tag accent">CLI Platform</span>
-          <h3>DrugLab — CLI Platform for Computational Drug Discovery</h3>
-          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Python • AutoDock Vina • Admet AI</span>
-          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-            Built a lightweight, GPU-free, cloud-free CLI platform automating the full CADD workflow — protein/ligand preparation, binding-pocket detection, and AutoDock Vina docking. Engineered multi-criteria lead selection combining drug-likeness filters with ADMET screening, plus lead-optimization ranking.
-          </p>
-          <a href="https://github.com/faiyazrizwee/druglab" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
-            Check GitHub Repo <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-
-        <div class="card">
-          <span class="kintsugi-tag">GenAI &amp; RAG</span>
-          <h3>LLM-Powered NL2SQL &amp; RAG Chatbot</h3>
-          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Python • Django • LLM • RAG • PostgreSQL</span>
-          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-            Developed an integrated platform featuring an LLM-powered Natural Language to SQL system and a domain-specific RAG chatbot. The system utilizes document ingestion pipelines, vector embeddings, and semantic retrieval to ground AI responses in scientific literature.
-          </p>
-          <a href="http://14.139.61.8/plantpepdb2/assistant/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
-            Live Demo: AI-Assistant <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-
-        <div class="card">
-          <span class="kintsugi-tag matcha">BRIC-NIPGR</span>
-          <h3>Multi class plant peptide family predictor</h3>
-          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Machine Learning • Sequence Classification</span>
-          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-            Built an end-to-end multiclass prediction platform for identifying plant peptide families directly from protein sequences. The project involved dataset curation, feature extraction, model training and evaluation, deployed within PlantPepDB 2.0 with a standalone CLI.
-          </p>
-          <a href="https://github.com/faiyazrizwee/multi-class-plant-peptide-predictor/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
-            Check GitHub Repo <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-
-        <div class="card">
-          <span class="kintsugi-tag">Production DB</span>
-          <h3>PlantPepDB2 — (Dr. Shailesh Kumar)</h3>
-          <span class="mono-meta" style="display: block; margin-bottom: 8px;">BRIC - National Institute of Plant Genome Research</span>
-          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-            Developed a comprehensive plant peptide database using Django and PostgreSQL. Involved designing a robust database schema to store and manage peptide data, and creating a user-friendly web interface for researchers to query data efficiently.
-          </p>
-          <a href="http://14.139.61.8/plantpepdb2/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
-            Go to Database <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-
-        <div class="card">
-          <span class="kintsugi-tag">FastAPI &amp; React</span>
-          <h3>Gene2Therapy — (Prof. Syed Zeeshan Hussain)</h3>
-          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Jamia Millia Islamia</span>
-          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-            Developed an end-to-end bioinformatics pipeline (React.js and FastAPI) for Differential Gene Expression (DGE) analysis. Integrated KEGG/Reactome pathway enrichment.
-          </p>
-          <a href="http://14.139.61.8/gene2therapy/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
-            Launch Tool <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-
-        <div class="card">
-          <span class="kintsugi-tag">Full-Stack</span>
-          <h3>Full-Stack Management System</h3>
-          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Django &amp; Docker</span>
-          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-            This project was part of my hands-on learning journey in web development, exploring how to build and deploy containerized full-stack applications.
-          </p>
-          <a href="https://school-demo-six-drab.vercel.app" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">
-            Live Demo <i class="fas fa-external-link-alt"></i>
-          </a>
-        </div>
-
-        <div class="card">
-          <span class="kintsugi-tag">Neuro-Research</span>
-          <h3>Epilepsy Biomarker Discovery</h3>
-          <span class="mono-meta" style="display: block; margin-bottom: 8px;">Jawaharlal Nehru University (Prof. R.K. Brojen Singh)</span>
-          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-            Identifying biomarkers of Epilepsy using an integrated approach combining Data Mining, Network-Based Pharmacology, and Machine Learning.
-          </p>
-          <a href="Certificates/Epilepsy_Biomarker_Discovery.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
-            <i class="fas fa-file-pdf"></i> View Certificate
-          </a>
-        </div>
-
-        <div class="card">
-          <span class="kintsugi-tag">NGS Workflows</span>
-          <h3>Multi-omics Data Science</h3>
-          <span class="mono-meta" style="display: block; margin-bottom: 8px;">NextGen Helper (Dr. Mamta Gautam)</span>
-          <p style="font-size: 0.98rem; color: var(--color-stone); margin-bottom: var(--space-m);">
-            Advanced NGS toolkits. Variant calling workflows and transcriptomics alignment (Bowtie2).
-          </p>
-          <a href="Certificates/Multi-omics_Data_Science.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;">
-            <i class="fas fa-file-pdf"></i> View Certificate
-          </a>
+        <div class="projects-progress-track" aria-hidden="true">
+          <div class="projects-progress-bar" id="projects-progress-bar"></div>
         </div>
       </div>
-    </section>
+
+      <div class="projects-track-viewport">
+        <div class="projects-horizontal-track" id="projects-horizontal-track">
+          <!-- Card 1: SOPHIA -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag accent">sORF Prediction</span>
+              <h3>SOPHIA — Short Open Reading Frame Prediction using Holistic Integrated Analysis</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">Python • Machine Learning • Web &amp; Windows App</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                Developed a plant-focused computational framework with web and Windows applications for identifying and evaluating small open reading frames (sORFs). Integrated sequence analysis, ORF extraction and translation, feature generation, and machine-learning-based coding-potential classification into an end-to-end workflow.
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="http://14.139.61.8/sophia" target="_blank" class="btn btn-primary btn-sm">
+                Launch Tool <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2: DrugLab -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag accent">CLI Platform</span>
+              <h3>DrugLab — CLI Platform for Computational Drug Discovery</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">Python • AutoDock Vina • Admet AI</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                Built a lightweight, GPU-free, cloud-free CLI platform automating the full CADD workflow — protein/ligand preparation, binding-pocket detection, and AutoDock Vina docking. Engineered multi-criteria lead selection combining drug-likeness filters with ADMET screening, plus lead-optimization ranking.
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="https://github.com/faiyazrizwee/druglab" target="_blank" class="btn btn-primary btn-sm">
+                Check GitHub Repo <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 3: LLM NL2SQL -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag">GenAI &amp; RAG</span>
+              <h3>LLM-Powered NL2SQL &amp; RAG Chatbot</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">Python • Django • LLM • RAG • PostgreSQL</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                Developed an integrated platform featuring an LLM-powered Natural Language to SQL system and a domain-specific RAG chatbot. The system utilizes document ingestion pipelines, vector embeddings, and semantic retrieval to ground AI responses in scientific literature.
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="http://14.139.61.8/plantpepdb2/assistant/" target="_blank" class="btn btn-primary btn-sm">
+                Live Demo: AI-Assistant <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 4: Multi class plant peptide predictor -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag matcha">BRIC-NIPGR</span>
+              <h3>Multi class plant peptide family predictor</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">Machine Learning • Sequence Classification</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                Built an end-to-end multiclass prediction platform for identifying plant peptide families directly from protein sequences. The project involved dataset curation, feature extraction, model training and evaluation, deployed within PlantPepDB 2.0 with a standalone CLI.
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="https://github.com/faiyazrizwee/multi-class-plant-peptide-predictor/" target="_blank" class="btn btn-primary btn-sm">
+                Check GitHub Repo <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 5: PlantPepDB2 -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag">Production DB</span>
+              <h3>PlantPepDB2 — (Dr. Shailesh Kumar)</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">BRIC - National Institute of Plant Genome Research</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                Developed a comprehensive plant peptide database using Django and PostgreSQL. Involved designing a robust database schema to store and manage peptide data, and creating a user-friendly web interface for researchers to query data efficiently.
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="http://14.139.61.8/plantpepdb2/" target="_blank" class="btn btn-primary btn-sm">
+                Go to Database <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 6: Gene2Therapy -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag">FastAPI &amp; React</span>
+              <h3>Gene2Therapy — (Prof. Syed Zeeshan Hussain)</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">Jamia Millia Islamia</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                Developed an end-to-end bioinformatics pipeline (React.js and FastAPI) for Differential Gene Expression (DGE) analysis. Integrated KEGG/Reactome pathway enrichment.
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="http://14.139.61.8/gene2therapy/" target="_blank" class="btn btn-primary btn-sm">
+                Launch Tool <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 7: Full-Stack Management System -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag">Full-Stack</span>
+              <h3>Full-Stack Management System</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">Django &amp; Docker</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                This project was part of my hands-on learning journey in web development, exploring how to build and deploy containerized full-stack applications.
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="https://school-demo-six-drab.vercel.app" target="_blank" class="btn btn-primary btn-sm">
+                Live Demo <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 8: Epilepsy Biomarker Discovery -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag">Neuro-Research</span>
+              <h3>Epilepsy Biomarker Discovery</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">Jawaharlal Nehru University (Prof. R.K. Brojen Singh)</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                Identifying biomarkers of Epilepsy using an integrated approach combining Data Mining, Network-Based Pharmacology, and Machine Learning.
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="Certificates/Epilepsy_Biomarker_Discovery.pdf" target="_blank" class="btn btn-secondary btn-sm">
+                <i class="fas fa-file-pdf"></i> View Certificate
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 9: Multi-omics Data Science -->
+          <div class="card project-h-card">
+            <div class="project-h-card-body">
+              <span class="kintsugi-tag">NGS Workflows</span>
+              <h3>Multi-omics Data Science</h3>
+              <span class="mono-meta" style="display: block; margin-bottom: 8px;">NextGen Helper (Dr. Mamta Gautam)</span>
+              <p style="font-size: var(--font-size-body); color: var(--color-stone); margin-bottom: var(--space-m);">
+                Advanced NGS toolkits. Variant calling workflows and transcriptomics alignment (Bowtie2).
+              </p>
+            </div>
+            <div class="project-h-card-footer">
+              <a href="Certificates/Multi-omics_Data_Science.pdf" target="_blank" class="btn btn-secondary btn-sm">
+                <i class="fas fa-file-pdf"></i> View Certificate
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
 
     <!-- Certifications & Awards -->
-    <section id="certifications" class="section-padding animate-in">
+    <section id="certifications" class="section-padding">
       <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: var(--space-m);">
         <div>
           <span class="section-eyebrow">Professional Development</span>
@@ -1502,8 +1899,8 @@
         <div class="card">
           <div class="cert-icon"><i class="fas fa-certificate"></i></div>
           <h3>Systematic Review Paper Planning</h3>
-          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">Dr. Zakir Husain Library, JMI</p>
-          <a href="Certificates/Systematic_Review_Paper_Planning.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+          <p style="color: var(--color-stone); font-size: var(--font-size-meta); margin-bottom: 12px;">Dr. Zakir Husain Library, JMI</p>
+          <a href="Certificates/Systematic_Review_Paper_Planning.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
@@ -1511,8 +1908,8 @@
         <div class="card">
           <div class="cert-icon"><i class="fas fa-atom"></i></div>
           <h3>Molecular Docking Workshop</h3>
-          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">AutoDock Vina &amp; PyRx Hands-on</p>
-          <a href="Certificates/Molecular_Docking_Workshop.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+          <p style="color: var(--color-stone); font-size: var(--font-size-meta); margin-bottom: 12px;">AutoDock Vina &amp; PyRx Hands-on</p>
+          <a href="Certificates/Molecular_Docking_Workshop.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
@@ -1520,8 +1917,8 @@
         <div class="card">
           <div class="cert-icon"><i class="fas fa-brain"></i></div>
           <h3>Supervised Machine Learning</h3>
-          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">Python Implementation (Mindluster)</p>
-          <a href="Certificates/Supervised_Machine_Learning.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+          <p style="color: var(--color-stone); font-size: var(--font-size-meta); margin-bottom: 12px;">Python Implementation (Mindluster)</p>
+          <a href="Certificates/Supervised_Machine_Learning.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
@@ -1529,8 +1926,8 @@
         <div class="card">
           <div class="cert-icon"><i class="fas fa-laptop-medical"></i></div>
           <h3>Intro to Bioinformatics</h3>
-          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">Advancements &amp; Tools (Biocode)</p>
-          <a href="Certificates/Intro_to_Bioinformatics.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+          <p style="color: var(--color-stone); font-size: var(--font-size-meta); margin-bottom: 12px;">Advancements &amp; Tools (Biocode)</p>
+          <a href="Certificates/Intro_to_Bioinformatics.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
@@ -1538,8 +1935,8 @@
         <div class="card">
           <div class="cert-icon"><i class="fas fa-video"></i></div>
           <h3>Webinars Attended</h3>
-          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">NGS in medicine &amp; TLC in Pharmacology</p>
-          <a href="Certificates/Webinars_Attended.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+          <p style="color: var(--color-stone); font-size: var(--font-size-meta); margin-bottom: 12px;">NGS in medicine &amp; TLC in Pharmacology</p>
+          <a href="Certificates/Webinars_Attended.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
@@ -1547,8 +1944,8 @@
         <div class="card">
           <div class="cert-icon"><i class="fas fa-microscope"></i></div>
           <h3>Genomic Data Science Symposium</h3>
-          <p style="color: var(--color-stone); font-size: 0.9rem; margin-bottom: 12px;">BRIC-NIPGR, New Delhi (March 2026)</p>
-          <a href="Certificates/Genomic_Data_Science_Symposium.pdf" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.82rem;">
+          <p style="color: var(--color-stone); font-size: var(--font-size-meta); margin-bottom: 12px;">BRIC-NIPGR, New Delhi (March 2026)</p>
+          <a href="Certificates/Genomic_Data_Science_Symposium.pdf" target="_blank" class="btn btn-secondary btn-sm">
             <i class="fas fa-eye"></i> View Certificate
           </a>
         </div>
@@ -1557,7 +1954,7 @@
 
     <!-- Footer -->
     <footer>
-      <p style="font-weight: 600; color: var(--color-charcoal); font-size: 1.05rem;">
+      <p class="footer-copy">
         &copy; 2026 Md Faiyaz Rizwee — Bioinformatics Researcher
       </p>
     </footer>
@@ -1589,6 +1986,48 @@
       requestAnimationFrame(animation);
     };
 
+    // Mobile navigation toggle & menu controls
+    const navToggle = document.getElementById("nav-toggle");
+    const navMenu = document.getElementById("nav-menu");
+
+    const closeNavMenu = () => {
+      if (navMenu && navMenu.classList.contains("is-open")) {
+        navMenu.classList.remove("is-open");
+        if (navToggle) {
+          navToggle.setAttribute("aria-expanded", "false");
+          const icon = navToggle.querySelector("i");
+          if (icon) icon.className = "fas fa-bars";
+        }
+      }
+    };
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = navMenu.classList.toggle("is-open");
+        navToggle.setAttribute("aria-expanded", String(isOpen));
+        const icon = navToggle.querySelector("i");
+        if (icon) {
+          icon.className = isOpen ? "fas fa-times" : "fas fa-bars";
+        }
+      });
+
+      // Close when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+          closeNavMenu();
+        }
+      });
+
+      // Close on Escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeNavMenu();
+          navToggle.focus();
+        }
+      });
+    }
+
     // Nav clicks
     document.addEventListener("click", (e) => {
       const logoLink = e.target.closest("#logo-link");
@@ -1596,6 +2035,7 @@
 
       if (logoLink || navLink) {
         e.preventDefault();
+        closeNavMenu();
         const targetId = (logoLink || navLink).getAttribute("href");
 
         if (targetId === "#top") {
@@ -1605,7 +2045,8 @@
           const targetElement = document.querySelector(targetId);
           if (targetElement) {
             const navbar = document.querySelector(".navbar");
-            const offset = navbar ? navbar.offsetHeight + 24 : 70;
+            const navContainer = document.querySelector(".nav-container");
+            const offset = (navContainer ? navContainer.offsetHeight : (navbar ? navbar.offsetHeight : 56)) + 20;
             smoothScrollTo(targetElement.offsetTop - offset);
           }
         }
@@ -1633,6 +2074,118 @@
     document.querySelectorAll("section[id]").forEach((section) => {
       navObserver.observe(section);
     });
+
+    // ========================================================
+    // Engineering & Pipelines: Horizontal Scroll-Pinned Conveyor
+    // Scrolls horizontally on vertical scroll, unpins at the end,
+    // and triggers opacity appearance transition at 40% screen threshold.
+    // ========================================================
+    const pinSection = document.getElementById("projects");
+    const stickyFrame = pinSection ? pinSection.querySelector(".projects-sticky-frame") : null;
+    const horizTrack = document.getElementById("projects-horizontal-track");
+    const progressBar = document.getElementById("projects-progress-bar");
+    const counterBadge = document.getElementById("projects-counter");
+    const projectCards = horizTrack ? horizTrack.querySelectorAll(".project-h-card") : [];
+
+    if (pinSection && stickyFrame && horizTrack && projectCards.length > 0) {
+      let maxScrollX = 0;
+      let sectionTop = 0;
+      let totalScrollDist = 0;
+      let isTicking = false;
+
+      const calculateMetrics = () => {
+        const viewportWidth = window.innerWidth;
+        const trackScrollWidth = horizTrack.scrollWidth;
+        maxScrollX = Math.max(0, trackScrollWidth - viewportWidth);
+
+        // Pin distance equals horizontal travel distance
+        totalScrollDist = maxScrollX;
+        pinSection.style.height = `${window.innerHeight + totalScrollDist}px`;
+
+        const pinRect = pinSection.getBoundingClientRect();
+        sectionTop = window.scrollY + pinRect.top;
+      };
+
+      const updateCardVisibility = (viewportWidth) => {
+        let bestActiveIndex = 0;
+        let bestScore = -Infinity;
+
+        projectCards.forEach((card, index) => {
+          const rect = card.getBoundingClientRect();
+          const cardWidth = card.offsetWidth;
+
+          // 40% screen appearance threshold:
+          // 1. The card has entered >= 40% into the viewport from the right
+          // 2. Or >= 40% of the card's width is visible within the viewport
+          const enteredViewportRatio = (viewportWidth - rect.left) / viewportWidth;
+          const visibleWidth = Math.max(0, Math.min(rect.right, viewportWidth) - Math.max(rect.left, 0));
+          const cardVisibleRatio = cardWidth > 0 ? (visibleWidth / cardWidth) : 0;
+
+          const isAt40Percent = enteredViewportRatio >= 0.40 || cardVisibleRatio >= 0.40;
+
+          if (isAt40Percent && rect.right > 0 && rect.left < viewportWidth) {
+            card.classList.add("is-in-view");
+          } else {
+            card.classList.remove("is-in-view");
+          }
+
+          // Track prominent card for the 1/9 badge counter
+          const cardCenter = rect.left + cardWidth / 2;
+          const viewportCenter = viewportWidth / 2;
+          const proximityScore = -Math.abs(cardCenter - viewportCenter);
+          if (proximityScore > bestScore && rect.right > 0 && rect.left < viewportWidth) {
+            bestScore = proximityScore;
+            bestActiveIndex = index;
+          }
+        });
+
+        if (counterBadge) {
+          counterBadge.textContent = `${bestActiveIndex + 1} / ${projectCards.length}`;
+        }
+      };
+
+      const handleScroll = () => {
+        const scrollY = window.scrollY;
+        const stickyTop = stickyFrame.offsetTop;
+        const startPin = sectionTop - stickyTop;
+        const currentScrolled = scrollY - startPin;
+
+        const clampedScroll = Math.max(0, Math.min(currentScrolled, totalScrollDist));
+        const progress = totalScrollDist > 0 ? (clampedScroll / totalScrollDist) : 0;
+        const currentTranslateX = progress * maxScrollX;
+
+        horizTrack.style.transform = `translate3d(-${currentTranslateX}px, 0, 0)`;
+
+        if (progressBar) {
+          progressBar.style.width = `${(progress * 100).toFixed(1)}%`;
+        }
+
+        updateCardVisibility(window.innerWidth);
+        isTicking = false;
+      };
+
+      const requestScrollTick = () => {
+        if (!isTicking) {
+          requestAnimationFrame(handleScroll);
+          isTicking = true;
+        }
+      };
+
+      window.addEventListener("scroll", requestScrollTick, { passive: true });
+      window.addEventListener("resize", () => {
+        calculateMetrics();
+        handleScroll();
+      });
+
+      // Initial measurement after DOM layout settlement
+      calculateMetrics();
+      handleScroll();
+      // Second tick after fonts and assets settle
+      window.addEventListener("load", () => {
+        calculateMetrics();
+        handleScroll();
+      });
+    }
 
     // Skills Filter
     const skillFilterBtns = document.querySelectorAll(".skill-filter-btn");
@@ -1680,20 +2233,45 @@
       }
     });
 
-    // Simple Intersection Observer for entry animations
-    const entryObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-in");
-            entryObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08 }
-    );
+    // Scroll-Driven Animation & Fallback Intersection Observer
+    const setupEnterTransitions = () => {
+      const enterElements = document.querySelectorAll(
+        ".card:not(.project-h-card), .skill-bento-card, .skills-section-header, .skills-filter-nav, .education-grid .card, .cert-grid .card, .kintsugi-line, footer"
+      );
 
-    document.querySelectorAll("section").forEach((s) => entryObserver.observe(s));
+      enterElements.forEach((el) => {
+        el.classList.add("reveal-on-scroll");
+      });
+
+      // If CSS animation-timeline is supported natively by browser, pure CSS handles it
+      const supportsViewTimeline = CSS.supports && (
+        CSS.supports("animation-timeline", "view()") ||
+        CSS.supports("animation-timeline: view()")
+      );
+
+      if (!supportsViewTimeline) {
+        const elementObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-revealed");
+                elementObserver.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            rootMargin: "0px 0px -40px 0px",
+            threshold: 0.1,
+          }
+        );
+
+        document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+          elementObserver.observe(el);
+        });
+      }
+    };
+
+    setupEnterTransitions();
 
     // Visitor Tracking
     const trackingUrl = "https://script.google.com/macros/s/AKfycbxxzhO_G6hvszSr-FK8PQY7_XHT0o7-I0W4G8ftpIuWjtKMTD9hol6HX7J28bkCo-mD/exec";
