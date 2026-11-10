@@ -1044,10 +1044,11 @@
     }
 
     .projects-horizontal-track {
+      position: relative;
       display: flex;
       gap: 24px;
-      padding-left: max(1.5rem, calc((100vw - var(--max-width)) / 2 + 1.5rem));
-      padding-right: 25vw;
+      padding-left: calc(50vw - clamp(310px, 31vw, 430px) / 2);
+      padding-right: calc(50vw - clamp(310px, 31vw, 430px) / 2);
       width: max-content;
       will-change: transform;
       transform: translate3d(0, 0, 0);
@@ -1121,8 +1122,8 @@
       }
       .projects-horizontal-track {
         gap: 16px;
-        padding-left: 1rem;
-        padding-right: 30vw;
+        padding-left: calc(50vw - clamp(270px, 82vw, 340px) / 2);
+        padding-right: calc(50vw - clamp(270px, 82vw, 340px) / 2);
       }
       .project-h-card {
         flex: 0 0 clamp(270px, 82vw, 340px);
@@ -1132,6 +1133,10 @@
     }
 
     @media (max-width: 400px) {
+      .projects-horizontal-track {
+        padding-left: calc(50vw - 135px);
+        padding-right: calc(50vw - 135px);
+      }
       .project-h-card {
         flex: 0 0 270px;
         min-height: 310px;
@@ -1727,7 +1732,7 @@
       <div class="projects-track-viewport">
         <div class="projects-horizontal-track" id="projects-horizontal-track">
           <!-- Card 1: SOPHIA -->
-          <div class="card project-h-card">
+          <div class="card project-h-card is-in-view">
             <div class="project-h-card-body">
               <span class="kintsugi-tag accent">sORF Prediction</span>
               <h3>SOPHIA — Short Open Reading Frame Prediction using Holistic Integrated Analysis</h3>
@@ -2044,10 +2049,15 @@
         } else {
           const targetElement = document.querySelector(targetId);
           if (targetElement) {
-            const navbar = document.querySelector(".navbar");
-            const navContainer = document.querySelector(".nav-container");
-            const offset = (navContainer ? navContainer.offsetHeight : (navbar ? navbar.offsetHeight : 56)) + 20;
-            smoothScrollTo(targetElement.offsetTop - offset);
+            if (targetId === "#projects" && stickyFrame) {
+              const topOffset = parseFloat(window.getComputedStyle(stickyFrame).top) || 60;
+              smoothScrollTo(targetElement.offsetTop - topOffset);
+            } else {
+              const navbar = document.querySelector(".navbar");
+              const navContainer = document.querySelector(".nav-container");
+              const offset = (navContainer ? navContainer.offsetHeight : (navbar ? navbar.offsetHeight : 56)) + 20;
+              smoothScrollTo(targetElement.offsetTop - offset);
+            }
           }
         }
       }
@@ -2089,21 +2099,31 @@
 
     if (pinSection && stickyFrame && horizTrack && projectCards.length > 0) {
       let maxScrollX = 0;
-      let sectionTop = 0;
       let totalScrollDist = 0;
       let isTicking = false;
 
       const calculateMetrics = () => {
         const viewportWidth = window.innerWidth;
-        const trackScrollWidth = horizTrack.scrollWidth;
-        maxScrollX = Math.max(0, trackScrollWidth - viewportWidth);
+        const firstCard = projectCards[0];
+        const lastCard = projectCards[projectCards.length - 1];
+        if (!firstCard || !lastCard) return;
 
-        // Pin distance equals horizontal travel distance
-        totalScrollDist = maxScrollX;
-        pinSection.style.height = `${window.innerHeight + totalScrollDist}px`;
+        // Center card 1 horizontally in viewport at entry (progress = 0)
+        const cardWidth = firstCard.offsetWidth;
+        const sidePadding = Math.max(0, (viewportWidth - cardWidth) / 2);
+        horizTrack.style.paddingLeft = `${sidePadding}px`;
+        horizTrack.style.paddingRight = `${sidePadding}px`;
 
-        const pinRect = pinSection.getBoundingClientRect();
-        sectionTop = window.scrollY + pinRect.top;
+        // Travel distance from Card 1 centered to Card 9 centered
+        const travelDist = Math.max(0, lastCard.offsetLeft - firstCard.offsetLeft);
+        maxScrollX = travelDist;
+        totalScrollDist = travelDist;
+
+        // Sticky top offset (60px desktop, 50px mobile)
+        const topOffset = parseFloat(window.getComputedStyle(stickyFrame).top) || 60;
+
+        // Height ensures the section unpins exactly when Card 9 is centered
+        pinSection.style.height = `${Math.max(window.innerHeight, window.innerHeight + totalScrollDist - topOffset)}px`;
       };
 
       const updateCardVisibility = (viewportWidth) => {
@@ -2145,12 +2165,12 @@
       };
 
       const handleScroll = () => {
-        const scrollY = window.scrollY;
-        const stickyTop = stickyFrame.offsetTop;
-        const startPin = sectionTop - stickyTop;
-        const currentScrolled = scrollY - startPin;
+        const topOffset = parseFloat(window.getComputedStyle(stickyFrame).top) || 60;
+        const pinRect = pinSection.getBoundingClientRect();
+        // Exact distance scrolled from the moment stickyFrame sticks
+        const distScrolled = topOffset - pinRect.top;
 
-        const clampedScroll = Math.max(0, Math.min(currentScrolled, totalScrollDist));
+        const clampedScroll = Math.max(0, Math.min(distScrolled, totalScrollDist));
         const progress = totalScrollDist > 0 ? (clampedScroll / totalScrollDist) : 0;
         const currentTranslateX = progress * maxScrollX;
 
