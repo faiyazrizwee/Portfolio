@@ -23,7 +23,7 @@
     :root {
       --color-background: #0a0a0b;
       --color-foreground: #f5f5f5;
-      --color-card: #111113;
+      --color-card: #0a0a0b;
       --color-card-hover: #17171a;
       --color-accent: #c8ff2e;       /* Electric Volt / Lime */
       --color-accent-rgb: 200, 255, 46;
@@ -267,16 +267,16 @@
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.03em;
-      padding: 0.3rem 0.85rem;
-      border-radius: 9999px;
+      padding: 0.3rem 0.85rem 0.3rem 0;
+     /* border-radius: 9999px;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1); */
       color: var(--color-neutral-300);
       transition: all 200ms ease;
     }
     .tag-chip.accent {
-      background: rgba(var(--color-accent-rgb), 0.12);
-      border-color: rgba(var(--color-accent-rgb), 0.3);
+     /* background: rgba(var(--color-accent-rgb), 0.12);
+      border-color: rgba(var(--color-accent-rgb), 0.3); */
       color: var(--color-accent);
     }
     .tag-chip.white {
@@ -1250,11 +1250,11 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(var(--color-accent-rgb), 0.12);
-      border: 1px solid rgba(var(--color-accent-rgb), 0.3);
+      /*background: rgba(var(--color-accent-rgb), 0.12);
+      border: 1px solid rgba(var(--color-accent-rgb), 0.3);*/
       color: var(--color-accent);
-      padding: 0.35rem 0.85rem;
-      border-radius: 9999px;
+      padding: 0.35rem 0.85rem 0.35rem 0rem;
+      /*border-radius: 9999px; */
       font-weight: 700;
       font-size: 0.85rem;
       font-family: var(--font-mono);
@@ -1414,10 +1414,10 @@
       font-size: 0.75rem;
       color: var(--color-accent);
       font-weight: 600;
-      padding: 0.25rem 0.75rem;
-      border-radius: 9999px;
+      padding: 0.25rem 0.75rem 0.25rem 0rem;
+     /* border-radius: 9999px;
       background: rgba(var(--color-accent-rgb), 0.1);
-      border: 1px solid rgba(var(--color-accent-rgb), 0.25);
+      border: 1px solid rgba(var(--color-accent-rgb), 0.25);*/
     }
 
     .exp-meta-table {
@@ -2364,7 +2364,7 @@
           <div class="edu-card">
             <div class="edu-card-header">
               <div>
-                <span class="tag-chip" style="margin-bottom: 6px;">2019 — 2022 • Bachelor of Science</span>
+                <span class="tag-chip accent" style="margin-bottom: 6px;">2019 — 2022 • Bachelor of Science</span>
                 <h3 class="edu-degree-title">B.Sc. (Honors) Biotechnology</h3>
                 <p class="edu-institution">B.N. College, Patna University</p>
               </div>
@@ -2386,7 +2386,7 @@
             <div class="edu-card">
               <div class="edu-card-header">
                 <div>
-                  <span class="tag-chip" style="margin-bottom: 6px;">2017 — 2019 • Higher Secondary</span>
+                  <span class="tag-chip accent" style="margin-bottom: 6px;">2017 — 2019 • Higher Secondary</span>
                   <h3 class="edu-degree-title">Intermediate (10+2) — Science</h3>
                   <p class="edu-institution">Town Inter College</p>
                 </div>
@@ -2403,7 +2403,7 @@
             <div class="edu-card">
               <div class="edu-card-header">
                 <div>
-                  <span class="tag-chip" style="margin-bottom: 6px;">2007 — 2017 • Matriculation</span>
+                  <span class="tag-chip accent" style="margin-bottom: 6px;">2007 — 2017 • Matriculation</span>
                   <h3 class="edu-degree-title">Secondary Education (10th)</h3>
                   <p class="edu-institution">St. Ignatius School</p>
                 </div>
@@ -2529,7 +2529,7 @@
               <h3 class="skill-card-title">Linux &amp; HPC Infrastructure</h3>
               <span class="skill-card-sub">Cluster Computing &amp; DevOps</span>
             </div>
-            <span class="tag-chip">Systems</span>
+            <span class="tag-chip accent">Systems</span>
           </div>
           <div class="skill-chips-wrap">
             <span class="skill-badge highlight">Linux Systems Administration</span>
@@ -2548,7 +2548,7 @@
               <h3 class="skill-card-title">Web &amp; Database Development</h3>
               <span class="skill-card-sub">Full-Stack Scientific Tools</span>
             </div>
-            <span class="tag-chip">Engineering</span>
+            <span class="tag-chip accent">Engineering</span>
           </div>
           <div class="skill-chips-wrap">
             <span class="skill-badge highlight">FastAPI</span>
@@ -2741,7 +2741,7 @@
           <!-- Card 1: SOPHIA -->
           <div class="project-h-card is-in-view">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">sORF Prediction</span>
+              <!--<span class="tag-chip accent project-card-category-badge">sORF Prediction</span>-->
               <img src="images/sophia.webp" alt="SOPHIA Framework" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2764,7 +2764,7 @@
           <!-- Card 2: DrugLab -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">CLI Platform</span>
+              <!--<span class="tag-chip accent project-card-category-badge">CLI Platform</span>-->
               <img src="images/druglab.webp" alt="DrugLab CLI" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2787,7 +2787,7 @@
           <!-- Card 3: LLM NL2SQL & RAG -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">GenAI &amp; RAG</span>
+              <!--<span class="tag-chip accent project-card-category-badge">GenAI &amp; RAG</span>-->
               <img src="images/llm_nl2sql.webp" alt="LLM NL2SQL" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2810,7 +2810,7 @@
           <!-- Card 4: Multi-Class Plant Peptide Predictor -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">BRIC-NIPGR</span>
+              <!--<span class="tag-chip accent project-card-category-badge">BRIC-NIPGR</span>-->
               <img src="images/multi_class_plant_peptide_family_predictor.webp" alt="Plant Peptide Predictor" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2833,7 +2833,7 @@
           <!-- Card 5: PlantPepDB 2.0 -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">Production DB</span>
+              <!--<span class="tag-chip accent project-card-category-badge">Production DB</span>-->
               <img src="images/plantpepdb2.webp" alt="PlantPepDB 2.0" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2856,7 +2856,7 @@
           <!-- Card 6: Gene2Therapy -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">FastAPI &amp; React</span>
+              <!--<span class="tag-chip accent project-card-category-badge">FastAPI &amp; React</span>-->
               <img src="images/gene2therapy.webp" alt="Gene2Therapy" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2879,7 +2879,7 @@
           <!-- Card 7: Full-Stack Management System -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">Full-Stack</span>
+              <!--<span class="tag-chip accent project-card-category-badge">Full-Stack</span>-->
               <img src="images/Full_Stack_Management_System.webp" alt="Management System" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2902,7 +2902,7 @@
           <!-- Card 8: Epilepsy Biomarker Discovery -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">Neuro-Research</span>
+              <!--<span class="tag-chip accent project-card-category-badge">Neuro-Research</span>-->
               <img src="images/Epilepsy_Biomarker_Discovery.webp" alt="Epilepsy Biomarker Discovery" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2925,7 +2925,7 @@
           <!-- Card 9: Multi-omics Data Science -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <span class="tag-chip accent project-card-category-badge">NGS Workflows</span>
+              <!--<span class="tag-chip accent project-card-category-badge">NGS Workflows</span>-->
               <img src="images/Multi_Omics_Data_Science.webp" alt="Multi-Omics Data Science" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
