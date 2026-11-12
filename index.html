@@ -8,6 +8,13 @@
   <title>Md Faiyaz Rizwee — Computational Biologist & Bioinformatics Engineer</title>
   <meta name="description" content="Portfolio of Md Faiyaz Rizwee, a Computational Biologist and Bioinformatics Researcher specializing in Multi-Omics, CADD, Structural Biology, Machine Learning, and Pipeline Engineering." />
 
+  <!-- Favicons: Theme-Adaptive SVG + Media-Targeted PNGs + Fallback ICO in images/logo/ -->
+  <link rel="icon" type="image/svg+xml" href="images/logo/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/logo/favicon-dark-32.png" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/logo/favicon-light-32.png" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/x-icon" href="images/logo/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/logo/apple-touch-icon.png" />
+
   <!-- Fonts: Space Grotesk (Display), Inter (Sans Body), Caveat (Signature Accent), ui-monospace -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1199,9 +1206,9 @@
     /* Animated SVG Progression Staircase Graphic */
     .academics-svg-frame {
       background: var(--color-card);
-      border: 1px solid var(--color-neutral-850);
-      border-radius: var(--radius-xl);
-      padding: 2rem;
+     /* border: 1px solid var(--color-neutral-850);
+      border-radius: var(--radius-xl);*/
+      padding: 1rem 0rem;
       position: relative;
       overflow: hidden;
     }
@@ -2823,7 +2830,7 @@
             </h2>
           </div>
           <div>
-            <span class="tag-chip accent font-mono" id="projects-counter">1 / 9</span>
+            <span class="tag-chip accent font-mono" id="projects-counter">1 / 10</span>
           </div>
         </div>
         <div class="projects-progress-track" aria-hidden="true">
@@ -2834,102 +2841,9 @@
       <div class="projects-track-viewport">
         <div class="projects-horizontal-track" id="projects-horizontal-track">
 
-          <!-- Card 1: SOPHIA -->
+          <!-- Card 1: PlantPepDB 2.0 — (Dr. Shailesh Kumar) -->
           <div class="project-h-card is-in-view">
             <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">sORF Prediction</span>-->
-              <img src="images/sophia.webp" alt="SOPHIA Framework" class="project-card-img" />
-              <div class="project-card-gradient-overlay"></div>
-            </div>
-            <div class="project-card-body">
-              <div>
-                <h3 class="project-card-title">SOPHIA — Short Open Reading Frame Prediction</h3>
-                <div class="project-card-meta">Python • Machine Learning • GUI &amp; CLI</div>
-                <p class="project-card-desc">
-                  A plant-focused computational framework with web and Windows GUI applications for identifying and evaluating small open reading frames (sORFs). Integrates ORF translation, sequence feature generation, and machine-learning-based coding-potential classification.
-                </p>
-              </div>
-              <div class="project-card-footer">
-                <a href="http://14.139.61.8/sophia" target="_blank" class="btn btn-volt btn-sm">
-                  Launch Tool <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2: DrugLab -->
-          <div class="project-h-card">
-            <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">CLI Platform</span>-->
-              <img src="images/druglab.webp" alt="DrugLab CLI" class="project-card-img" />
-              <div class="project-card-gradient-overlay"></div>
-            </div>
-            <div class="project-card-body">
-              <div>
-                <h3 class="project-card-title">DrugLab — CLI Platform for Computational Drug Discovery</h3>
-                <div class="project-card-meta">Python • AutoDock Vina • ADMET-AI</div>
-                <p class="project-card-desc">
-                  Built a lightweight, GPU-free, cloud-free CLI platform automating the full CADD workflow: receptor/ligand preparation, binding-pocket detection, and docking. Engineered multi-criteria lead selection combining drug-likeness filters with ADMET screening.
-                </p>
-              </div>
-              <div class="project-card-footer">
-                <a href="https://github.com/faiyazrizwee/druglab" target="_blank" class="btn btn-volt btn-sm">
-                  Check GitHub Repo <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3: LLM NL2SQL & RAG -->
-          <div class="project-h-card">
-            <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">GenAI &amp; RAG</span>-->
-              <img src="images/llm_nl2sql.webp" alt="LLM NL2SQL" class="project-card-img" />
-              <div class="project-card-gradient-overlay"></div>
-            </div>
-            <div class="project-card-body">
-              <div>
-                <h3 class="project-card-title">LLM-Powered NL2SQL &amp; RAG Chatbot</h3>
-                <div class="project-card-meta">Python • Django • LLM • RAG • PostgreSQL</div>
-                <p class="project-card-desc">
-                  Developed an integrated platform featuring an LLM-powered Natural Language to SQL interface and a domain-specific RAG chatbot. The system utilizes document ingestion pipelines, vector embeddings, and semantic retrieval to ground AI answers in scientific literature.
-                </p>
-              </div>
-              <div class="project-card-footer">
-                <a href="http://14.139.61.8/plantpepdb2/assistant/" target="_blank" class="btn btn-volt btn-sm">
-                  Live Demo: Assistant <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 4: Multi-Class Plant Peptide Predictor -->
-          <div class="project-h-card">
-            <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">BRIC-NIPGR</span>-->
-              <img src="images/multi_class_plant_peptide_family_predictor.webp" alt="Plant Peptide Predictor" class="project-card-img" />
-              <div class="project-card-gradient-overlay"></div>
-            </div>
-            <div class="project-card-body">
-              <div>
-                <h3 class="project-card-title">Multi-Class Plant Peptide Family Predictor</h3>
-                <div class="project-card-meta">Machine Learning • Sequence Classification</div>
-                <p class="project-card-desc">
-                  Built an end-to-end multiclass prediction platform for classifying plant peptide families directly from raw amino acid sequences. Curated datasets, engineered feature pipelines, and deployed within PlantPepDB 2.0 with a standalone CLI toolkit.
-                </p>
-              </div>
-              <div class="project-card-footer">
-                <a href="https://github.com/faiyazrizwee/multi-class-plant-peptide-predictor/" target="_blank" class="btn btn-volt btn-sm">
-                  Check GitHub Repo <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 5: PlantPepDB 2.0 -->
-          <div class="project-h-card">
-            <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">Production DB</span>-->
               <img src="images/plantpepdb2.webp" alt="PlantPepDB 2.0" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2949,10 +2863,53 @@
             </div>
           </div>
 
-          <!-- Card 6: Gene2Therapy -->
+          <!-- Card 2: SOPHIA — Short Open Reading Frame Prediction -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">FastAPI &amp; React</span>-->
+              <img src="images/sophia.webp" alt="SOPHIA Framework" class="project-card-img" />
+              <div class="project-card-gradient-overlay"></div>
+            </div>
+            <div class="project-card-body">
+              <div>
+                <h3 class="project-card-title">SOPHIA — Short Open Reading Frame Prediction</h3>
+                <div class="project-card-meta">Python • Machine Learning • GUI &amp; CLI</div>
+                <p class="project-card-desc">
+                  A plant-focused computational framework with web and Windows GUI applications for identifying and evaluating small open reading frames (sORFs). Integrates ORF translation, sequence feature generation, and machine-learning-based coding-potential classification.
+                </p>
+              </div>
+              <div class="project-card-footer">
+                <a href="http://14.139.61.8/sophia" target="_blank" class="btn btn-volt btn-sm">
+                  Launch Tool <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: LLM-Powered NL2SQL & RAG Chatbot -->
+          <div class="project-h-card">
+            <div class="project-card-image-wrap">
+              <img src="images/llm_nl2sql.webp" alt="LLM NL2SQL" class="project-card-img" />
+              <div class="project-card-gradient-overlay"></div>
+            </div>
+            <div class="project-card-body">
+              <div>
+                <h3 class="project-card-title">LLM-Powered NL2SQL &amp; RAG Chatbot</h3>
+                <div class="project-card-meta">Python • Django • LLM • RAG • PostgreSQL</div>
+                <p class="project-card-desc">
+                  Developed an integrated platform featuring an LLM-powered Natural Language to SQL interface and a domain-specific RAG chatbot. The system utilizes document ingestion pipelines, vector embeddings, and semantic retrieval to ground AI answers in scientific literature.
+                </p>
+              </div>
+              <div class="project-card-footer">
+                <a href="http://14.139.61.8/plantpepdb2/assistant/" target="_blank" class="btn btn-volt btn-sm">
+                  Live Demo: Assistant <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4: Gene2Therapy — (Prof. Syed Zeeshan Hussain) -->
+          <div class="project-h-card">
+            <div class="project-card-image-wrap">
               <img src="images/gene2therapy.webp" alt="Gene2Therapy" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2972,10 +2929,75 @@
             </div>
           </div>
 
-          <!-- Card 7: Full-Stack Management System -->
+          <!-- Card 5: Computational Biology & Plant Genomics Lab Page -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">Full-Stack</span>-->
+              <img src="images/lab-page.webp" alt="Lab Page - Computational Biology &amp; Plant Genomics" class="project-card-img" />
+              <div class="project-card-gradient-overlay"></div>
+            </div>
+            <div class="project-card-body">
+              <div>
+                <h3 class="project-card-title">Computational Biology &amp; Plant Genomics Lab</h3>
+                <div class="project-card-meta">Full-Stack • Web Development • BRIC-NIPGR</div>
+                <p class="project-card-desc">
+                  Designed and developed the official laboratory portal for Dr. Shailesh Kumar's Computational Biology &amp; Plant Genomics Lab at BRIC-NIPGR, showcasing research initiatives, databases, pipelines, team members, and scientific publications.
+                </p>
+              </div>
+              <div class="project-card-footer">
+                <a href="http://14.139.61.8/sklab/" target="_blank" class="btn btn-volt btn-sm">
+                  Visit Lab Page <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6: DrugLab — CLI Platform for Computational Drug Discovery -->
+          <div class="project-h-card">
+            <div class="project-card-image-wrap">
+              <img src="images/druglab.webp" alt="DrugLab CLI" class="project-card-img" />
+              <div class="project-card-gradient-overlay"></div>
+            </div>
+            <div class="project-card-body">
+              <div>
+                <h3 class="project-card-title">DrugLab — CLI Platform for Computational Drug Discovery</h3>
+                <div class="project-card-meta">Python • AutoDock Vina • ADMET-AI</div>
+                <p class="project-card-desc">
+                  Built a lightweight, GPU-free, cloud-free CLI platform automating the full CADD workflow: receptor/ligand preparation, binding-pocket detection, and docking. Engineered multi-criteria lead selection combining drug-likeness filters with ADMET screening.
+                </p>
+              </div>
+              <div class="project-card-footer">
+                <a href="https://github.com/faiyazrizwee/druglab" target="_blank" class="btn btn-volt btn-sm">
+                  Check GitHub Repo <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 7: Multi-Class Plant Peptide Family Predictor -->
+          <div class="project-h-card">
+            <div class="project-card-image-wrap">
+              <img src="images/multi_class_plant_peptide_family_predictor.webp" alt="Plant Peptide Predictor" class="project-card-img" />
+              <div class="project-card-gradient-overlay"></div>
+            </div>
+            <div class="project-card-body">
+              <div>
+                <h3 class="project-card-title">Multi-Class Plant Peptide Family Predictor</h3>
+                <div class="project-card-meta">Machine Learning • Sequence Classification</div>
+                <p class="project-card-desc">
+                  Built an end-to-end multiclass prediction platform for classifying plant peptide families directly from raw amino acid sequences. Curated datasets, engineered feature pipelines, and deployed within PlantPepDB 2.0 with a standalone CLI toolkit.
+                </p>
+              </div>
+              <div class="project-card-footer">
+                <a href="https://github.com/faiyazrizwee/multi-class-plant-peptide-predictor/" target="_blank" class="btn btn-volt btn-sm">
+                  Check GitHub Repo <svg class="lucide-icon" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 8: Full-Stack Containerized Management System -->
+          <div class="project-h-card">
+            <div class="project-card-image-wrap">
               <img src="images/Full_Stack_Management_System.webp" alt="Management System" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -2995,10 +3017,9 @@
             </div>
           </div>
 
-          <!-- Card 8: Epilepsy Biomarker Discovery -->
+          <!-- Card 9: Epilepsy Biomarker Discovery — JNU -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">Neuro-Research</span>-->
               <img src="images/Epilepsy_Biomarker_Discovery.webp" alt="Epilepsy Biomarker Discovery" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
@@ -3018,10 +3039,9 @@
             </div>
           </div>
 
-          <!-- Card 9: Multi-omics Data Science -->
+          <!-- Card 10: Multi-Omics Data Science — NextGen Helper -->
           <div class="project-h-card">
             <div class="project-card-image-wrap">
-              <!--<span class="tag-chip accent project-card-category-badge">NGS Workflows</span>-->
               <img src="images/Multi_Omics_Data_Science.webp" alt="Multi-Omics Data Science" class="project-card-img" />
               <div class="project-card-gradient-overlay"></div>
             </div>
